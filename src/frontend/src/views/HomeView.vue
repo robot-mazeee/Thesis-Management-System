@@ -9,7 +9,7 @@
     <CoordinatorHomeView v-else-if="roleStore.isCoordinator" />
     <StaffHomeView v-else-if="roleStore.isStaff" />
     <p v-else>
-      Page in Construction :)
+      Page in Construction :).
     </p>
   </div>
 </template>
