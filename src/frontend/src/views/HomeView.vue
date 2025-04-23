@@ -2,7 +2,7 @@
   <div class="text-center">
     <h1>Welcome to DEI-PMS!</h1>
 
-    <LoginPage v-if="!studentStore.isLoggedIn && roleStore.isStudent"/>
+    <LoginPage v-if="roleStore.isStudent && (!studentStore.isLoggedIn || !studentStore.currentStudent)"/>
     
     <StudentHomeView v-else-if="roleStore.isStudent" />
     <SCHomeView v-else-if="roleStore.isSc" />
