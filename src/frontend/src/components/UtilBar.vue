@@ -1,28 +1,31 @@
 <template>
   <v-app-bar color="secondary" :height="36" class="px-2">
-    <v-toolbar-items>
-      <v-btn
-        href="https://dei.tecnico.ulisboa.pt/"
-        selected-class="no-active"
-        class="dei-title"
-        size="small"
-      >
-        DEI
-      </v-btn>
-    </v-toolbar-items>
-    <v-spacer />
-    <span><ChangeRoleDropdown /></span>
-    <v-spacer />
-    <v-toolbar-items class="align-center">
-      <DarkModeSwitch />
-    </v-toolbar-items>
+    <v-container fluid class="d-flex align-center justify-space-between">
+      <div class="d-flex align-center">
+        <v-btn
+          href="https://dei.tecnico.ulisboa.pt/"
+          selected-class="no-active"
+          class="dei-title"
+        >
+          DEI
+        </v-btn>
+      </div>
+      <v-spacer />
+      <div class="d-flex align-center justify-center" style="flex: 1">
+        <ChangeRoleDropdown />
+      </div>
+      <v-spacer />
+      <!-- <v-toolbar-items class="align-center">
+        <DarkModeSwitch />
+      </v-toolbar-items> -->
 
-    <v-toolbar-items class="ms-2">
-      <v-btn size="small" variant="text" @click="logout()">
-        Logout
-        <v-icon size="small" class="ms-1" icon="mdi-logout"></v-icon>
-      </v-btn>
-    </v-toolbar-items>
+      <div class="d-flex align-center">
+          <v-btn variant="text" @click="logout()">
+            Logout
+            <v-icon class="ms-1" icon="mdi-logout"></v-icon>
+          </v-btn>
+      </div>
+    </v-container>
   </v-app-bar>
 </template>
 
