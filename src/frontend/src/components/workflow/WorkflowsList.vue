@@ -37,6 +37,7 @@ import WorkflowDto from '../../models/WorkflowDto'
 import { useRouter } from 'vue-router'
 import { useRoleStore } from '@/stores/role'
 import Workflow from '@/Workflow.vue'
+import ThesisWorkflow from './ThesisWorkflow.vue'
 
 const roleStore = useRoleStore()
 const router = useRouter()

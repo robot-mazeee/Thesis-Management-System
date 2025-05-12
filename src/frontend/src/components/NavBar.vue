@@ -5,9 +5,11 @@
       {{ item.name }}
       <v-icon color="contrast" :icon="item.icon"></v-icon>
     </v-btn>
+    <v-spacer></v-spacer>
   </v-app-bar>
 </template>
 
 <script setup lang="ts">
+
 defineProps<{ navbarItems: { name: string; path: string; icon: string }[] }>()
 </script>
