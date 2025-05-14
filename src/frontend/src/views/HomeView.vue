@@ -5,7 +5,7 @@
     <LoginPage v-if="roleStore.isStudent && (!studentStore.isLoggedIn || !studentStore.currentStudent)"/>
     
     <StudentHomeView v-else-if="roleStore.isStudent" />
-    <SCHomeView v-else-if="roleStore.isSc" />
+    <SCHomeView v-else-if="roleStore.isAdmin" />
     <CoordinatorHomeView v-else-if="roleStore.isCoordinator" />
     <StaffHomeView v-else-if="roleStore.isStaff" />
     <p v-else>

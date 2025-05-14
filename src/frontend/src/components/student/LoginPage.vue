@@ -1,14 +1,8 @@
 <template>
-    <h1>Login as:</h1>
+    <h1></h1>
     <div>
-        <div v-if="students.length !== 0" v-for="student in students">
-            <v-btn @click="selectStudent(student)" color="success" class="mb-3">
-                {{ student.name }} ({{ student.istId }})
-            </v-btn>
-        </div>
-        <h3 v-else>
-            No Students.
-        </h3 v-else>
+         <PersonDialog />
+         <v-btn>Create Account</v-btn>
     </div>
 </template>
 
@@ -25,6 +19,9 @@ const students: PersonDto[] = reactive([])
 onMounted(() => {
     getStudents();
 });
+
+// se nao houver a pessoa na base de dados, criar uma nova pessoa com os dados
+// nome, istID, email, tipo
 
 async function getStudents() {
     students.splice(0, students.length)

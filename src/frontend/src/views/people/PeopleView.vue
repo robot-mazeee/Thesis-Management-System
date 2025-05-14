@@ -4,11 +4,7 @@
       <h2 class="text-left ml-1">{{ showStudents ? "Listagem de Alunos" : "Listagem de Pessoas"}}</h2>
     </v-col>
     <v-col cols="auto">
-      <PersonDialog 
-        :editMode="editing"
-        :personToEdit="selectedPerson"
-        @close-dialog="handleDialogClose"
-      />
+      <CreatePersonDialog @close-dialog="getPeopleOrStudents"/>
     </v-col>
   </v-row>
 
@@ -42,9 +38,9 @@
     </template>
     <template v-slot:[`item.actions`]="{ item }">
       <v-tooltip>
-        <template v-slot:activator="{ props }">
+        <!-- <template v-slot:activator="{ props }">
           <v-icon v-bind="{ props }" @click="openEditDialog(item)" class="mr-2">mdi-pencil</v-icon>
-        </template>
+        </template> -->
       </v-tooltip>
       <v-icon @click="deletePerson(item)">mdi-delete</v-icon>
     </template>
@@ -68,10 +64,10 @@
 <script setup lang="ts">
 import GoHomeBtn from '../../components/GoHomeBtn.vue'
 import RemoteService from '@/services/RemoteService'
-import PersonDialog from './PersonDialog.vue'
 import { reactive, ref } from 'vue'
 import PersonDto from '../../models/PersonDto'
 import { useRouter } from 'vue-router'
+import CreatePersonDialog from '../Dialogs/CreatePersonDialog.vue'
 
 let search = ref('')
 let loading = ref(true)
@@ -81,7 +77,7 @@ const editing = ref(false);
 const peopleHeaders = [
   { title: 'ID', key: 'id', value: 'id', sortable: true, filterable: false },
   {
-    title: 'Nome',
+    title: 'Name',
     key: 'name',
     value: 'name',
     sortable: true,
@@ -102,14 +98,14 @@ const peopleHeaders = [
     filterable: true
   },
   {
-    title: 'Tipo',
+    title: 'Role',
     key: 'type',
     value: 'type',
     sortable: true,
     filterable: true
   },
   {
-    title: 'Ações',
+    title: 'Actions',
     key: 'actions',
     value: 'actions',
     sortable: false,
@@ -160,9 +156,6 @@ const studentsHeaders = [
 const people: PersonDto[] = reactive([])
 const students: PersonDto[] = reactive([])
 
-// prop for dialogs
-let selectedPerson = ref<PersonDto>({})
-
 const router = useRouter()
 
 getPeopleOrStudents() // first render
@@ -184,19 +177,6 @@ async function getPeopleOrStudents() {
 
   loading.value = false
 }
-
-function openEditDialog(person: PersonDto) {
-  console.log("opening");
-  selectedPerson.value = person;
-  editing.value = true;
-}
-
-const handleDialogClose = () => {
-  console.log("closing dialog")
-  selectedPerson.value = {};
-  editing.value = false;
-  getPeopleOrStudents();
-};
 
 const deletePerson = async (person: PersonDto) => {
   console.log("A apagar pessoa:", person);
@@ -221,10 +201,12 @@ const getColorByType = (type: string) => {
       return "red";
     case "TEACHER":
       return "blue";
-    case "SC":
+    case "ADMIN":
       return "yellow";
+    case "STUDENT":
+      return "black";
     default:
-      return "green";
+      return "green"
   }
 };
 
@@ -263,24 +245,19 @@ const translateStatus = (status: string) => {
 const translateType = (type: string) => {
   switch (type) {
     case "COORDINATOR":
-      return "Coordenador";
+      return "Coordinator";
     case "STAFF":
       return "Staff";
     case "TEACHER":
       return "Professor";
-    case "SC":
-      return "SC";
+    case "ADMIN":
+      return "Admin";
+    case "STUDENT":
+      return "Student";
     default:
-      return "Aluno";
+      return "Default";
   }
 };
-
-// const deletePerson = (person: PeopleDto) => {
-//   console.log('Deleting person:', person);
-//   RemoteService.deletePerson(person.id)
-//     .then(() => console.log(`Person with ID ${person.id} deleted successfully`))
-//     .catch((error) => console.error('Error deleting person:', error));
-// }
 
 const fuzzySearch = (value: string, search: string) => {
   // Regex to match any character in between the search characters
