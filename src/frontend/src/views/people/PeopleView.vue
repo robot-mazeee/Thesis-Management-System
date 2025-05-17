@@ -1,268 +1,131 @@
 <template>
-  <v-row align="center">
-    <v-col>
-      <h2 class="text-left ml-1">{{ showStudents ? "Listagem de Alunos" : "Listagem de Pessoas"}}</h2>
-    </v-col>
-    <v-col cols="auto">
-      <CreatePersonDialog @close-dialog="getPeopleOrStudents"/>
-    </v-col>
-  </v-row>
+	<v-row align="center">
+		<v-col>
+			<h1 class="text-left ml-1">People List</h1>
+		</v-col>
+		<v-col cols="auto">
+			<CreatePersonDialog @close-dialog="getPeople"/>
+		</v-col>
+	</v-row>
 
-  <v-btn @click="toggleView" color="primary" class="mb-3">
-    {{ showStudents ? "Todas as Pessoas" : "Filtrar Alunos" }}
-  </v-btn>
+	<v-text-field
+		v-model="search"
+		label="Search"
+		prepend-inner-icon="mdi-magnify"
+		variant="outlined"
+		hide-details
+		single-line
+	></v-text-field>
 
-  <v-text-field
-    v-model="search"
-    label="Search"
-    prepend-inner-icon="mdi-magnify"
-    variant="outlined"
-    hide-details
-    single-line
-  ></v-text-field>
-
-  <v-data-table
-    :headers="showStudents ? studentsHeaders : peopleHeaders "
-    :items="showStudents ? students : people"
-    :search="search"
-    :loading="loading"
-    :custom-filter="fuzzySearch"
-    item-key="id"
-    class="text-left"
-    no-data-text="Sem pessoas a apresentar."
-  >
-    <template v-slot:[`item.type`]="{ item }">
-      <v-chip :color="getColorByType(item.type)" text-color="white">
-        {{ translateType(item.type) }}
-      </v-chip>
-    </template>
-    <template v-slot:[`item.actions`]="{ item }">
-      <v-tooltip>
-        <!-- <template v-slot:activator="{ props }">
-          <v-icon v-bind="{ props }" @click="openEditDialog(item)" class="mr-2">mdi-pencil</v-icon>
-        </template> -->
-      </v-tooltip>
-      <v-icon @click="deletePerson(item)">mdi-delete</v-icon>
-    </template>
-    <template v-slot:[`item.workflowState`]="{ item }">
-      <v-chip :color="getColorByStatus(item.workflowState)" text-color="white">
-        {{ translateStatus(item.workflowState) }}
-      </v-chip>
-    </template>
-    <template v-slot:[`item.profile`]="{ item }">
-      <v-btn @click="goToProfile(item.id)" color="info" class="mb-3">
-        Go to Profile
-      </v-btn>
-    </template>
-
-  </v-data-table>
-
-  <GoHomeBtn />
-
+	<v-data-table
+		:headers="peopleHeaders"
+		:items="people"
+		:search="search"
+		:loading="loading"
+		:custom-filter="fuzzySearch"
+		item-key="id"
+		class="text-left"
+		no-data-text="No people."
+	>
+		<template v-slot:[`item.type`]="{ item }">
+			<v-chip :color="getColorByType(item.type)" text-color="white">
+				{{ translateType(item.type) }}
+			</v-chip>
+		</template>
+		<template v-slot:[`item.actions`]="{ item }">
+			<div class="d-flex align-center justify-center ga-2">
+				<EditPersonDialog :person-to-edit="item" @close-dialog="getPeople" />
+				<v-icon @click="deletePerson(item)" color="red" class="cursor-pointer">
+					mdi-delete
+				</v-icon>
+			</div>
+		</template>
+	</v-data-table>
 </template>
 
 <script setup lang="ts">
-import GoHomeBtn from '../../components/GoHomeBtn.vue'
-import RemoteService from '@/services/RemoteService'
+import RemoteService from '../../services/RemoteService'
 import { reactive, ref } from 'vue'
 import PersonDto from '../../models/PersonDto'
 import { useRouter } from 'vue-router'
-import CreatePersonDialog from '../Dialogs/CreatePersonDialog.vue'
+import CreatePersonDialog from '../dialogs/CreatePersonDialog.vue'
+import EditPersonDialog from '../dialogs/EditPersonDialog.vue'
+import { getColorByType, translateType } from '../mappings/peopleMappings'
 
 let search = ref('')
 let loading = ref(true)
-let showStudents = ref(false)
-const editing = ref(false);
 
 const peopleHeaders = [
-  { title: 'ID', key: 'id', value: 'id', sortable: true, filterable: false },
-  {
-    title: 'Name',
-    key: 'name',
-    value: 'name',
-    sortable: true,
-    filterable: true
-  },
-  {
-    title: 'IST ID',
-    key: 'istId',
-    value: 'istId',
-    sortable: true,
-    filterable: true
-  },
-  {
-    title: 'Email',
-    key: 'email',
-    value: 'email',
-    sortable: true,
-    filterable: true
-  },
-  {
-    title: 'Role',
-    key: 'type',
-    value: 'type',
-    sortable: true,
-    filterable: true
-  },
-  {
-    title: 'Actions',
-    key: 'actions',
-    value: 'actions',
-    sortable: false,
-    filterable: false
-  }
-  // TODO: maybe add another column with possible actions? (edit / delete)
-]
-
-const studentsHeaders = [
-  { title: 'ID', key: 'id', value: 'id', sortable: true, filterable: false },
-  {
-    title: 'Nome',
-    key: 'name',
-    value: 'name',
-    sortable: true,
-    filterable: true
-  },
-  {
-    title: 'IST ID',
-    key: 'istId',
-    value: 'istId',
-    sortable: true,
-    filterable: true
-  },
-  {
-    title: 'Email',
-    key: 'email',
-    value: 'email',
-    sortable: true,
-    filterable: true
-  },
-  {
-    title: 'Estado do Workflow',
-    key: 'workflowState',
-    value: 'workflowState',
-    sortable: true,
-    filterable: true
-  },
-  {
-    title: 'Profile',
-    key: 'profile',
-    value: 'profile',
-    sortable: false,
-    filterable: false
-  },
+	{ title: 'ID', key: 'id', value: 'id', sortable: true, filterable: false },
+	{
+		title: 'Name',
+		key: 'name',
+		value: 'name',
+		sortable: true,
+		filterable: true
+	},
+	{
+		title: 'IST ID',
+		key: 'istId',
+		value: 'istId',
+		sortable: true,
+		filterable: true
+	},
+	{
+		title: 'Email',
+		key: 'email',
+		value: 'email',
+		sortable: true,
+		filterable: true
+	},
+	{
+		title: 'Role',
+		key: 'type',
+		value: 'type',
+		sortable: true,
+		filterable: true
+	},
+	{
+		title: 'Actions',
+		key: 'actions',
+		value: 'actions',
+		sortable: false,
+		filterable: false,
+		align: 'center'
+	}
 ]
 
 const people: PersonDto[] = reactive([])
-const students: PersonDto[] = reactive([])
 
-const router = useRouter()
+getPeople() // first render
 
-getPeopleOrStudents() // first render
+async function getPeople() { 
+	people.splice(0, people.length);
+	
+	console.log("Getting people!");
+	try {
+		people.push(...(await RemoteService.getPeople()));
+	} catch (error) {
+		console.error("Error getting people: ", error);
+	}
 
-const toggleView = () => {
-  showStudents.value = !showStudents.value;
-  getPeopleOrStudents(); // Fetch data again based on the new value
-};
-
-async function getPeopleOrStudents() {  
-  if (showStudents.value) {
-    students.splice(0, students.length)
-    students.push(...(await RemoteService.getStudents()))
-  }
-  else {
-    people.splice(0, people.length)
-    people.push(...(await RemoteService.getPeople()))
-  }
-
-  loading.value = false
+	loading.value = false;
 }
 
 const deletePerson = async (person: PersonDto) => {
-  console.log("A apagar pessoa:", person);
-  try {
-    await RemoteService.deletePerson(person);
-    getPeopleOrStudents();
-  } catch (error) {
-    console.error("Erro ao apagar pessoa:", error);
-  }
-};
-
-const goToProfile = (id: number) => {
-    router.push(`/people/${id}`);
-};
-
-
-const getColorByType = (type: string) => {
-  switch (type) {
-    case "COORDINATOR":
-      return "purple";
-    case "STAFF":
-      return "red";
-    case "TEACHER":
-      return "blue";
-    case "ADMIN":
-      return "yellow";
-    case "STUDENT":
-      return "black";
-    default:
-      return "green"
-  }
-};
-
-const getColorByStatus = (status: string) => {
-  switch (status) {
-    case "APPROVED_BY_SC":
-      return "purple";
-    case "JURI_PRESIDENT_ATTRIBUTED":
-      return "red";
-    case "DOCUMENT_SIGNED":
-      return "green";
-    case "SUBMITTED_TO_FENIX":
-      return "yellow";
-    default:
-      return "blue"
-  }
-};
-
-const translateStatus = (status: string) => {
-  switch (status) {
-    case "JURI_PROPOSAL_SUBMITTED":
-      return "Juri Proposal Submitted"
-    case "APPROVED_BY_SC":
-      return "Approved By SC";
-    case "JURI_PRESIDENT_ATTRIBUTED":
-      return "Juri President Attributed";
-    case "DOCUMENT_SIGNED":
-      return "Document Signed";
-    case "SUBMITTED_TO_FENIX":
-      return "Submitted to Fenix";
-    default:
-      return "No workflows initiated"
-  }
-};
-
-const translateType = (type: string) => {
-  switch (type) {
-    case "COORDINATOR":
-      return "Coordinator";
-    case "STAFF":
-      return "Staff";
-    case "TEACHER":
-      return "Professor";
-    case "ADMIN":
-      return "Admin";
-    case "STUDENT":
-      return "Student";
-    default:
-      return "Default";
-  }
-};
+	console.log("Deleting person:", person);
+	try {
+		await RemoteService.deletePerson(person);
+		getPeople();
+	} catch (error) {
+		console.error("Error deleting person: ", error);
+	}
+}
 
 const fuzzySearch = (value: string, search: string) => {
-  // Regex to match any character in between the search characters
-  let searchRegex = new RegExp(search.split('').join('.*'), 'i')
-  return searchRegex.test(value)
+	// Regex to match any character in between the search characters
+	let searchRegex = new RegExp(search.split('').join('.*'), 'i');
+	return searchRegex.test(value);
 }
 
 </script>
