@@ -65,9 +65,13 @@ const editablePerson = reactive({ ...props.personToEdit })
 
 const editPerson = async () => {
 	const person = { ...editablePerson }
-	person.type = typeMappings[person.type as keyof typeof typeMappings]
+	const isValidTypeValue = Object.values(typeMappings).includes(person.type);
+	if (!isValidTypeValue) {
+		person.type = typeMappings[person.type as keyof typeof typeMappings];
+	}
 
 	try {
+		console.log("Editing person: ", person)
 		await RemoteService.editPerson(person);
 		console.log('Person edited!');
 	} catch (error) {

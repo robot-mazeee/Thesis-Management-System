@@ -33,7 +33,6 @@ export default class RemoteServices {
 	}
 
 	static async editPerson(person: PersonDto) {
-		console.log(person.id);
 		return httpClient.put(`/people/${person.id}`, person);
 	}
 
