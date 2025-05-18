@@ -30,7 +30,7 @@ import { watch } from 'vue'
 
 const roleStore = useRoleStore()
 const menuVisible = ref(false)
-const options = ['student', 'coordinator', 'staff', 'admin', 'professor']
+const options = ['student', 'coordinator', 'staff', 'admin', 'teacher']
 
 const changeRole = (role: string) => {
   roleStore.currentRole = role;

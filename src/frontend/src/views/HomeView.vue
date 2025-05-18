@@ -1,9 +1,6 @@
 <template>
   <div class="text-center">
-    <h1>Welcome to DEI-PMS!</h1>
-
     <LoginPage v-if="!studentStore.isLoggedIn" />
-    
     <StudentHomeView v-else-if="roleStore.isStudent" />
     <SCHomeView v-else-if="roleStore.isAdmin" />
     <CoordinatorHomeView v-else-if="roleStore.isCoordinator" />

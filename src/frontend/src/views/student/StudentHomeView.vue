@@ -1,5 +1,5 @@
 <template>
-    <v-row justify="center" align="center">
+    <!-- <v-row justify="center" align="center">
         <v-col cols="auto">
             <h2 class="text-left ml-1"></h2>
         </v-col>
@@ -11,13 +11,20 @@
                 Start Thesis Workflow (Propose Juri)
             </v-btn>
         </v-col>
+    </v-row> --> 
+    <v-row justify="center" align="center">
+        <v-col cols="auto">
+            <h2 class="text-left ml-1">
+                <StudentProfile />
+            </h2>
+        </v-col>
     </v-row>
-  
-  </template>
+</template>
   
 <script setup lang="ts">
 import { useRouter } from 'vue-router'
-import { useRoleStore } from '@/stores/role'
+import { useRoleStore } from '../../stores/role'
+import StudentProfile from './StudentProfile.vue'
 
 const roleStore = useRoleStore()
 const router = useRouter()

@@ -12,7 +12,7 @@ import pt.ulisboa.tecnico.rnl.dei.dms.person.dto.PersonDto;
 public class Person {
 
 	public enum PersonType {
-		COORDINATOR, STAFF, STUDENT, TEACHER, ADMIN
+		COORDINATOR, STAFF, STUDENT, PROFESSOR, ADMIN
 	}
 
 	@Id

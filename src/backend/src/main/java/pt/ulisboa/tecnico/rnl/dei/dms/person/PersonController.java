@@ -30,9 +30,9 @@ public class PersonController {
 		return personService.getStudents();
 	}
 
-	@GetMapping("/teachers")
-	public List<PersonDto> getTeachers() {
-		return personService.getTeachers();
+	@GetMapping("/professors")
+	public List<PersonDto> getProfessors() {
+		return personService.getProfessors();
 	}
 
 	@PostMapping("/people")

@@ -39,8 +39,8 @@ public class PersonService {
 	}
 
 	@Transactional
-	public List<PersonDto> getTeachers() {
-		return personRepository.findByType(Person.PersonType.TEACHER).stream()
+	public List<PersonDto> getProfessors() {
+		return personRepository.findByType(Person.PersonType.PROFESSOR).stream()
 				.map(PersonDto::new)
 				.toList();
 	}

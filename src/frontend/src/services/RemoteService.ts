@@ -24,8 +24,8 @@ export default class RemoteServices {
 		return httpClient.get('/students')
 	}
 
-	static async getTeachers(): Promise<PersonDto[]> {
-		return httpClient.get('/teachers')
+	static async getProfessors(): Promise<PersonDto[]> {
+		return httpClient.get('/professors')
 	}
 
 	static async createPerson(person: PersonDto): Promise<PersonDto> {

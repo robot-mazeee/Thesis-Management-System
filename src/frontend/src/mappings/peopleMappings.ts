@@ -4,7 +4,7 @@ export const getColorByType = (type: string) => {
       return "purple";
     case "STAFF":
       return "red";
-    case "TEACHER":
+    case "PROFESSOR":
       return "blue";
     case "ADMIN":
       return "yellow";
@@ -19,7 +19,7 @@ export const typeMappings = {
 	Coordinator: 'COORDINATOR',
 	Staff: 'STAFF',
 	Student: 'STUDENT',
-	Professor: 'TEACHER',
+	Professor: 'PROFESSOR',
 	Admin: 'ADMIN'
 }
 
@@ -29,7 +29,7 @@ export const translateType = (type: string) => {
       return "Coordinator";
     case "STAFF":
       return "Staff";
-    case "TEACHER":
+    case "PROFESSOR":
       return "Professor";
     case "ADMIN":
       return "Admin";

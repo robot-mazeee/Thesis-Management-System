@@ -50,7 +50,7 @@ import PersonDto from '../../models/PersonDto'
 import { useRouter } from 'vue-router'
 import CreatePersonDialog from '../dialogs/CreatePersonDialog.vue'
 import EditPersonDialog from '../dialogs/EditPersonDialog.vue'
-import { getColorByType, translateType } from '../mappings/peopleMappings'
+import { getColorByType, translateType } from '../../mappings/peopleMappings'
 
 let search = ref('')
 let loading = ref(true)

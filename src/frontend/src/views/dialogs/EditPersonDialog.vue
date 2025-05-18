@@ -52,7 +52,7 @@
 import { ref, reactive } from 'vue'
 import PersonDto from '../../models/PersonDto'
 import RemoteService from '../../services/RemoteService'
-import { typeMappings } from '../mappings/peopleMappings'
+import { typeMappings } from '../../mappings/peopleMappings'
 
 const dialog = ref(false)
 const emit = defineEmits(['close-dialog'])
