@@ -1,6 +1,6 @@
 <template>
   <v-layout id="app">
-    <TopBar />
+    <TopBar v-if="studentStore.isLoggedIn"/>
     <v-main
       style="margin-top: 96px"
       class="pa-10 d-flex flex-column flex-grow-1 flex-shrink-1 text-center"
@@ -16,17 +16,20 @@
 </template>
 
 <script setup lang="ts">
-import TopBar from '@/components/TopBar.vue'
-import ErrorMessage from '@/components/ErrorMessage.vue';
-import LoadingOverlay from '@/components/LoadingOverlay.vue';
+import TopBar from './components/TopBar.vue';
+import ErrorMessage from './components/ErrorMessage.vue';
+import LoadingOverlay from './components/LoadingOverlay.vue';
 
 
-import { RouterLink, RouterView } from 'vue-router'
+import { RouterView } from 'vue-router'
 
 import { useAppearanceStore } from './stores/appearance';
 import { onMounted, onUnmounted } from 'vue';
+import { useStudentStore } from './stores/studentStore';
+import LoginPage from './views/login/LoginPage.vue';
 
 const appearanceStore = useAppearanceStore();
+const studentStore = useStudentStore();
 
 const setWidth = () => (appearanceStore.windowWidth = window.innerWidth);
 setWidth();

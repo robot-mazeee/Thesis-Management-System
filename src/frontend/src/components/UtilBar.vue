@@ -33,12 +33,14 @@
 import DarkModeSwitch from './DarkModeSwitch.vue'
 import { useStudentStore } from '../stores/studentStore'
 import ChangeRoleDropdown from './ChangeRoleDropdown.vue'
+import router from '../router'
 
 const studentStore = useStudentStore()
 
 function logout() {
   studentStore.logout()
-  console.log(studentStore.isLoggedIn)
+  router.push("/")
+  console.log(studentStore.isLoggedIn);
 }
 </script>
 

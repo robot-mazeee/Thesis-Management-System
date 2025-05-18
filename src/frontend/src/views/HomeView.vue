@@ -2,7 +2,7 @@
   <div class="text-center">
     <h1>Welcome to DEI-PMS!</h1>
 
-    <LoginPage v-if="roleStore.isStudent && (!studentStore.isLoggedIn || !studentStore.currentStudent)"/>
+    <LoginPage v-if="!studentStore.isLoggedIn" />
     
     <StudentHomeView v-else-if="roleStore.isStudent" />
     <SCHomeView v-else-if="roleStore.isAdmin" />
@@ -15,13 +15,13 @@
 </template>
 
 <script setup lang="ts">
-import LoginPage from '../components/student/LoginPage.vue';
+import LoginPage from './login/LoginPage.vue';
 import CoordinatorHomeView from './coordinator/CoordinatorHomeView.vue';
 import SCHomeView from './sc/SCHomeView.vue';
 import StaffHomeView from './staff/StaffHomeView.vue';
 import StudentHomeView from './student/StudentHomeView.vue';
-import { useRoleStore } from '@/stores/role';
-import { useStudentStore  } from '@/stores/studentStore';
+import { useRoleStore } from '../stores/role';
+import { useStudentStore } from '../stores/studentStore';
 
 const roleStore = useRoleStore();
 const studentStore = useStudentStore();

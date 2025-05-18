@@ -69,7 +69,6 @@
 
 <script setup lang="ts">
 import { ref } from 'vue'
-import GoHomeBtn from '../../components/GoHomeBtn.vue';
 import RemoteServices from '../../services/RemoteService';
 import { onMounted } from 'vue';
 

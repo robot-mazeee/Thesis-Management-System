@@ -5,12 +5,13 @@ import StatisticsView from '@/views/statistics/StatisticsView.vue'
 import JuriProposal from '@/components/juri_proposal/ProposeJuri.vue'
 import StudentProfile from '@/components/student/StudentProfile.vue'
 import WorkflowsView from '@/views/workflows/WorkflowsView.vue'
+import LoginPage from '@/views/login/LoginPage.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
     {
-      path: '/',
+      path: '/home',
       name: 'home',
       component: HomeView
     },
@@ -38,6 +39,11 @@ const router = createRouter({
       path: "/people/:id",
       name: "student-profile",
       component: StudentProfile
+    },
+    { 
+      path: "/",
+      name: "login-page",
+      component: LoginPage
     }
   ]
 })
