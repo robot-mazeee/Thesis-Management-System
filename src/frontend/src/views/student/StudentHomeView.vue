@@ -1,38 +1,13 @@
 <template>
-    <!-- <v-row justify="center" align="center">
-        <v-col cols="auto">
-            <h2 class="text-left ml-1"></h2>
-        </v-col>
-    </v-row>
-
-    <v-row justify="center">
-        <v-col cols="auto">
-            <v-btn @click="proposeJuriPage" color="secondary" class="mb-3">
-                Start Thesis Workflow (Propose Juri)
-            </v-btn>
-        </v-col>
-    </v-row> --> 
-    <v-row justify="center" align="center">
-        <v-col cols="auto">
-            <h2 class="text-left ml-1">
-                <StudentProfile />
-            </h2>
+    <v-row justify="center" align="center" class="w-full min-h-screen bg-gray-100">
+        <v-col cols="12" class="flex justify-center">
+            <StudentProfile :student-id="null" />
         </v-col>
     </v-row>
 </template>
+
   
 <script setup lang="ts">
-import { useRouter } from 'vue-router'
-import { useRoleStore } from '../../stores/role'
 import StudentProfile from './StudentProfile.vue'
-
-const roleStore = useRoleStore()
-const router = useRouter()
-
-const proposeJuriPage = () => {
-    if (roleStore.isStudent) {
-        router.push("/juri-proposal")
-    }
-}
 
 </script>

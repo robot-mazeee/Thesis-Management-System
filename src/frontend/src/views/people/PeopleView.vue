@@ -34,7 +34,7 @@
 		</template>
 		<template v-slot:[`item.actions`]="{ item }">
 			<div class="d-flex align-center justify-center ga-2">
-				<EditPersonDialog :person-to-edit="item" @close-dialog="getPeople" />
+				<EditPersonDialog :person-to-edit="item" :can-alter-type="true" @close-dialog="getPeople" />
 				<v-icon @click="deletePerson(item)" color="red" class="cursor-pointer">
 					mdi-delete
 				</v-icon>
@@ -47,7 +47,6 @@
 import RemoteService from '../../services/RemoteService'
 import { reactive, ref } from 'vue'
 import PersonDto from '../../models/PersonDto'
-import { useRouter } from 'vue-router'
 import CreatePersonDialog from '../dialogs/CreatePersonDialog.vue'
 import EditPersonDialog from '../dialogs/EditPersonDialog.vue'
 import { getColorByType, translateType } from '../../mappings/peopleMappings'

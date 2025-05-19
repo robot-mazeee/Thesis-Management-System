@@ -45,20 +45,14 @@
   
 <script setup lang="ts">
 import { ref, onMounted } from 'vue';
-import PersonDto from '../../models/PersonDto';
-import { useStudentStore } from '../../stores/studentStore';
-import RemoteService from '../../services/RemoteService';
+import { useStudentStore } from '../../stores/student';
 import router from '../../router';
+import { genericStudent } from '../genericStudent';
 
 const dialog = ref(false);
 const studentStore = useStudentStore();
 
-const newStudent = ref<PersonDto>({
-	name: 'John Doe',
-	istId: '110283',
-	email: 'johndoe@tecnico.ulisboa.pt',
-	type: 'STUDENT'
-});
+const newStudent = genericStudent;
 
 onMounted(() => {
     dialog.value = true;
@@ -67,8 +61,7 @@ onMounted(() => {
 async function login() {
     console.log(newStudent.value);
     try {
-		// await RemoteService.createPerson(newStudent.value);
-        studentStore.login(newStudent);
+        studentStore.login(newStudent.value);
         router.push("/home");
 		console.log('Logged in as: ', newStudent.value);
 	} catch (error) {

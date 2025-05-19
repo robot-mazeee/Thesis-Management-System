@@ -31,7 +31,7 @@
 
 <script setup lang="ts">
 import DarkModeSwitch from './DarkModeSwitch.vue'
-import { useStudentStore } from '../stores/studentStore'
+import { useStudentStore } from '../stores/student'
 import ChangeRoleDropdown from './ChangeRoleDropdown.vue'
 import router from '../router'
 

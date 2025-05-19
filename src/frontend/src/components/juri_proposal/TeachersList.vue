@@ -35,7 +35,7 @@ import { onMounted } from 'vue'
 import WorkflowDto from '../../models/WorkflowDto'
 import { useRouter } from 'vue-router'
 import { useRoleStore } from '@/stores/role'
-import { useStudentStore } from '../../stores/studentStore'
+import { useStudentStore } from '../../stores/student'
 
 const roleStore = useRoleStore()
 const studentStore = useStudentStore()

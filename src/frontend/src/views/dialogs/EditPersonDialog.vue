@@ -27,7 +27,7 @@
 				required
 				:placeholder="props.personToEdit.email"
 			/>
-			<v-select
+			<v-select v-if="props.canAlterType"
 				v-model="editablePerson.type"
 				:items="['Coordinator', 'Staff', 'Student', 'Professor', 'Admin']"
 				label="Role"
@@ -58,7 +58,8 @@ const dialog = ref(false)
 const emit = defineEmits(['close-dialog'])
 
 const props = defineProps<{
-  	personToEdit: PersonDto
+  	personToEdit: PersonDto,
+	canAlterType: Boolean
 }>()
 
 const editablePerson = reactive({ ...props.personToEdit })

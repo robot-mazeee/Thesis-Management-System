@@ -8,32 +8,32 @@ export const useStudentStore = defineStore('studentStore', {
   }),
   getters: {
     getName(): string {
-      return this.student.name
+        return this.student.name
     },
     getEmail(): string {
-      return this.student.email
+        return this.student.email
     },
     getIstId(): string {
-      return this.student.istId
+        return this.student.istId
     },
     getType(): string {
-      return this.student.type
+        return this.student.type
     },
     isLoggedIn(): boolean {
-      return this.loggedIn
+        return this.loggedIn
     },
     currentStudent(): PersonDto {
-      return this.student
+        return this.student
     }
   },
   actions: {
     login(newStudent: PersonDto) {
-      this.student = newStudent
-      this.loggedIn = true;
+        this.student = newStudent
+        this.loggedIn = true;
     },
     logout() {
-      this.student = {} as PersonDto;
-      this.loggedIn = false;
+        this.student = {} as PersonDto;
+        this.loggedIn = false;
     }
   },
   persist: true

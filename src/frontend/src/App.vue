@@ -25,19 +25,27 @@ import { RouterView } from 'vue-router'
 
 import { useAppearanceStore } from './stores/appearance';
 import { onMounted, onUnmounted } from 'vue';
-import { useStudentStore } from './stores/studentStore';
-import LoginPage from './views/login/LoginPage.vue';
+import { useStudentStore } from './stores/student';
+import { genericStudent } from './views/genericStudent';
+import RemoteService from './services/RemoteService';
 
 const appearanceStore = useAppearanceStore();
 const studentStore = useStudentStore();
 
+function createDummyStudent() {
+  const dummyStudent = genericStudent;
+  RemoteService.createPerson(dummyStudent.value);
+}
+
 const setWidth = () => (appearanceStore.windowWidth = window.innerWidth);
 setWidth();
+
 onMounted(() => {
   window.addEventListener('resize', setWidth);
   appearanceStore.clearErrors();
-
+  createDummyStudent();
 });
+
 onUnmounted(() => {
   window.removeEventListener('resize', setWidth);
 });
