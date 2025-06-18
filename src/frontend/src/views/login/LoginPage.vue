@@ -59,7 +59,6 @@ onMounted(() => {
 })
 
 async function login() {
-    console.log(newStudent.value);
     try {
         studentStore.login(newStudent.value);
         router.push("/home");

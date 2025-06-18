@@ -17,6 +17,7 @@ export default class RemoteServices {
 	}
 
 	static async getPerson(id: Number): Promise<PersonDto> {
+		console.log(`Getting person: ${id}`)
 		return httpClient.get(`/people/${id}`)
 	}
 

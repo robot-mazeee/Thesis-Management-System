@@ -24,7 +24,7 @@ const studentStore = useStudentStore();
 let student = ref(null);
 
 onMounted(async () => {
-    if (props.studentId) {
+    if (props.studentId !== null) {
         try {
             student.value = await RemoteService.getPerson(props.studentId);
         } catch (error) {

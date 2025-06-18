@@ -27,14 +27,14 @@ import { useAppearanceStore } from './stores/appearance';
 import { onMounted, onUnmounted } from 'vue';
 import { useStudentStore } from './stores/student';
 import { genericStudent } from './views/genericStudent';
-import RemoteService from './services/RemoteService';
+import RemoteServices from './services/RemoteService';
 
 const appearanceStore = useAppearanceStore();
 const studentStore = useStudentStore();
 
 function createDummyStudent() {
   const dummyStudent = genericStudent;
-  RemoteService.createPerson(dummyStudent.value);
+  RemoteServices.createPerson(dummyStudent.value);
 }
 
 const setWidth = () => (appearanceStore.windowWidth = window.innerWidth);

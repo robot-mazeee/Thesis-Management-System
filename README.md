@@ -1,65 +1,99 @@
-To run the project locally, follow the steps bellow:
+# DEI Management System - DMS
 
-# 0) Install Dependencies
+## Dependencies
 
-- [Java 17](https://www.oracle.com/java/technologies/javase/jdk17-archive-downloads.html)
-- [Maven](https://maven.apache.org/download.cgi)
-- [Node.js 14+](https://nodejs.org/en/) ([Node Version Manager](https://github.com/nvm-sh/nvm) recommended)
-- [Docker](https://www.docker.com/)
-- [Spring Boot](https://spring.io/) (Handled by Maven)
-- [Vue.js](https://vuejs.org/) (Handled by npm)
+- Require download
+  - [Java 17](https://www.oracle.com/java/technologies/javase/jdk17-archive-downloads.html)
+  - [Maven](https://maven.apache.org/download.cgi)
+  - [Node 14+](https://nodejs.org/en/) ([Node Version Manager](https://github.com/nvm-sh/nvm) recommended)
+  - [Docker](https://www.docker.com/)
+- No download required
+  - [Spring-boot](https://spring.io/)
+  - [Vue.js](https://vuejs.org/)
 
-# 1) Clone the project
+
+## Run Locally
+
+Clone the project
 
 ```bash
-git clone https://gitlab.rnl.tecnico.ulisboa.pt/dei/candidaturas/dei-pms-sols-candidatos/dei-pms-madalena-mota.git
+git clone git@gitlab.rnl.tecnico.ulisboa.pt:<REPO>
 ```
 
-# 2) Navigate to the project directory
+Go to the project directory
 
 ```bash
-cd dei-pms-madalena-mota
+cd src/
 ```
 
-# 3) Run the database with Docker
+### Database
+
+To run the database with Docker (recommended), run the following command:
 
 ```bash
 docker compose up
 ```
 
-# OR (if using a Linux subsystem)
+Alternatively, you can create services that will be run in the background:
 
 ```bash
-sudo docker compose up
+docker compose up -d
 ```
 
-# To stop the database
+To stop the database, run the following command:
 
 ```bash
-(sudo) docker compose down
+docker compose down
 ```
 
-# 4) Run the backend
+### Backend
+
+Create a copy of the `application-local.properties` file.
 
 ```bash
-cd src/backend  
+cp ./backend/src/main/resources/application.properties.example ./backend/src/main/resources/application.properties
+```
+
+If you're running your database using Docker, the datasource variables should match the ones in `Docker-compose.yml`.
+
+To build and run the backend, execute the following commands:
+
+```bash
+cd ./backend
 mvn clean spring-boot:run
 ```
 
-# 5) Run the frontend
+## Frontend
+
+Create a copy of the `example.env` file named `.env`.
 
 ```bash
-cd src/frontend
+cp ./frontend/example.env ./frontend/.env
+```
+
+Now, you need to install the dependencies:
+
+```bash
+cd ./frontend
 npm i
+```
+
+To run the frontend, run the following command:
+
+```bash
 npm run dev
 ```
 
-# 6) Access the database
+## Access the Database
+
+In order to access the database, you can use the following command (if you're using the provided Docker Compose file, `PORT` should be `7654`, `USER` should be `postgres` and `DB_NAME` should be `deidb`):
 
 ```bash
 psql -h localhost -p <PORT> -U <USER> <DB_NAME>
+psql -h localhost -p 7654 -U postgres deidb
 ```
 
-```bash
-psql -h localhost -p 7654 -U postgres deidb  # If using Docker default
+
+```
+pg_dump -U postgres -p 7654 -d deidb > populate.sql
 ```
