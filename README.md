@@ -1,4 +1,4 @@
-# DEI Management System - DMS
+# Thesis & People Management System (TPMS)
 
 ## Dependencies
 
