@@ -1,4 +1,4 @@
-# Thesis Management System (TPMS)
+# Thesis Management System (TMS)
 
 **Thesis Management System (_TMS_)** is an internal platform that allows for the centralized management of the PhD student supervision process in a department, facilitating the organization and control of the different workflows related to the thesis and defense phases.
 
