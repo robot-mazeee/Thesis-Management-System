@@ -1,4 +1,4 @@
-# Thesis & People Management System (TPMS)
+# Thesis Management System (TMS)
 
 ## Dependencies
 
