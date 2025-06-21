@@ -1,6 +1,6 @@
-# Thesis & People Management System (TPMS)
+# Thesis Management System (TPMS)
 
-**Thesis & People Management System (_TPMS_)** is an internal platform that allows for the centralized management of the PhD student supervision process in a department, facilitating the organization and control of the different workflows related to the thesis and defense phases.
+**Thesis Management System (_TMS_)** is an internal platform that allows for the centralized management of the PhD student supervision process in a department, facilitating the organization and control of the different workflows related to the thesis and defense phases.
 
 This subsystem allows the management of:
 
@@ -43,7 +43,7 @@ Once the thesis workflow is complete, the defense workflow can begin:
 
 ## Goal functionalities
 
-- Display all TPMS members in a quick-access table, containing at least name, IST ID, email, and role;
+- Display all TMS members in a quick-access table, containing at least name, IST ID, email, and role;
 - Add new people to the system;
 - Update and remove existing people;
 - Assign roles in the frontend: staff, student, professor, coordinator, SC;
@@ -71,7 +71,7 @@ Once the thesis workflow is complete, the defense workflow can begin:
 _Note that the situation described in this assignment has been simplified and does not necessarily reflect reality._
 
 
-## Database
+## Goal for Database
 
 Include a `populate.sql` file with a database *dump* that allows the database to be populated with data for testing and evaluation. This file can be generated using [`pg_dump`](https://www.postgresql.org/docs/current/app-pgdump.html), for example with the command:  
 `pg_dump -U <USER> -p <PORT> > populate.sql`
