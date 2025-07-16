@@ -13,7 +13,7 @@
 
   - Página de estatísticas dos dados do sistema, como por exemplo o número de alunos por estado do workflow de tese/defesa, notas médias, etc.;
   - Logs detalhados de ações feitas no sistema, como submissões, aprovações e atualizações nos workflows;
-  - Autenticação de alunos no backend;
+  - Autenticação de alunos no backend via Spring Security;
   - Uma homepage com os dados de cada utilizador, reais para o role de student (pois este é o único role que exige criação de conta e autenticação) e genéricos nos restantes roles;
   - Sistema de envio de [emails](https://github.com/tweedegolf/mailcrab).
 

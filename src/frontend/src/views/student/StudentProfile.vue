@@ -1,15 +1,6 @@
 <template>
     <v-container fluid class="p-6 w-full">
-        <h1>Student Profile</h1>
-        <div v-if="student" class="p-6 border rounded-xl shadow-lg w-full max-w-2xl bg-white mx-auto">
-            <h3 class="text-gray-600">Name: {{ student.name }}</h3>
-            <h3 class="text-gray-600">IST ID: {{ student.istId }}</h3>
-            <h3 class="text-gray-600">Email: {{ student.email }} </h3>
-            <EditPersonDialog :person-to-edit="student" :can-alter-type="false"/>
-        </div>
-        <div v-else>
-            <p>Loading...</p>
-        </div>
+        <StudentTab v-if="student.value" :student="student.value"/>
     </v-container>
 </template>
 
@@ -17,13 +8,14 @@
 import { onMounted, ref } from 'vue';
 import { useStudentStore } from '../../stores/student';
 import RemoteService from '../../services/RemoteService';
-import EditPersonDialog from '../dialogs/EditPersonDialog.vue';
+import StudentTab from './StudentTab.vue';
 
-const props = defineProps<{ studentId: Number }>();
+const props = defineProps<{ studentId: number }>();
 const studentStore = useStudentStore();
 let student = ref(null);
 
 onMounted(async () => {
+    // Get student through id or show current logged in student
     if (props.studentId !== null) {
         try {
             student.value = await RemoteService.getPerson(props.studentId);
@@ -33,6 +25,9 @@ onMounted(async () => {
     }
     else if (studentStore.isLoggedIn) {
         student.value = studentStore.currentStudent;
+    }
+    else {
+        console.error('Could not fetch student')
     }
 });
 </script>

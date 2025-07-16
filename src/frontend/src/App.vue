@@ -5,12 +5,9 @@
       style="margin-top: 96px"
       class="pa-10 d-flex flex-column flex-grow-1 flex-shrink-1 text-center"
     >
-      <v-card class="elevation-4 pa-8" width="100%">
-        <ErrorMessage />
-        <LoadingOverlay />
-
-        <RouterView />
-      </v-card>
+      <ErrorMessage />
+      <LoadingOverlay />
+      <RouterView />
     </v-main>
   </v-layout>
 </template>
