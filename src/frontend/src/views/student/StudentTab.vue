@@ -31,9 +31,7 @@
 
           <v-window-item value="workflows">
             <div>
-              <!-- <p v-for="(workflow, index) in props.student.workflows" :key="index">
-                {{ workflow }}
-              </p> -->
+              <StudentWorkflows />
             </div>
           </v-window-item>
         </v-window>
@@ -47,6 +45,7 @@
 import { ref } from 'vue'
 import EditPersonDialog from '../dialogs/EditPersonDialog.vue'
 import PersonDto from '../../models/PersonDto'
+import StudentWorkflows from './StudentWorkflows.vue';
 
 const activeTab = ref('profile')
 
