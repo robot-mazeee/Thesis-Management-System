@@ -40,7 +40,9 @@ setWidth();
 onMounted(() => {
   window.addEventListener('resize', setWidth);
   appearanceStore.clearErrors();
-  createDummyStudent();
+  if (!studentStore.isLoggedIn) {
+    createDummyStudent();
+  }
 });
 
 onUnmounted(() => {

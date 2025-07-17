@@ -1,7 +1,7 @@
 <template>
-    <v-container fluid class="p-6 w-full">
-        <StudentTab v-if="student.value" :student="student.value"/>
-    </v-container>
+  <v-container fluid class="p-6 w-full">
+    <StudentTab v-if="ready" :student="student" />
+  </v-container>
 </template>
 
 <script setup lang="ts">
@@ -9,25 +9,31 @@ import { onMounted, ref } from 'vue';
 import { useStudentStore } from '../../stores/student';
 import RemoteService from '../../services/RemoteService';
 import StudentTab from './StudentTab.vue';
+import PersonDto from '../../models/PersonDto';
 
-const props = defineProps<{ studentId: number }>();
+const props = defineProps<{ studentId: number | null }>();
 const studentStore = useStudentStore();
-let student = ref(null);
+
+const student = ref<PersonDto | null>(null);
+const ready = ref(false);
 
 onMounted(async () => {
-    // Get student through id or show current logged in student
-    if (props.studentId !== null) {
+  console.log("Fetching student")
+    if (props.studentId === null || studentStore.isLoggedIn) {
+        student.value = studentStore.currentStudent;
+        console.log("STUDENT", student.value)
+    } else {
         try {
             student.value = await RemoteService.getPerson(props.studentId);
+            console.log(student.value)
         } catch (error) {
             console.error('Failed to fetch user data:', error);
         }
     }
-    else if (studentStore.isLoggedIn) {
-        student.value = studentStore.currentStudent;
-    }
-    else {
-        console.error('Could not fetch student')
+
+    if (student.value) {
+        ready.value = true;
     }
 });
+
 </script>
