@@ -1,5 +1,5 @@
 <template>
-  <v-timeline align="center" side="start" direction="horizontal">
+  <v-timeline align="center" side="start" direction="horizontal" class="timeline">
     <v-timeline-item
       v-for="(event, index) in events"
       :key="index"
@@ -19,6 +19,7 @@
       </template>
     </v-timeline-item>
   </v-timeline>
+  <v-btn>Start Thesis Workflow</v-btn>
 </template>
 
 <script setup>
@@ -36,8 +37,17 @@ const events = [
 .timeline-label {
   text-align: center;
   width: 100%;
-  max-width: 120px;
+  max-width: 200px;
   margin: 0 auto;
+}
+
+.timeline {
+  margin-top: 30px;
+}
+
+button {
+  margin-top: 50px;
+  margin-bottom: 30px;
 }
 </style>
 
