@@ -25,7 +25,7 @@ public class Workflow {
     @JoinColumn(name = "workflow_teachers")
     private List<Person> teachers;
 
-    private Number studentId;
+    private Long studentId;
 
     @ManyToOne
     @JoinColumn(name = "juri_president")
@@ -33,7 +33,7 @@ public class Workflow {
 
     public Workflow() {}
 
-    public Workflow(WorkflowStatus status, List<Person> teachers, Number studentId) {
+    public Workflow(WorkflowStatus status, List<Person> teachers, Long studentId) {
         this.workflowStatus = status;
         this.teachers = teachers;
         this.studentId = studentId;

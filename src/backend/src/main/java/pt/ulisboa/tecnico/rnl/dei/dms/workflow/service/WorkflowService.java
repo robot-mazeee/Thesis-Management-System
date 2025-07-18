@@ -26,6 +26,11 @@ public class WorkflowService {
 		return workflowRepository.findById(id)
 				.orElseThrow(() -> new DEIException(ErrorMessage.NO_SUCH_WORKFLOW, Long.toString(id)));
 	}
+
+    private Workflow fetchWorkflowByStudentOrThrow(long id) {
+		return workflowRepository.findByStudentId(id)
+				.orElseThrow(() -> new DEIException(ErrorMessage.NO_SUCH_WORKFLOW, Long.toString(id)));
+	}
     
 	@Transactional
     public WorkflowDto createWorkflow(WorkflowDto workflowDto) {
@@ -34,7 +39,7 @@ public class WorkflowService {
 
         List<Person> teachers = workflowDto.teachers().stream().toList();
         workflow.setTeachers(teachers);
-        Number studentId = workflowDto.studentId();
+        Long studentId = workflowDto.studentId();
         workflow.setStudentId(studentId);
         workflow.setJuriPresident(null);
 
@@ -53,6 +58,11 @@ public class WorkflowService {
     @Transactional
     public WorkflowDto getWorkflow(long id) {
         return new WorkflowDto(fetchWorkflowOrThrow(id));
+    }
+
+    @Transactional
+    public WorkflowDto getWorkflowByStudent(long studentId) {
+        return new WorkflowDto(fetchWorkflowByStudentOrThrow(studentId));
     }
 
     @Transactional 

@@ -30,15 +30,12 @@ export const translateStatus = (status: string) => {
   }
 };
 
-export const thesisStatuses = [
+export const workflowStatusMappings = [
   "JURI_PROPOSAL_SUBMITTED",
   "APPROVED_BY_SC",
   "JURI_PRESIDENT_ATTRIBUTED",
   "DOCUMENT_SIGNED",
-  "SUBMITTED_TO_FENIX"
-];
-
-export const defenseStatuses = [
+  "SUBMITTED_TO_FENIX",
   "DEFENSE_SCHEDULED",
   "UNDER_REVIEW",
   "SUBMITTED_TO_FENIX"

@@ -38,6 +38,11 @@ public class WorkflowController {
 		return workflowService.getWorkflow(id);
 	}
 
+	@GetMapping("/student-workflow/{studentId}")
+	public WorkflowDto getWorkflowByStudent(long studentId) {
+		return workflowService.getWorkflowByStudent(studentId);
+	}
+
 	// update workflow status
 	@PutMapping("/workflows/{id}")
 	public WorkflowDto updateWorkflow(@PathVariable long id, @RequestBody WorkflowDto workflow) {
