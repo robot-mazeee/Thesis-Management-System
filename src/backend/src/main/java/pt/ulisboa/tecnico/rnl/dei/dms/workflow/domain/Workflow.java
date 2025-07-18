@@ -17,7 +17,7 @@ public class Workflow {
 	@GeneratedValue
 	private Long id;
  
-    @Column(name = "workflow_status", nullable = false)
+    @Column(name = "workflow_status")
 	@Enumerated(EnumType.STRING)
     private WorkflowStatus workflowStatus;
 
