@@ -44,9 +44,7 @@
   <v-btn>Start Thesis Workflow</v-btn>
 </template>
 
-<script setup>
-import { onMounted } from 'vue';
-
+<script setup lang="ts">
 const thesis_events = [
   { title: 'Start', date: '2025-01', color: 'primary', icon: 'mdi-flag' },
   { title: 'Juri Proposal Submitted', date: '2025-02', color: 'success', icon: 'mdi-code-tags' },

@@ -25,9 +25,7 @@ public class Workflow {
     @JoinColumn(name = "workflow_teachers")
     private List<Person> teachers;
 
-    @ManyToOne
-    @JoinColumn(name = "student")
-    private Person student;
+    private Number studentId;
 
     @ManyToOne
     @JoinColumn(name = "juri_president")
@@ -35,16 +33,16 @@ public class Workflow {
 
     public Workflow() {}
 
-    public Workflow(WorkflowStatus status, List<Person> teachers, Person student) {
+    public Workflow(WorkflowStatus status, List<Person> teachers, Number studentId) {
         this.workflowStatus = status;
         this.teachers = teachers;
-        this.student = student;
+        this.studentId = studentId;
     }
 
     public Workflow(WorkflowDto workflowDto) {
         this.workflowStatus = WorkflowStatus.valueOf(workflowDto.workflowStatus().toUpperCase());
         this.teachers = workflowDto.teachers();
-        this.student = workflowDto.student();
+        this.studentId = workflowDto.studentId();
     }
 
     public void setWorkflowStatus(WorkflowStatus newStatus) {

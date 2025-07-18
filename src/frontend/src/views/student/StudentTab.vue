@@ -31,7 +31,7 @@
 
           <v-window-item value="workflows">
             <div>
-              <StudentWorkflows />
+              <StudentWorkflows :student-id="props.student.id"/>
             </div>
           </v-window-item>
         </v-window>
