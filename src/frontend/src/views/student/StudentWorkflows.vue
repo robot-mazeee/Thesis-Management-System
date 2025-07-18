@@ -1,7 +1,7 @@
 <template>
   <v-timeline align="center" side="start" direction="horizontal" class="timeline">
     <v-timeline-item
-      v-for="(event, index) in thesis_events"
+      v-for="(event, index) in thesisEvents"
       :key="index"
       :dot-color="event.color"
       align="center"
@@ -45,19 +45,57 @@
 </template>
 
 <script setup lang="ts">
-const thesis_events = [
-  { title: 'Juri Proposal Submitted', date: '2025-02', color: 'success', icon: 'mdi-code-tags' },
-  { title: 'Approved by SC', date: '2025-02', color: 'success', icon: 'mdi-code-tags' },
-  { title: 'Juri President Attributed', date: '2025-02', color: 'success', icon: 'mdi-code-tags' },
-  { title: 'Document Signed', date: '2025-02', color: 'success', icon: 'mdi-code-tags' },
-  { title: 'Submitted to Fenix', date: '2025-02', color: 'success', icon: 'mdi-code-tags' },
+import { onMounted, reactive } from 'vue';
+import RemoteServices from '../../services/RemoteService';
+import WorkflowDto from '../../models/WorkflowDto';
+import { translateStatusToIndex } from '../../mappings/workflowMappings';
+
+const props = defineProps<{
+  studentId: number,
+}>()
+
+const thesisEvents = [
+  { title: 'Juri Proposal Submitted', date: '2025-02', color: 'grey', icon: 'mdi-code-tags' },
+  { title: 'Approved by SC', date: '2025-02', color: 'grey', icon: 'mdi-code-tags' },
+  { title: 'Juri President Attributed', date: '2025-02', color: 'grey', icon: 'mdi-code-tags' },
+  { title: 'Document Signed', date: '2025-02', color: 'grey', icon: 'mdi-code-tags' },
+  { title: 'Submitted to Fenix', date: '2025-02', color: 'grey', icon: 'mdi-code-tags' },
 ];
 
 const defense_events = [
-  { title: 'Defense Scheduled', date: '2025-01', color: 'primary', icon: 'mdi-flag' },
-  { title: 'Under Review', date: '2025-02', color: 'success', icon: 'mdi-code-tags' },
-  { title: 'Graded', date: '2025-02', color: 'success', icon: 'mdi-code-tags' },
+  { title: 'Defense Scheduled', date: '2025-01', color: 'grey', icon: 'mdi-flag' },
+  { title: 'Under Review', date: '2025-02', color: 'grey', icon: 'mdi-code-tags' },
+  { title: 'Graded', date: '2025-02', color: 'grey', icon: 'mdi-code-tags' },
 ];
+
+const workflow = reactive<WorkflowDto>({} as WorkflowDto);
+
+async function getStudentWorkflow() {
+  console.log("Getting student workflow!");
+  try {
+    const response = await RemoteServices.getWorkflowByStudent(props.studentId);
+    Object.assign(workflow, response);
+  } catch (error) {
+    console.error("Error getting student workflow: ", error);
+  }
+}
+
+function getDotColors(index) {
+  let counter = -1;
+  thesisEvents.forEach(event => {
+    counter += 1
+    if (counter <= index)
+      event.color = 'success';
+    else return;
+  });
+}
+
+onMounted(async () => {
+  await getStudentWorkflow(); 
+  const workflowStatus = workflow.workflowStatus;
+  const index = translateStatusToIndex[workflowStatus];
+  getDotColors(index);
+});
 </script>
 
 <style scoped>

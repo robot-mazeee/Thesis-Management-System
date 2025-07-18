@@ -39,7 +39,7 @@ public class WorkflowController {
 	}
 
 	@GetMapping("/student-workflow/{studentId}")
-	public WorkflowDto getWorkflowByStudent(long studentId) {
+	public WorkflowDto getWorkflowByStudent(Long studentId) {
 		return workflowService.getWorkflowByStudent(studentId);
 	}
 

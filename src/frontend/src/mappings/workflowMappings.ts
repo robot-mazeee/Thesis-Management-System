@@ -30,13 +30,19 @@ export const translateStatus = (status: string) => {
   }
 };
 
-export const workflowStatusMappings = [
-  "JURI_PROPOSAL_SUBMITTED",
-  "APPROVED_BY_SC",
-  "JURI_PRESIDENT_ATTRIBUTED",
-  "DOCUMENT_SIGNED",
-  "SUBMITTED_TO_FENIX",
-  "DEFENSE_SCHEDULED",
-  "UNDER_REVIEW",
-  "SUBMITTED_TO_FENIX"
-];
+export const translateStatusToIndex = (status: string) => {
+  switch (status) {
+    case "JURI_PROPOSAL_SUBMITTED":
+      return 0
+    case "APPROVED_BY_SC":
+      return 1;
+    case "JURI_PRESIDENT_ATTRIBUTED":
+      return 2;
+    case "DOCUMENT_SIGNED":
+      return 3;
+    case "SUBMITTED_TO_FENIX":
+      return 4;
+    default:
+      return -1;
+  }
+};
