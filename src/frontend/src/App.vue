@@ -17,22 +17,14 @@ import TopBar from './components/TopBar.vue';
 import ErrorMessage from './components/ErrorMessage.vue';
 import LoadingOverlay from './components/LoadingOverlay.vue';
 
-
 import { RouterView } from 'vue-router'
 
 import { useAppearanceStore } from './stores/appearance';
 import { onMounted, onUnmounted } from 'vue';
 import { useStudentStore } from './stores/student';
-import { genericStudent } from './views/genericStudent';
-import RemoteServices from './services/RemoteService';
 
 const appearanceStore = useAppearanceStore();
 const studentStore = useStudentStore();
-
-function createDummyStudent() {
-  const dummyStudent = genericStudent;
-  RemoteServices.createPerson(dummyStudent.value);
-}
 
 const setWidth = () => (appearanceStore.windowWidth = window.innerWidth);
 setWidth();
@@ -40,9 +32,8 @@ setWidth();
 onMounted(() => {
   window.addEventListener('resize', setWidth);
   appearanceStore.clearErrors();
-  if (!studentStore.isLoggedIn) {
-    createDummyStudent();
-  }
+  if (!studentStore.isStudentCreated)
+    studentStore.createGenericStudent();
 });
 
 onUnmounted(() => {

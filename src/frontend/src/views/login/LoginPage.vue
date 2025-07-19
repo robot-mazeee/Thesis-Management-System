@@ -47,12 +47,9 @@
 import { ref, onMounted } from 'vue';
 import { useStudentStore } from '../../stores/student';
 import router from '../../router';
-import { genericStudent } from '../genericStudent';
 
 const dialog = ref(false);
 const studentStore = useStudentStore();
-
-const newStudent = genericStudent;
 
 onMounted(() => {
     dialog.value = true;
@@ -60,9 +57,9 @@ onMounted(() => {
 
 async function login() {
     try {
-        studentStore.login(newStudent.value);
+        studentStore.login(studentStore.student);
         router.push("/home");
-		console.log('Logged in as: ', newStudent.value);
+		console.log('Logged in as: ', studentStore.student);
 	} catch (error) {
 		console.error("Error logging in: ", error);
 	}

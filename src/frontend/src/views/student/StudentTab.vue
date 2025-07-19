@@ -52,4 +52,6 @@ const activeTab = ref('profile')
 const props = defineProps<{
   student: PersonDto,
 }>()
+
+console.log(props.student);
 </script>

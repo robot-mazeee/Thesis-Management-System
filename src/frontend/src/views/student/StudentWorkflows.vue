@@ -1,4 +1,5 @@
 <template>
+  <h3 v-if="noWorkflow">No Workflow Initiated</h3>
   <v-timeline align="center" side="start" direction="horizontal" class="timeline">
     <v-timeline-item
       v-for="(event, index) in thesisEvents"
@@ -41,11 +42,11 @@
       </template>
     </v-timeline-item>
   </v-timeline>
-  <v-btn>Start Thesis Workflow</v-btn>
+  <v-btn v-if="noWorkflow">Initiate Thesis Workflow</v-btn>
 </template>
 
 <script setup lang="ts">
-import { onMounted, reactive } from 'vue';
+import { onMounted, reactive, ref } from 'vue';
 import RemoteServices from '../../services/RemoteService';
 import WorkflowDto from '../../models/WorkflowDto';
 import { translateStatusToIndex } from '../../mappings/workflowMappings';
@@ -53,6 +54,8 @@ import { translateStatusToIndex } from '../../mappings/workflowMappings';
 const props = defineProps<{
   studentId: number,
 }>()
+
+const noWorkflow = ref(false);
 
 const thesisEvents = [
   { title: 'Juri Proposal Submitted', date: '2025-02', color: 'grey', icon: 'mdi-code-tags' },
@@ -74,13 +77,17 @@ async function getStudentWorkflow() {
   console.log("Getting student workflow!");
   try {
     const response = await RemoteServices.getWorkflowByStudent(props.studentId);
+    if (!response) {
+      noWorkflow.value = true;
+      return;
+    }
     Object.assign(workflow, response);
   } catch (error) {
     console.error("Error getting student workflow: ", error);
   }
 }
 
-function getDotColors(index) {
+function getDotColors(index: number) {
   let counter = -1;
   thesisEvents.forEach(event => {
     counter += 1
@@ -91,7 +98,11 @@ function getDotColors(index) {
 }
 
 onMounted(async () => {
-  await getStudentWorkflow(); 
+  await getStudentWorkflow();
+  if (noWorkflow.value) {
+    console.log('No workflow found');
+    return;
+  }
   const workflowStatus = workflow.workflowStatus;
   const index = translateStatusToIndex[workflowStatus];
   getDotColors(index);

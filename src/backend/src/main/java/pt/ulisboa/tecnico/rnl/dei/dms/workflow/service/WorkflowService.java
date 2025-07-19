@@ -27,9 +27,8 @@ public class WorkflowService {
 				.orElseThrow(() -> new DEIException(ErrorMessage.NO_SUCH_WORKFLOW, Long.toString(id)));
 	}
 
-    private Workflow fetchWorkflowByStudentOrThrow(long id) {
-		return workflowRepository.findByStudentId(id)
-				.orElseThrow(() -> new DEIException(ErrorMessage.NO_SUCH_WORKFLOW, Long.toString(id)));
+    private Workflow fetchWorkflowByStudent(long id) {
+		return workflowRepository.findByStudentId(id).orElse(null);
 	}
     
 	@Transactional
@@ -62,7 +61,8 @@ public class WorkflowService {
 
     @Transactional
     public WorkflowDto getWorkflowByStudent(long studentId) {
-        return new WorkflowDto(fetchWorkflowByStudentOrThrow(studentId));
+        var workflow = fetchWorkflowByStudent(studentId);
+        return (workflow != null) ? new WorkflowDto(workflow) : null;
     }
 
     @Transactional 
