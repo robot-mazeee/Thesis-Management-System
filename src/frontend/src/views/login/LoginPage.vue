@@ -1,5 +1,5 @@
 <template>
-    <h1>Welcome to DEI-PMS!</h1>
+    <h1>Welcome to Thesis And People Management System!</h1>
     <div class="pa-4 d-flex flex-column align-center justify-center">
         <v-card title="Login" width="50%" class="pb-6 mb-6">
             <v-card-text>

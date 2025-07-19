@@ -48,7 +48,6 @@ export const useStudentStore = defineStore('studentStore', {
         type: 'STUDENT',
       });
       this.studentCreated = true;
-      console.log("from student store:", this.student);
     }
   },
   persist: true
