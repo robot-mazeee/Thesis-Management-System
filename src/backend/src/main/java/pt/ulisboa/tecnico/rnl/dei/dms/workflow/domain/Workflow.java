@@ -22,8 +22,8 @@ public class Workflow {
     private WorkflowStatus workflowStatus;
 
     @OneToMany
-    @JoinColumn(name = "workflow_teachers")
-    private List<Person> teachers;
+    @JoinColumn(name = "workflow_professors")
+    private List<Person> professors;
 
     private Long studentId;
 
@@ -33,15 +33,15 @@ public class Workflow {
 
     public Workflow() {}
 
-    public Workflow(WorkflowStatus status, List<Person> teachers, Long studentId) {
+    public Workflow(WorkflowStatus status, List<Person> professors, Long studentId) {
         this.workflowStatus = status;
-        this.teachers = teachers;
+        this.professors = professors;
         this.studentId = studentId;
     }
 
     public Workflow(WorkflowDto workflowDto) {
         this.workflowStatus = WorkflowStatus.valueOf(workflowDto.workflowStatus().toUpperCase());
-        this.teachers = workflowDto.teachers();
+        this.professors = workflowDto.professors();
         this.studentId = workflowDto.studentId();
     }
 
@@ -49,8 +49,8 @@ public class Workflow {
         this.workflowStatus = newStatus;
     }
 
-    public void setTeachers(List<Person> teachers) {
-        this.teachers = teachers;
+    public void setProfessors(List<Person> professors) {
+        this.professors = professors;
     }
 
     public WorkflowStatus getWorkflowStatus() {
