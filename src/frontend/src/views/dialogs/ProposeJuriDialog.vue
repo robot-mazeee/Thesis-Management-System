@@ -11,19 +11,37 @@
                 ></v-btn>
             </template>
 
-            <v-card prepend-icon="mdi-account" title="New">
+            <v-card>
                 <v-card-title>Select Juri</v-card-title>
                 <v-card-text>
                     <v-checkbox 
                         v-for="prof in professors"
                         :key="prof"
-                        :label="prof"
+                        :label="prof.name"
                         :value="prof"
                         v-model="selectedProfessors"
                         hide-details
                         density="compact"
                     ></v-checkbox>
                 </v-card-text>
+                <v-card-actions>
+					<v-spacer></v-spacer>
+					<v-btn 
+						text="Close" 
+						variant="plain" 
+						@click="dialog = false">
+					</v-btn>
+		
+					<v-btn
+						text="Save"
+						color="primary"
+						variant="tonal"
+						@click="
+							dialog = false,
+							proposeJuri()
+						"
+					></v-btn>
+				</v-card-actions>
             </v-card>
         </v-dialog>
     </div>
@@ -33,10 +51,13 @@
 import { onMounted, ref } from 'vue';
 import RemoteServices from '../../services/RemoteService';
 import PersonDto from '../../models/PersonDto';
+import WorkflowDto from '../../models/WorkflowDto';
+import { useStudentStore } from '../../stores/student';
 
 const dialog = ref(false);
 const professors = ref<PersonDto[]>([]);
-const selectedProfessors = ref([]);
+const selectedProfessors = ref<PersonDto[]>([]);
+const studentStore = useStudentStore();
 
 onMounted(() => {
     getProfessors();
@@ -48,6 +69,20 @@ async function getProfessors() {
         professors.value = result;
     } catch (error) {
         console.error("Error getting professors: ", error);
+    }
+}
+
+async function proposeJuri() {
+    try {
+        const workflow: WorkflowDto = {
+            workflowStatus: 'JURI_PROPOSAL_SUBMITTED',
+            professors: selectedProfessors.value,
+            student: studentStore.currentStudent,
+            juriPresident: null
+        }
+        await RemoteServices.createWorkflow(workflow);
+    } catch (error) {
+        console.log("Error creating juri proposal: ", error);
     }
 }
 </script>

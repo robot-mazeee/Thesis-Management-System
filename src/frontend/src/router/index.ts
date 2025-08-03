@@ -2,7 +2,6 @@ import { createRouter, createWebHistory } from 'vue-router'
 import HomeView from '../views/HomeView.vue'
 import PeopleView from '@/views/people/PeopleView.vue'
 import StatisticsView from '@/views/statistics/StatisticsView.vue'
-import JuriProposal from '@/components/juri_proposal/ProposeJuri.vue'
 import StudentProfile from '@/views/student/StudentProfile.vue'
 import WorkflowsView from '@/views/workflows/WorkflowsView.vue'
 import LoginPage from '@/views/login/LoginPage.vue'
@@ -29,11 +28,6 @@ const router = createRouter({
       path: '/workflows',
       name: 'workflows',
       component: WorkflowsView
-    },
-    {
-      path: '/juri-proposal',
-      name: 'juri-proposal',
-      component: JuriProposal
     },
     { 
       path: "/people/:id",

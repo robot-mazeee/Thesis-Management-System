@@ -42,7 +42,7 @@
       </template>
     </v-timeline-item>
   </v-timeline>
-  <v-btn v-if="noWorkflow">Initiate Thesis Workflow</v-btn>
+  <ProposeJuriDialog v-if="noWorkflow" />
 </template>
 
 <script setup lang="ts">
@@ -50,6 +50,7 @@ import { onMounted, reactive, ref } from 'vue';
 import RemoteServices from '../../services/RemoteService';
 import WorkflowDto from '../../models/WorkflowDto';
 import { translateStatusToIndex } from '../../mappings/workflowMappings';
+import ProposeJuriDialog from '../dialogs/ProposeJuriDialog.vue';
 
 const props = defineProps<{
   studentId: number,
