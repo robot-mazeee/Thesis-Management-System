@@ -1,48 +1,7 @@
 <template>
   <h3 v-if="noWorkflow">No Workflow Initiated</h3>
-  <v-timeline align="center" side="start" direction="horizontal" class="timeline">
-    <v-timeline-item
-      v-for="(event, index) in thesisEvents"
-      :key="index"
-      :dot-color="event.color"
-      align="center"
-    >
-      <template #opposite>
-        <div class="timeline-label">
-          {{ event.date }}
-        </div>
-      </template>
-
-      <template #default>
-        <div class="timeline-label">
-          {{ event.title }}
-        </div>
-      </template>
-    </v-timeline-item>
-  </v-timeline>
-  <br>
-  <v-divider></v-divider>
-  <v-timeline align="center" side="start" direction="horizontal" class="timeline">
-    <v-timeline-item
-      v-for="(event, index) in defense_events"
-      :key="index"
-      :dot-color="event.color"
-      align="center"
-    >
-      <template #opposite>
-        <div class="timeline-label">
-          {{ event.date }}
-        </div>
-      </template>
-
-      <template #default>
-        <div class="timeline-label">
-          {{ event.title }}
-        </div>
-      </template>
-    </v-timeline-item>
-  </v-timeline>
-  <ProposeJuriDialog v-if="noWorkflow" />
+  <WorkflowTimeline :thesis-events="thesisEvents" :defense-events="defenseEvents"/>
+  <ProposeJuriDialog v-if="noWorkflow" @workflow-created="getStudentWorkflow"/>
 </template>
 
 <script setup lang="ts">
@@ -51,6 +10,7 @@ import RemoteServices from '../../services/RemoteService';
 import WorkflowDto from '../../models/WorkflowDto';
 import { translateStatusToIndex } from '../../mappings/workflowMappings';
 import ProposeJuriDialog from '../dialogs/ProposeJuriDialog.vue';
+import WorkflowTimeline from './WorkflowTimeline.vue';
 
 const props = defineProps<{
   studentId: number,
@@ -58,19 +18,19 @@ const props = defineProps<{
 
 const noWorkflow = ref(false);
 
-const thesisEvents = [
+const thesisEvents = reactive([
   { title: 'Juri Proposal Submitted', date: '2025-02', color: 'grey', icon: 'mdi-code-tags' },
   { title: 'Approved by SC', date: '2025-02', color: 'grey', icon: 'mdi-code-tags' },
   { title: 'Juri President Attributed', date: '2025-02', color: 'grey', icon: 'mdi-code-tags' },
   { title: 'Document Signed', date: '2025-02', color: 'grey', icon: 'mdi-code-tags' },
   { title: 'Submitted to Fenix', date: '2025-02', color: 'grey', icon: 'mdi-code-tags' },
-];
+]);
 
-const defense_events = [
+const defenseEvents = reactive([
   { title: 'Defense Scheduled', date: '2025-01', color: 'grey', icon: 'mdi-flag' },
   { title: 'Under Review', date: '2025-02', color: 'grey', icon: 'mdi-code-tags' },
   { title: 'Graded', date: '2025-02', color: 'grey', icon: 'mdi-code-tags' },
-];
+]);
 
 const workflow = reactive<WorkflowDto>({} as WorkflowDto);
 
@@ -78,11 +38,17 @@ async function getStudentWorkflow() {
   console.log("Getting student workflow!");
   try {
     const response = await RemoteServices.getWorkflowByStudent(props.studentId);
+    console.log("student workflow: ", response);
     if (!response) {
       noWorkflow.value = true;
       return;
     }
+    noWorkflow.value = false;
     Object.assign(workflow, response);
+    const workflowStatus = workflow.workflowStatus;
+    const index = translateStatusToIndex(workflowStatus);
+    getDotColors(index);
+    console.log(thesisEvents);
   } catch (error) {
     console.error("Error getting student workflow: ", error);
   }
@@ -91,10 +57,12 @@ async function getStudentWorkflow() {
 function getDotColors(index: number) {
   let counter = -1;
   thesisEvents.forEach(event => {
-    counter += 1
+    counter += 1;
     if (counter <= index)
       event.color = 'success';
-    else return;
+    else {
+      return;
+    }
   });
 }
 
@@ -105,7 +73,7 @@ onMounted(async () => {
     return;
   }
   const workflowStatus = workflow.workflowStatus;
-  const index = translateStatusToIndex[workflowStatus];
+  const index = translateStatusToIndex(workflowStatus);
   getDotColors(index);
 });
 </script>

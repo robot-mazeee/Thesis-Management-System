@@ -58,6 +58,7 @@ const dialog = ref(false);
 const professors = ref<PersonDto[]>([]);
 const selectedProfessors = ref<PersonDto[]>([]);
 const studentStore = useStudentStore();
+const emit = defineEmits(['workflow-created'])
 
 onMounted(() => {
     getProfessors();
@@ -80,8 +81,8 @@ async function proposeJuri() {
             studentId: studentStore.getId,
             juriPresident: null
         }
-        const newWorkflow = await RemoteServices.createWorkflow(workflow);
-        console.log(newWorkflow);
+        await RemoteServices.createWorkflow(workflow);
+        emit('workflow-created')
     } catch (error) {
         console.log("Error creating juri proposal: ", error);
     }

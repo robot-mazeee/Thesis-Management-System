@@ -63,7 +63,7 @@ export default class RemoteServices {
 		return httpClient.get(`/workflows/${workflow.id}`);
 	}
 
-	static async getWorkflowByStudent(studentId: number): Promise<WorkflowDto[]> {
+	static async getWorkflowByStudent(studentId: number): Promise<WorkflowDto> {
 		return httpClient.get(`/student-workflow/${studentId}`);
 	}
 
