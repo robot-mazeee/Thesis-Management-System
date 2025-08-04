@@ -17,23 +17,27 @@ const studentStore = useStudentStore();
 const student = ref<PersonDto | null>(null);
 const ready = ref(false);
 
-onMounted(async () => {
+async function fetchStudent() {
   console.log("Fetching student")
-    if (props.studentId === null || studentStore.isLoggedIn) {
-        student.value = studentStore.currentStudent;
-        console.log("STUDENT", student.value)
-    } else {
-        try {
-            student.value = await RemoteService.getPerson(props.studentId);
-            console.log(student.value)
-        } catch (error) {
-            console.error('Failed to fetch user data:', error);
-        }
-    }
+  if (props.studentId === null || studentStore.isLoggedIn) {
+      student.value = studentStore.currentStudent;
+      console.log("STUDENT", student.value)
+  } else {
+      try {
+          student.value = await RemoteService.getPerson(props.studentId);
+          console.log(student.value)
+      } catch (error) {
+          console.error('Failed to fetch user data:', error);
+      }
+  }
 
-    if (student.value) {
-        ready.value = true;
-    }
+  if (student.value) {
+      ready.value = true;
+  }
+}
+
+onMounted(async () => {
+  fetchStudent()
 });
 
 </script>
