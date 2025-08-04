@@ -34,6 +34,12 @@ const defenseEvents = reactive([
 
 const workflow = reactive<WorkflowDto>({} as WorkflowDto);
 
+function updateTimeline() {
+  const workflowStatus = workflow.workflowStatus;
+  const index = translateStatusToIndex(workflowStatus);
+  getDotColors(index);
+}
+
 async function getStudentWorkflow() {
   console.log("Getting student workflow!");
   try {
@@ -45,10 +51,7 @@ async function getStudentWorkflow() {
     }
     noWorkflow.value = false;
     Object.assign(workflow, response);
-    const workflowStatus = workflow.workflowStatus;
-    const index = translateStatusToIndex(workflowStatus);
-    getDotColors(index);
-    console.log(thesisEvents);
+    updateTimeline();
   } catch (error) {
     console.error("Error getting student workflow: ", error);
   }
@@ -72,9 +75,7 @@ onMounted(async () => {
     console.log('No workflow found');
     return;
   }
-  const workflowStatus = workflow.workflowStatus;
-  const index = translateStatusToIndex(workflowStatus);
-  getDotColors(index);
+  updateTimeline();
 });
 </script>
 
