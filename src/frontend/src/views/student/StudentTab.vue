@@ -25,7 +25,7 @@
               <v-col><span class="ma-0">{{ props.student.istId }}</span></v-col>
             </v-row>
             <v-row>
-              <v-col><EditPersonDialog :person-to-edit="props.student" :can-alter-type="false"/></v-col>
+              <v-col><EditPersonDialog :person-to-edit="props.student" :can-alter-type="false" @close-dialog="updateStudentInfo"/></v-col>
             </v-row>
           </v-window-item>
 
@@ -46,12 +46,24 @@ import { ref } from 'vue'
 import EditPersonDialog from '../dialogs/EditPersonDialog.vue'
 import PersonDto from '../../models/PersonDto'
 import StudentWorkflows from './StudentWorkflows.vue';
+import { useStudentStore } from '../../stores/student';
 
 const activeTab = ref('profile')
+
+const emit = defineEmits(['fetch-student']);
+const studentStore = useStudentStore();
 
 const props = defineProps<{
   student: PersonDto,
 }>()
+
+function updateStudentInfo() {
+  if (studentStore.isLoggedIn) {
+    studentStore.updateCurrentStudent(props.student.id);
+    console.log("current student: ", studentStore.currentStudent);
+  }
+  emit('fetch-student');
+}
 
 console.log(props.student);
 </script>

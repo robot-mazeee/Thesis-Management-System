@@ -1,6 +1,6 @@
 <template>
   <v-container fluid class="p-6 w-full">
-    <StudentTab v-if="ready" :student="student" />
+    <StudentTab v-if="ready" :student="student" @fetch-student="fetchStudent"/>
   </v-container>
 </template>
 
@@ -20,7 +20,7 @@ const ready = ref(false);
 async function fetchStudent() {
   console.log("Fetching student")
   if (props.studentId === null || studentStore.isLoggedIn) {
-      student.value = studentStore.currentStudent;
+      student.value = { ...studentStore.currentStudent };
       console.log("STUDENT", student.value)
   } else {
       try {
@@ -30,7 +30,6 @@ async function fetchStudent() {
           console.error('Failed to fetch user data:', error);
       }
   }
-
   if (student.value) {
       ready.value = true;
   }

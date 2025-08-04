@@ -32,16 +32,16 @@ export const useStudentStore = defineStore('studentStore', {
     },
     currentStudent(): PersonDto {
         return this.student
-    }
+    },
   },
   actions: {
     async login() {
       console.log("before login - ", "studentCreated: ", this.studentCreated, "islogged in?: : ", this.loggedIn)
-        if (!this.studentCreated) {
-          await this.createGenericStudent();
-        }
-        this.loggedIn = true;
-        console.log("Login student id: ", this.student.id)
+      if (!this.studentCreated) {
+        await this.createGenericStudent();
+      }
+      this.loggedIn = true;
+      console.log("Login student id: ", this.student.id)
     },
     logout() {
         this.student = {} as PersonDto;
@@ -57,6 +57,9 @@ export const useStudentStore = defineStore('studentStore', {
       } as PersonDto);
       this.studentCreated = true;
       console.log("Generic student: ", this.student)
+    },
+    async updateCurrentStudent(studentId: number) {
+      this.student = await RemoteServices.getPerson(studentId);
     }
   },
   persist: true
