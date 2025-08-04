@@ -4,7 +4,7 @@ export default class WorkflowDto {
     id?: number
     workflowStatus?: string
     professors?: PersonDto[]
-    student?: PersonDto
+    studentId?: number
     juriPresident?: PersonDto
   
     constructor(obj?: Partial<WorkflowDto>) {

@@ -9,6 +9,9 @@ export const useStudentStore = defineStore('studentStore', {
     loggedIn: false,
   }),
   getters: {
+    getId(): number {
+      return this.student.id
+    },
     getName(): string {
         return this.student.name
     },
@@ -32,22 +35,28 @@ export const useStudentStore = defineStore('studentStore', {
     }
   },
   actions: {
-    login(newStudent: PersonDto) {
-        // this.student = newStudent
+    async login() {
+      console.log("before login - ", "studentCreated: ", this.studentCreated, "islogged in?: : ", this.loggedIn)
+        if (!this.studentCreated) {
+          await this.createGenericStudent();
+        }
         this.loggedIn = true;
+        console.log("Login student id: ", this.student.id)
     },
     logout() {
-        // this.student = {} as PersonDto;
+        this.student = {} as PersonDto;
         this.loggedIn = false;
     },
     async createGenericStudent() {
+      console.log("creating student")
       this.student = await RemoteServices.createPerson({
         name: 'John Doe',
         istId: '110283',
         email: 'johndoe@tecnico.ulisboa.pt',
         type: 'STUDENT',
-      });
+      } as PersonDto);
       this.studentCreated = true;
+      console.log("Generic student: ", this.student)
     }
   },
   persist: true

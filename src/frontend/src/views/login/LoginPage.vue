@@ -57,9 +57,9 @@ onMounted(() => {
 
 async function login() {
     try {
-        studentStore.login(studentStore.student);
+        studentStore.login();
         router.push("/home");
-		console.log('Logged in as: ', studentStore.student);
+		console.log('Logged in as: ', studentStore.currentStudent);
 	} catch (error) {
 		console.error("Error logging in: ", error);
 	}

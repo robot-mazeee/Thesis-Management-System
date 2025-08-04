@@ -77,10 +77,11 @@ async function proposeJuri() {
         const workflow: WorkflowDto = {
             workflowStatus: 'JURI_PROPOSAL_SUBMITTED',
             professors: selectedProfessors.value,
-            student: studentStore.currentStudent,
+            studentId: studentStore.getId,
             juriPresident: null
         }
-        await RemoteServices.createWorkflow(workflow);
+        const newWorkflow = await RemoteServices.createWorkflow(workflow);
+        console.log(newWorkflow);
     } catch (error) {
         console.log("Error creating juri proposal: ", error);
     }

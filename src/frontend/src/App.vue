@@ -32,8 +32,8 @@ setWidth();
 onMounted(() => {
   window.addEventListener('resize', setWidth);
   appearanceStore.clearErrors();
-  if (!studentStore.isStudentCreated)
-    studentStore.createGenericStudent();
+  // Reset student store between sessions (for development only)
+  localStorage.removeItem('studentStore');
 });
 
 onUnmounted(() => {
