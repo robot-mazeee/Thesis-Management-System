@@ -45,7 +45,7 @@
 
 <script setup lang="ts">
 import RemoteService from '../../services/RemoteService'
-import { reactive, ref } from 'vue'
+import { onMounted, reactive, ref } from 'vue'
 import PersonDto from '../../models/PersonDto'
 import CreatePersonDialog from '../dialogs/CreatePersonDialog.vue'
 import EditPersonDialog from '../dialogs/EditPersonDialog.vue'
@@ -96,7 +96,9 @@ const peopleHeaders = [
 
 const people: PersonDto[] = reactive([])
 
-getPeople() // first render
+onMounted(() => {
+	getPeople()
+})
 
 async function getPeople() { 
 	people.splice(0, people.length);

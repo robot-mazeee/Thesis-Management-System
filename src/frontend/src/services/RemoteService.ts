@@ -47,16 +47,8 @@ export default class RemoteServices {
 		return httpClient.post('/workflows', workflow);
 	}
 
-	static async createDefense() {
-		return httpClient.post('/defenses');
-	}
-
 	static async getWorkflows(): Promise<WorkflowDto[]> {
 		return httpClient.get('/workflows');
-	}
-
-	static async getDefenses(): Promise<DefenseDto[]> {
-		return httpClient.get('/defenses');
 	}
 
 	static async getWorkflow(workflow: WorkflowDto): Promise<WorkflowDto[]> {
@@ -70,6 +62,14 @@ export default class RemoteServices {
 	// Updates workflow status
 	static async updateWorkflow(workflow: WorkflowDto) {
 		return httpClient.put(`/workflows/${workflow.id}`, workflow);
+	}
+
+	static async createDefense() {
+		return httpClient.post('/defenses');
+	}
+
+	static async getDefenses(): Promise<DefenseDto[]> {
+		return httpClient.get('/defenses');
 	}
 
 	static async updateDefense(defense: DefenseDto) {
