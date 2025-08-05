@@ -56,5 +56,4 @@ const props = defineProps<{
   thesisEvents: TimelineEvent[];
 }>();
 
-
 </script>

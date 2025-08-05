@@ -57,13 +57,11 @@ const props = defineProps<{
   student: PersonDto,
 }>()
 
-function updateStudentInfo() {
+async function updateStudentInfo() {
   if (studentStore.isLoggedIn) {
-    studentStore.updateCurrentStudent(props.student.id);
+    await studentStore.updateCurrentStudent(props.student.id);
     console.log("current student: ", studentStore.currentStudent);
   }
   emit('fetch-student');
 }
-
-console.log(props.student);
 </script>

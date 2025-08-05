@@ -18,10 +18,11 @@ const student = ref<PersonDto | null>(null);
 const ready = ref(false);
 
 async function fetchStudent() {
+  ready.value = false
   console.log("Fetching student")
   if (props.studentId === null || studentStore.isLoggedIn) {
-      student.value = { ...studentStore.currentStudent };
-      console.log("STUDENT", student.value)
+      student.value = studentStore.currentStudent;
+      console.log("fetched student", student.value);
   } else {
       try {
           student.value = await RemoteService.getPerson(props.studentId);
