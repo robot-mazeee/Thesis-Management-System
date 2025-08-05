@@ -34,7 +34,7 @@ public class WorkflowService {
 	@Transactional
     public WorkflowDto createWorkflow(WorkflowDto workflowDto) {
         Workflow workflow = new Workflow();
-        workflow.setWorkflowStatus(WorkflowStatus.valueOf(workflowDto.workflowStatus()));
+        workflow.setStatus(WorkflowStatus.valueOf(workflowDto.status()));
 
         List<Person> professors = workflowDto.professors().stream().toList();
         workflow.setProfessors(professors);
@@ -44,7 +44,7 @@ public class WorkflowService {
 
         workflow = workflowRepository.save(workflow);
 
-        return new WorkflowDto(workflow.getId(), workflow.getWorkflowStatus().toString(), workflow.getProfessors(), workflow.getStudentId(), workflow.getJuriPresident());
+        return new WorkflowDto(workflow.getId(), workflow.getStatus().toString(), workflow.getProfessors(), workflow.getStudentId(), workflow.getJuriPresident());
     }
 	
 	@Transactional
@@ -74,7 +74,7 @@ public class WorkflowService {
     }
 
     public List<WorkflowDto> getWorkflowsByStatus(WorkflowStatus status) {
-        return workflowRepository.findByWorkflowStatus(status).stream()
+        return workflowRepository.findByStatus(status).stream()
 				.map(WorkflowDto::new)
 				.toList();
     }
@@ -112,7 +112,7 @@ public class WorkflowService {
         Workflow workflow = fetchWorkflowOrThrow(id);
         Person juriPresident = workflowDto.juriPresident();
         workflow.setJuriPresident(juriPresident);
-        workflow.setWorkflowStatus(WorkflowStatus.JURI_PRESIDENT_ATTRIBUTED);
+        workflow.setStatus(WorkflowStatus.JURI_PRESIDENT_ATTRIBUTED);
         return new WorkflowDto(workflowRepository.save(workflow));
     }
 

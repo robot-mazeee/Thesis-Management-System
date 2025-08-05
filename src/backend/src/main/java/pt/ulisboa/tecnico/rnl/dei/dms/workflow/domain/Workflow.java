@@ -19,7 +19,7 @@ public class Workflow {
  
     @Column(name = "workflow_status")
 	@Enumerated(EnumType.STRING)
-    private WorkflowStatus workflowStatus;
+    private WorkflowStatus status;
 
     @OneToMany
     @JoinColumn(name = "workflow_professors")
@@ -34,26 +34,26 @@ public class Workflow {
     public Workflow() {}
 
     public Workflow(WorkflowStatus status, List<Person> professors, Long studentId) {
-        this.workflowStatus = status;
+        this.status = status;
         this.professors = professors;
         this.studentId = studentId;
     }
 
     public Workflow(WorkflowDto workflowDto) {
-        this.workflowStatus = WorkflowStatus.valueOf(workflowDto.workflowStatus().toUpperCase());
+        this.status = WorkflowStatus.valueOf(workflowDto.status().toUpperCase());
         this.professors = workflowDto.professors();
         this.studentId = workflowDto.studentId();
     }
 
-    public void setWorkflowStatus(WorkflowStatus newStatus) {
-        this.workflowStatus = newStatus;
+    public void setStatus(WorkflowStatus newStatus) {
+        this.status = newStatus;
     }
 
     public void setProfessors(List<Person> professors) {
         this.professors = professors;
     }
 
-    public WorkflowStatus getWorkflowStatus() {
-        return this.workflowStatus;
+    public WorkflowStatus getStatus() {
+        return this.status;
     } 
 }

@@ -28,7 +28,7 @@
             <Workflow :workflow="item" />
         </template>
         <template v-slot:[`item.actions`]="{ item }">
-            <v-btn v-if="checkStatus(item.workflowStatus)" @click="updateStatus(item, 'JURI_PROPOSAL_SUBMITTED')" class="mb-3" color="primary">Undo</v-btn>
+            <v-btn v-if="checkStatus(item.status)" @click="updateStatus(item, 'JURI_PROPOSAL_SUBMITTED')" class="mb-3" color="primary">Undo</v-btn>
             <v-btn v-else @click="updateStatus(item, 'APPROVED_BY_SC')" class="mb-3" color="primary">Approve</v-btn>
         </template>
 
@@ -38,10 +38,10 @@
 </template>
 
 <script setup lang="ts">
-import RemoteService from '@/services/RemoteService'
 import { onMounted, reactive, ref } from 'vue'
-import WorkflowDto from '@/models/WorkflowDto'
+import WorkflowDto from '../../models/WorkflowDto'
 import Workflow from '../../components/workflow/Workflow.vue'
+import RemoteServices from '../../services/RemoteService'
 
 let search = ref('')
 let loading = ref(true)
@@ -72,7 +72,7 @@ onMounted(() => {
 
 async function getWorkflows() { 
     juriProposals.splice(0, juriProposals.length)
-    juriProposals.push(...(await RemoteService.getWorkflows()))
+    juriProposals.push(...(await RemoteServices.getWorkflows()))
 
     loading.value = false
 }
@@ -96,9 +96,9 @@ function checkStatus(status: string) {
 async function updateStatus(proposal: WorkflowDto, status: string) {
     console.log("Sending proposal for approval:", proposal);
     try {
-        proposal.workflowStatus = status
-        console.log(proposal.workflowStatus)
-        const response = await RemoteService.updateWorkflow(proposal);
+        proposal.status = status
+        console.log(proposal.status)
+        const response = await RemoteServices.updateWorkflow(proposal);
         console.log("Server Response:", response);
         getWorkflows()
     } catch (error) {

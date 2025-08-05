@@ -1,8 +1,6 @@
-import type PersonDto from "./PersonDto"
-
 export default class WorkflowDto {
     id?: number
-    defenseStatus?: string
+    status?: string
     date?: string
     grade?: number
   

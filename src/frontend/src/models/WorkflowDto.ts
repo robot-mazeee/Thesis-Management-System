@@ -2,7 +2,7 @@ import type PersonDto from "./PersonDto"
 
 export default class WorkflowDto {
     id?: number
-    workflowStatus?: string
+    status?: string
     professors?: PersonDto[]
     studentId?: number
     juriPresident?: PersonDto

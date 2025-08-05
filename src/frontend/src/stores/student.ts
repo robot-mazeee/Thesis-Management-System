@@ -49,14 +49,18 @@ export const useStudentStore = defineStore('studentStore', {
     },
     async createGenericStudent() {
       console.log("creating student")
-      this.student = await RemoteServices.createPerson({
-        name: 'John Doe',
-        istId: '110283',
-        email: 'johndoe@tecnico.ulisboa.pt',
-        type: 'STUDENT',
-      } as PersonDto);
-      this.studentCreated = true;
-      console.log("Generic student: ", this.student)
+      try {
+        this.student = await RemoteServices.createPerson({
+          name: 'John Doe',
+          istId: '110283',
+          email: 'johndoe@tecnico.ulisboa.pt',
+          type: 'STUDENT',
+        } as PersonDto);
+        this.studentCreated = true;
+        console.log("Generic student: ", this.student)
+      } catch (error) {
+        console.log("Error creating generic student: ", error);
+      }
     },
     async updateCurrentStudent(studentId: number) {
       this.student = await RemoteServices.getPerson(studentId);

@@ -35,7 +35,7 @@ const defenseEvents = reactive([
 const workflow = reactive<WorkflowDto>({} as WorkflowDto);
 
 function updateTimeline() {
-  const workflowStatus = workflow.workflowStatus;
+  const workflowStatus = workflow.status;
   const index = translateStatusToIndex(workflowStatus);
   getDotColors(index);
 }

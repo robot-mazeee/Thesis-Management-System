@@ -76,7 +76,7 @@ async function getProfessors() {
 async function proposeJuri() {
     try {
         const workflow: WorkflowDto = {
-            workflowStatus: 'JURI_PROPOSAL_SUBMITTED',
+            status: 'JURI_PROPOSAL_SUBMITTED',
             professors: selectedProfessors.value,
             studentId: studentStore.getId,
             juriPresident: null

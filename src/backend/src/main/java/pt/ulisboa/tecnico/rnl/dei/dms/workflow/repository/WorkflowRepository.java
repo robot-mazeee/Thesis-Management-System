@@ -9,6 +9,6 @@ import java.util.List;
 import java.util.Optional;
 
 public interface WorkflowRepository extends JpaRepository<Workflow, Long> {
-    public List<Workflow> findByWorkflowStatus(WorkflowStatus status);
+    public List<Workflow> findByStatus(WorkflowStatus status);
     Optional<Workflow> findByStudentId(Long studentId);
 }

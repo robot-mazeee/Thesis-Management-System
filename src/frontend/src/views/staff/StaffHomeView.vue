@@ -36,7 +36,7 @@
 </template>
 
 <script setup lang="ts">
-import RemoteService from '@/services/RemoteService'
+import RemoteServices from '../../services/RemoteService';
 import { onMounted, reactive, ref } from 'vue'
 import WorkflowDto from '../../models/WorkflowDto'
 import Workflow from '../../components/workflow/Workflow.vue';
@@ -70,7 +70,7 @@ const workflowsHeaders = [
 
   async function getWorkflows() { 
         workflows.splice(0, workflows.length)
-        workflows.push(...(await RemoteService.getWorkflows()))
+        workflows.push(...(await RemoteServices.getWorkflows()))
 
         loading.value = false
   }
@@ -78,11 +78,11 @@ const workflowsHeaders = [
   async function updateStatus(proposal: WorkflowDto, status: string) {
       console.log("Sending proposal for approval:", proposal);
       try {
-          proposal.workflowStatus = status
-          const response = await RemoteService.updateWorkflow(proposal);
+          proposal.status = status
+          const response = await RemoteServices.updateWorkflow(proposal);
           console.log("Server Response:", response);
           try {
-            await RemoteService.createDefense();
+            await RemoteServices.createDefense();
           } catch(error) {
             console.error("Workflow creation failed:", error.response?.data || error.message);
           }

@@ -88,7 +88,7 @@
   </template>
   
 <script setup lang="ts">
-import RemoteService from '@/services/RemoteService'
+import RemoteServices from '../../services/RemoteService';
 import { computed, onMounted, reactive, ref } from 'vue'
 import WorkflowDto from '../../models/WorkflowDto'
 import DefenseDto from '../../models/DefenseDto'
@@ -174,7 +174,7 @@ const defensesHeaders = [
 
     async function getWorkflows() { 
         workflows.splice(0, workflows.length)
-        workflows.push(...(await RemoteService.getWorkflows()))
+        workflows.push(...(await RemoteServices.getWorkflows()))
 
         loading.value = false
     }
@@ -196,8 +196,8 @@ const defensesHeaders = [
     async function updateStatus(proposal: WorkflowDto, status: string) {
         console.log("Sending proposal for approval:", proposal);
         try {
-            proposal.workflowStatus = status
-            const response = await RemoteService.updateWorkflow(proposal);
+            proposal.status = status
+            const response = await RemoteServices.updateWorkflow(proposal);
             console.log("Server Response:", response);
             getWorkflows()
         } catch (error) {
@@ -210,7 +210,7 @@ const defensesHeaders = [
       try {
           defense.defenseStatus = status
           console.log('NEW STATUS: ', defense.defenseStatus)
-          const response = await RemoteService.updateDefense(defense);
+          const response = await RemoteServices.updateDefense(defense);
           console.log("Server Response:", response);
           getDefenses();
       } catch (error) {
@@ -220,7 +220,7 @@ const defensesHeaders = [
 
     async function getDefenses() { 
       defenses.splice(0, defenses.length);
-      const fetchedDefenses = await RemoteService.getDefenses();
+      const fetchedDefenses = await RemoteServices.getDefenses();
       console.log("Fetched Defenses:", fetchedDefenses); // Debugging
       defenses.push(...fetchedDefenses);
       loading.value = false;

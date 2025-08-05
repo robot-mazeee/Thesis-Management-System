@@ -45,8 +45,8 @@
 
 <script setup lang="ts">
 import { computed, ref } from 'vue';
-import type PersonDto from '@/models/people/PersonDto';
-import RemoteService from '@/services/RemoteService';
+import type PersonDto from '../../models/PersonDto';
+import RemoteServices from '../../services/RemoteService';
 import WorkflowDto from '../../models/WorkflowDto';
 
 const props = defineProps<{
@@ -56,7 +56,7 @@ const props = defineProps<{
 const selectedItem = ref<PersonDto | null>(null);
 
 const items = computed(() => {
-  return props.juriProposal?.teachers ?? [];
+  return props.juriProposal?.professors ?? [];
 });
 
 const dialog = ref(false);
@@ -70,8 +70,8 @@ const saveJuriPresident = async () => {
   console.log("Saving selection:", selectedItem.value);
   try {
     props.juriProposal.juriPresident = selectedItem.value;
-    props.juriProposal.workflowStatus = 'JURI_PRESIDENT_ATTRIBUTED'
-    const response = await RemoteService.selectJuriPresident(props.juriProposal);
+    props.juriProposal.status = 'JURI_PRESIDENT_ATTRIBUTED'
+    const response = await RemoteServices.selectJuriPresident(props.juriProposal);
     console.log("Server Response:", response);
   } catch(error) {
     console.log('Failed to save juri president: ', selectedItem.value)

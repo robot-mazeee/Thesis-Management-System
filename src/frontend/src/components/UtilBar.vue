@@ -40,7 +40,7 @@ const studentStore = useStudentStore()
 function logout() {
   studentStore.logout()
   router.push("/")
-  console.log(studentStore.isLoggedIn);
+  console.log("Is logged in? ", studentStore.isLoggedIn, "generic student created? ", studentStore.isStudentCreated);
 }
 </script>
 

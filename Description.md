@@ -12,15 +12,15 @@ This subsystem allows the management of:
 ## Workflows
 
 ### Thesis Workflow
-- **Jury Proposal Submitted** – Submitted by the student  
-- **Approved by SC** – Approved by the Scientific Committee  
-- **Jury President Assigned** – Assigned by the coordinator  
-- **Signed Document** – Signed by the coordinator  
+- **Jury Proposal Submitted** – Submitted by the student
+- **Approved by SC** – Approved by the Scientific Committee
+- **Jury President Assigned** – Assigned by the coordinator
+- **Signed Document** – Signed by the coordinator
 - **Submitted to Fenix** – Submitted by the staff
 
 ### Defense Workflow
-- **Defense Scheduled** – Scheduled by the coordinator  
-- **Under Review** – If the current date is after the scheduled date  
+- **Defense Scheduled** – Scheduled by the coordinator
+- **Under Review** – If the current date is after the scheduled date
 - **Submitted to Fenix** – Once the grade is assigned by the coordinator
 
 
