@@ -20,7 +20,7 @@ const noWorkflow = ref(false);
 
 const thesisEvents = reactive([
   { title: 'Juri Proposal Submitted', date: '2025-02', color: 'grey', icon: 'mdi-code-tags' },
-  { title: 'Approved by SC', date: '2025-02', color: 'grey', icon: 'mdi-code-tags' },
+  { title: 'Approved by Admin', date: '2025-02', color: 'grey', icon: 'mdi-code-tags' },
   { title: 'Juri President Attributed', date: '2025-02', color: 'grey', icon: 'mdi-code-tags' },
   { title: 'Document Signed', date: '2025-02', color: 'grey', icon: 'mdi-code-tags' },
   { title: 'Submitted to Fenix', date: '2025-02', color: 'grey', icon: 'mdi-code-tags' },

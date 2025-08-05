@@ -86,7 +86,7 @@ public class WorkflowService {
 
     @Transactional
     public List<WorkflowDto> getApprovedJuriProposals() {
-        return getWorkflowsByStatus(WorkflowStatus.APPROVED_BY_SC);
+        return getWorkflowsByStatus(WorkflowStatus.APPROVED_BY_ADMIN);
     }
 
     @Transactional

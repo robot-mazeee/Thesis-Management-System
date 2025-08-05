@@ -4,7 +4,7 @@
 
 This subsystem allows the management of:
 
-- **People**, including, for each individual, at least their name, IST ID, email, and their role in the system (staff, student, professor, coordinator, SC (Scientific Committee));
+- **People**, including, for each individual, at least their name, IST ID, email, and their role in the system (staff, student, professor, coordinator, admin);
 
 - **Workflows**, organized into two sections: thesis workflow and defense workflow, with stages associated with each.
 
@@ -13,7 +13,7 @@ This subsystem allows the management of:
 
 ### Thesis Workflow
 - **Jury Proposal Submitted** – Submitted by the student
-- **Approved by SC** – Approved by the Scientific Committee
+- **Approved by Admin** – Approved by the administration
 - **Jury President Assigned** – Assigned by the coordinator
 - **Signed Document** – Signed by the coordinator
 - **Submitted to Fenix** – Submitted by the staff
@@ -29,7 +29,7 @@ This subsystem allows the management of:
 An example of a complete thesis workflow:
 
 - The _student_, on their page, selects the professors (from one (1) to five (5) professors) who will compose the thesis jury and submits the proposal, initiating the thesis workflow with the state **Jury Proposal Submitted**.
-- The _SC_ (Scientific Committee) reviews the proposal and approves it (or not), changing the state to **Approved by SC**.
+- The _SC_ (Scientific Committee) reviews the proposal and approves it (or not), changing the state to **Approved by Admin**.
 - The _coordinator_ reviews the approved proposal and selects one of the professors to be the jury president, changing the state to **Jury President Assigned**.
 - The _coordinator_ downloads the document (a PDF file containing thesis and jury information), signs it, and uploads the signed document, changing the state to **Signed Document**.
 - The _staff_ confirms the signed document has been submitted to Fenix (for implementation purposes, this submission is just a button that changes the state — no interaction with Fenix is required), changing the state to **Submitted to Fenix**.
@@ -46,7 +46,7 @@ Once the thesis workflow is complete, the defense workflow can begin:
 - Display all TMS members in a quick-access table, containing at least name, IST ID, email, and role;
 - Add new people to the system;
 - Update and remove existing people;
-- Assign roles in the frontend: staff, student, professor, coordinator, SC;
+- Assign roles in the frontend: staff, student, professor, coordinator, admin;
 - Display all students in a quick-access table, containing at least name, IST ID, email, and the state of the thesis/defense workflow;
 - Filter students by thesis/defense workflow state or other relevant fields;
 - View each student’s individual page, including:

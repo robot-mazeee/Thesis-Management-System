@@ -1,6 +1,6 @@
 export const getColorByStatus = (status: string) => {
   switch (status) {
-    case "APPROVED_BY_SC":
+    case "APPROVED_BY_ADMIN":
       return "purple";
     case "JURI_PRESIDENT_ATTRIBUTED":
       return "red";
@@ -17,8 +17,8 @@ export const translateStatus = (status: string) => {
   switch (status) {
     case "JURI_PROPOSAL_SUBMITTED":
       return "Juri Proposal Submitted"
-    case "APPROVED_BY_SC":
-      return "Approved By SC";
+    case "APPROVED_BY_ADMIN":
+      return "Approved By ADMIN";
     case "JURI_PRESIDENT_ATTRIBUTED":
       return "Juri President Attributed";
     case "DOCUMENT_SIGNED":
@@ -34,7 +34,7 @@ export const translateStatusToIndex = (status: string) => {
   switch (status) {
     case "JURI_PROPOSAL_SUBMITTED":
       return 0
-    case "APPROVED_BY_SC":
+    case "APPROVED_BY_ADMIN":
       return 1;
     case "JURI_PRESIDENT_ATTRIBUTED":
       return 2;
