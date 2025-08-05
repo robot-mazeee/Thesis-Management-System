@@ -66,5 +66,4 @@ async function login() {
 }
 
 function createAccount() {}
-
 </script>

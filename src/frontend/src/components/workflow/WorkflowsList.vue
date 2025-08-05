@@ -12,7 +12,6 @@
 </template>
 
 <script setup lang="ts">
-
 import { reactive } from 'vue';
 import RemoteServices from '../../services/RemoteService';
 import { onMounted } from 'vue';
@@ -29,14 +28,4 @@ async function getWorkflows() {
     workflows.splice(0, workflows.length)
     workflows.push(...(await RemoteServices.getWorkflows()))
 }
-
-//     if (selectedTeachers.length === 0){
-//         alert("No Teachers Selected");
-//         return;
-//     }
-//     else if (selectedTeachers.length > 5){
-//         alert("Can only select up to 5 teachers.");
-//         return;
-//     }
-
 </script>
