@@ -74,15 +74,15 @@ async function getProfessors() {
 }
 
 async function proposeJuri() {
+    if (selectedProfessors.value.length <= 0){
+        alert("No professors Selected");
+        return;
+    }
+    else if (selectedProfessors.value.length > 5){
+        alert("Can only select up to 5 professors.");
+        return;
+    }
     try {
-        if (selectedProfessors.value.length <= 0){
-            alert("No professors Selected");
-            return;
-        }
-        else if (selectedProfessors.value.length > 5){
-            alert("Can only select up to 5 professors.");
-            return;
-        }
         const workflow: WorkflowDto = {
             status: 'JURI_PROPOSAL_SUBMITTED',
             professors: selectedProfessors.value,
