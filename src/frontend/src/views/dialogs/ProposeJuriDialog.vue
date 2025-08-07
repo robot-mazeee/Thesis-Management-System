@@ -36,10 +36,11 @@
 						text="Save"
 						color="primary"
 						variant="tonal"
-						@click="
-							dialog = false,
-							proposeJuri()
-						"
+						@click="async () => {
+                            const success = await proposeJuri();
+                            if (success) 
+                                dialog = false;
+                        }"
 					></v-btn>
 				</v-card-actions>
             </v-card>
@@ -75,12 +76,12 @@ async function getProfessors() {
 
 async function proposeJuri() {
     if (selectedProfessors.value.length <= 0){
-        alert("No professors Selected");
-        return;
+        alert("No professors selected");
+        return false;
     }
     else if (selectedProfessors.value.length > 5){
         alert("Can only select up to 5 professors.");
-        return;
+        return false;
     }
     try {
         const workflow: WorkflowDto = {
@@ -90,9 +91,11 @@ async function proposeJuri() {
             juriPresident: null
         }
         await RemoteServices.createWorkflow(workflow);
-        emit('workflow-created')
+        emit('workflow-created');
+        return true;
     } catch (error) {
         console.log("Error creating juri proposal: ", error);
+        return false;
     }
 }
 </script>
