@@ -46,3 +46,21 @@ export const translateStatusToIndex = (status: string) => {
       return -1;
   }
 };
+
+export const getColor = (status: string) => {
+    console.log(status)
+    switch(status) {
+        case "JURI_PROPOSAL_SUBMITTED":
+            return 'pink';
+        case "APPROVED_BY_SC":
+            return 'blue';
+        case "JURI_PRESIDENT_ATTRIBUTED":
+            return 'red';
+        case "DOCUMENT_SIGNED":
+            return 'green';
+        case "SUBMITTED_TO_FENIX":
+            return 'yellow';
+        default:
+            return 'red';
+    }
+}
