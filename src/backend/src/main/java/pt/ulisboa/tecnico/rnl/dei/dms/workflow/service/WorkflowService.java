@@ -38,13 +38,13 @@ public class WorkflowService {
 
         List<Person> professors = workflowDto.professors().stream().toList();
         workflow.setProfessors(professors);
-        Long studentId = workflowDto.studentId();
-        workflow.setStudentId(studentId);
+        Person student = workflowDto.student();
+        workflow.setStudent(student);
         workflow.setJuriPresident(null);
 
         workflow = workflowRepository.save(workflow);
 
-        return new WorkflowDto(workflow.getId(), workflow.getStatus().toString(), workflow.getProfessors(), workflow.getStudentId(), workflow.getJuriPresident());
+        return new WorkflowDto(workflow.getId(), workflow.getStatus().toString(), workflow.getProfessors(), workflow.getStudent(), workflow.getJuriPresident());
     }
 	
 	@Transactional

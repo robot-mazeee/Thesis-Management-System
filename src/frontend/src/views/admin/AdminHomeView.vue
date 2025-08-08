@@ -31,10 +31,7 @@
             <v-btn v-if="checkStatus(item.status)" @click="updateStatus(item, 'JURI_PROPOSAL_SUBMITTED')" class="mb-3" color="primary">Undo</v-btn>
             <v-btn v-else @click="updateStatus(item, 'APPROVED_BY_ADMIN')" class="mb-3" color="primary">Approve</v-btn>
         </template>
-
-
     </v-data-table>
-
 </template>
 
 <script setup lang="ts">

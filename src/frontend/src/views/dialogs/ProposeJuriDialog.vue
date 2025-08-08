@@ -87,7 +87,7 @@ async function proposeJuri() {
         const workflow: WorkflowDto = {
             status: 'JURI_PROPOSAL_SUBMITTED',
             professors: selectedProfessors.value,
-            studentId: studentStore.getId,
+            student: studentStore.currentStudent,
             juriPresident: null
         };
         await RemoteServices.createWorkflow(workflow);

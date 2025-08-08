@@ -15,5 +15,6 @@
   - Logs detalhados de ações feitas no sistema, como submissões, aprovações e atualizações nos workflows;
   - Autenticação de alunos no backend via Spring Security;
   - Uma homepage com os dados de cada utilizador, reais para o role de student (pois este é o único role que exige criação de conta e autenticação) e genéricos nos restantes roles;
+  - Populate com um dump da base de dados;
   - Sistema de envio de [emails](https://github.com/tweedegolf/mailcrab).
 

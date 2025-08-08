@@ -1,8 +1,8 @@
 <template>
     <h3>
-        Student: {{ student.name }}
+        Student: {{ props.workflow.student.name }}
         <v-divider></v-divider>
-        {{ student.istId }}
+        {{ props.workflow.student.istId }}
         <v-divider></v-divider>
         <v-chip :color="getColor(props.workflow.status)">
             {{ props.workflow.status }}
@@ -17,24 +17,24 @@ import WorkflowDto from '../../models/WorkflowDto';
 import RemoteServices from '../../services/RemoteService';
 
 const props = defineProps<{ workflow: WorkflowDto }>();
-const student = reactive<PersonDto>({} as PersonDto);
+// const student = reactive<PersonDto>({} as PersonDto);
 
-onMounted(() => {
-    getStudent();
-})
+// onMounted(() => {
+//     getStudent();
+// })
 
-async function getStudent() {
-    const studentId = props.workflow.studentId;
-    try {
-        console.log("Fetching student/workflow owner");
-        const result = await RemoteServices.getPerson(studentId);
+// async function getStudent() {
+//     const studentId = props.workflow.studentId;
+//     try {
+//         console.log("Fetching student/workflow owner");
+//         const result = await RemoteServices.getPerson(studentId);
 
-        Object.assign(student, result);
-        console.log("Fetched student: ", student);
-    } catch (error) {
-        console.log("Error fetching student/workflow owner: ", error);
-    }
-}
+//         Object.assign(student, result);
+//         console.log("Fetched student: ", student);
+//     } catch (error) {
+//         console.log("Error fetching student/workflow owner: ", error);
+//     }
+// }
 
 const getColor = (status: string) => {
     console.log(status)
