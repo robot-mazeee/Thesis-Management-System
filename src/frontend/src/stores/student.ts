@@ -44,7 +44,7 @@ export const useStudentStore = defineStore('studentStore', {
       console.log("Login student id: ", this.student.id)
     },
     logout() {
-        this.student = {} as PersonDto;
+        // this.student = {} as PersonDto;
         this.loggedIn = false;
     },
     async createGenericStudent() {

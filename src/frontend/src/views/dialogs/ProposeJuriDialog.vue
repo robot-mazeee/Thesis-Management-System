@@ -59,7 +59,7 @@ const dialog = ref(false);
 const professors = ref<PersonDto[]>([]);
 const selectedProfessors = ref<PersonDto[]>([]);
 const studentStore = useStudentStore();
-const emit = defineEmits(['workflow-created'])
+const emit = defineEmits(['workflow-created']);
 
 onMounted(() => {
     getProfessors();
@@ -89,7 +89,7 @@ async function proposeJuri() {
             professors: selectedProfessors.value,
             studentId: studentStore.getId,
             juriPresident: null
-        }
+        };
         await RemoteServices.createWorkflow(workflow);
         emit('workflow-created');
         return true;

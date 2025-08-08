@@ -29,7 +29,7 @@
         </template>
         <template v-slot:[`item.actions`]="{ item }">
             <v-btn v-if="checkStatus(item.status)" @click="updateStatus(item, 'JURI_PROPOSAL_SUBMITTED')" class="mb-3" color="primary">Undo</v-btn>
-            <v-btn v-else @click="updateStatus(item, 'APPROVED_BY_SC')" class="mb-3" color="primary">Approve</v-btn>
+            <v-btn v-else @click="updateStatus(item, 'APPROVED_BY_ADMIN')" class="mb-3" color="primary">Approve</v-btn>
         </template>
 
 
@@ -80,7 +80,7 @@ async function getWorkflows() {
 function checkStatus(status: string) {
     console.log(status)
     switch(status) {
-        case "APPROVED_BY_SC":
+        case "APPROVED_BY_ADMIN":
             return true;
         case "JURI_PRESIDENT_ATTRIBUTED":
             return true;
