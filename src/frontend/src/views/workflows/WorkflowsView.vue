@@ -16,6 +16,7 @@
 					</v-card-title>
 
 					<v-card-subtitle>
+						Status:
 						<v-chip :color="getColor(workflow.status)">
 							{{ workflow.status }}
 						</v-chip>
@@ -24,6 +25,7 @@
 					<v-card-text>
 						Juri President: {{ workflow.juriPresident !== null ? workflow.juriPresident.name : "Not Assigned"}}
 					</v-card-text>
+					<AdminActions v-if="roleStore.isAdmin" :workflow="workflow"/>
 				</v-card>
 			</v-col>
 		</v-row>
@@ -33,23 +35,15 @@
 <script setup lang="ts">
 import { onMounted, ref } from 'vue';
 import WorkflowDto from '../../models/WorkflowDto';
-import RemoteServices from '../../services/RemoteService';
+import { getWorkflows } from './WorkflowActions';
 import { getColor } from '../../mappings/workflowMappings';
+import { useRoleStore } from '../../stores/role';
+import AdminActions from './AdminActions.vue';
 
 const workflows = ref<WorkflowDto[]>([]);
+const roleStore = useRoleStore();
 
-onMounted(() => {
-	getWorkflows();
+onMounted(async () => {
+	workflows.value = await getWorkflows();
 })
-
-async function getWorkflows() {
-	console.log("getting workflows");
-	try {
-		const result = await RemoteServices.getWorkflows();
-		workflows.value = result;
-		console.log("Fetched workflows: ", workflows.value);
-	} catch (error) {
-		console.error("Error getting workflows: ", error);
-	}
-}
 </script>

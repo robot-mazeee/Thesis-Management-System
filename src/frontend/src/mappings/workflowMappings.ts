@@ -52,7 +52,7 @@ export const getColor = (status: string) => {
     switch(status) {
         case "JURI_PROPOSAL_SUBMITTED":
             return 'pink';
-        case "APPROVED_BY_SC":
+        case "APPROVED_BY_ADMIN":
             return 'blue';
         case "JURI_PRESIDENT_ATTRIBUTED":
             return 'red';
