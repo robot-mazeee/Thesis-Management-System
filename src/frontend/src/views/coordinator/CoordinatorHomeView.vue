@@ -94,7 +94,7 @@ import WorkflowDto from '../../models/WorkflowDto'
 import DefenseDto from '../../models/DefenseDto'
 import SelectPresidentDialog from '../dialogs/SelectJuriPresidentDialog.vue';
 import Workflow from '../../components/workflow/Workflow.vue';
-import FileUpload from './FileUpload.vue';
+import FileUpload from '../../components/FileUpload.vue';
 import { getColor } from '../../mappings/workflowMappings';
 
 let search = ref('')

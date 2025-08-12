@@ -49,7 +49,7 @@ Once the thesis workflow is complete, the defense workflow can begin:
 - Assign roles in the frontend: staff, student, professor, coordinator, admin;
 - Display all students in a quick-access table, containing at least name, IST ID, email, and the state of the thesis/defense workflow;
 - Filter students by thesis/defense workflow state or other relevant fields;
-- View each student’s individual page, including:
+- View each student’s individual page from people and workflows list, including:
   - Personal information section;
   - Thesis workflow;
   - Defense workflow;
