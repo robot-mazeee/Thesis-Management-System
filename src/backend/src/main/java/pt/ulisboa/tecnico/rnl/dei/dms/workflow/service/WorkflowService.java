@@ -108,7 +108,7 @@ public class WorkflowService {
     }
 
     @Transactional
-    public WorkflowDto assignJuriPresident(long id, WorkflowDto workflowDto) {
+    public WorkflowDto selectJuriPresident(long id, WorkflowDto workflowDto) {
         Workflow workflow = fetchWorkflowOrThrow(id);
         Person juriPresident = workflowDto.juriPresident();
         workflow.setJuriPresident(juriPresident);

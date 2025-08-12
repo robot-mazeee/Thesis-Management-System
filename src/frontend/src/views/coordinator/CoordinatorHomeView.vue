@@ -92,9 +92,10 @@ import RemoteServices from '../../services/RemoteService';
 import { computed, onMounted, reactive, ref } from 'vue'
 import WorkflowDto from '../../models/WorkflowDto'
 import DefenseDto from '../../models/DefenseDto'
-import SelectPresidentDialog from './SelectPresidentDialog.vue';
+import SelectPresidentDialog from '../dialogs/SelectJuriPresidentDialog.vue';
 import Workflow from '../../components/workflow/Workflow.vue';
 import FileUpload from './FileUpload.vue';
+import { getColor } from '../../mappings/workflowMappings';
 
 let search = ref('')
 let loading = ref(true)
@@ -247,20 +248,6 @@ const defensesHeaders = [
       }
       defense.grade = grade.value;
       updateDefense(defense, 'SUBMITTED_TO_FENIX')
-    }
-
-    function getColor(status: string) {
-      console.log(status);
-      switch(status) {
-        case 'DEFENSE_SCHEDULED':
-          return 'red'
-        case 'IN_REVISION':
-          return 'blue'
-        case 'SUBMITTED_TO_FENIX':
-          return 'green'
-        default:
-          return 'red'
-      }
     }
 
     const fuzzySearch = (value: string, search: string) => {

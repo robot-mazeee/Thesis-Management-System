@@ -17,9 +17,9 @@
 						{{ workflow.student.name }} ({{ workflow.student.istId }})
 					</v-card-title>
 
-					<v-card-subtitle>
+					<v-card-subtitle class="text-caption">
 						Status:
-						<v-chip :color="getColor(workflow.status)">
+						<v-chip :color="getColor(workflow.status)" size="small">
 							{{ workflow.status }}
 						</v-chip>
 					</v-card-subtitle>
@@ -28,6 +28,7 @@
 						Juri President: {{ workflow.juriPresident !== null ? workflow.juriPresident.name : "Not Assigned"}}
 					</v-card-text>
 					<AdminActions v-if="roleStore.isAdmin" :workflow="workflow"/>
+					<CoordinatorActions v-if="roleStore.isCoordinator" :workflow="workflow"/>
 				</v-card>
 			</v-col>
 		</v-row>
@@ -40,6 +41,7 @@ import { useWorkflowStore } from '../../stores/workflows';
 import { getColor } from '../../mappings/workflowMappings';
 import { useRoleStore } from '../../stores/role';
 import AdminActions from './AdminActions.vue';
+import CoordinatorActions from './CoordinatorActions.vue';
 
 const workflowStore = useWorkflowStore();
 const roleStore = useRoleStore();

@@ -40,7 +40,7 @@ const uploadFile = async () => {
     let workflow = props.workflow;
     workflow.status = "DOCUMENT_SIGNED"
     await RemoteServices.updateWorkflow(workflow);
-    emit('file-uploaded')
+    emit('file-uploaded');
   } catch (error) {
     console.error("Upload failed:", error);
   }

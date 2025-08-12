@@ -60,7 +60,7 @@ export default class RemoteServices {
 	}
 
 	// Updates workflow status
-	static async updateWorkflow(workflow: WorkflowDto) {
+	static async updateWorkflow(workflow: WorkflowDto): Promise<WorkflowDto> {
 		return httpClient.put(`/workflows/${workflow.id}`, workflow);
 	}
 
@@ -84,7 +84,7 @@ export default class RemoteServices {
 		return httpClient.get('/workflows/juri-proposals/approved');
 	}
 
-	static async selectJuriPresident(workflow: WorkflowDto) {
+	static async selectJuriPresident(workflow: WorkflowDto): Promise<WorkflowDto> {
 		return httpClient.put(`/workflows/${workflow.id}/juri-president`, workflow);
 	}
 

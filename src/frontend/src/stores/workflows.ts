@@ -1,6 +1,7 @@
 import { defineStore } from "pinia";
 import WorkflowDto from "@/models/WorkflowDto";
 import RemoteServices from "@/services/RemoteService";
+import PersonDto from "@/models/PersonDto";
 
 export const useWorkflowStore = defineStore('workflow', {
     state: () => ({
@@ -29,6 +30,25 @@ export const useWorkflowStore = defineStore('workflow', {
                 await this.fetchWorkflows();
             } catch (error) {
                 console.error("Workflow status update failed:", error);
+            }
+        },
+
+        async saveJuriPresident(workflowId: number, president: PersonDto) {
+            try {
+                const workflow = this.workflows.find(w => w.id === workflowId);
+                if (!workflow) 
+                    throw new Error('Workflow not found');
+
+                workflow.juriPresident = president;
+                workflow.status = 'JURI_PRESIDENT_ATTRIBUTED';
+                const updatedWorkflow = await RemoteServices.selectJuriPresident(workflow);
+                console.log("updated workflow: ", updatedWorkflow);
+
+                const index = this.workflows.findIndex(w => w.id === workflowId);
+                if (index !== -1) 
+                    this.workflows[index] = updatedWorkflow;
+            } catch (error) {
+                console.error('Failed to save Juri President:', error);
             }
         }
     }

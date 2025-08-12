@@ -61,7 +61,7 @@ public class WorkflowController {
 	}
 
 	// get workflow juri
-	@GetMapping("/workflows/{id}/teachers")
+	@GetMapping("/workflows/{id}/professors")
 	public List<PersonDto> getJuri(@PathVariable long id) {
 		return workflowService.getJuri(id);
 	}
@@ -75,7 +75,7 @@ public class WorkflowController {
 	// update/assign juri president
 	@PutMapping("/workflows/{id}/juri-president")
 	public WorkflowDto assignJuriPresident(@PathVariable long id, @RequestBody WorkflowDto workflow) {
-		return workflowService.assignJuriPresident(id, workflow);
+		return workflowService.selectJuriPresident(id, workflow);
 	}
 
 	@GetMapping("/workflows/juri-president-selected")
