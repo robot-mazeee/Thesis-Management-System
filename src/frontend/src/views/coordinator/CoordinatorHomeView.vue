@@ -27,10 +27,6 @@
       <template v-slot:[`item.workflows`]="{ item }">
           <Workflow :workflow="item"/>
       </template>
-      <template v-slot:[`item.actions`]="{ item }">
-        <v-btn v-if="checkStatus(item.status)" @click="updateStatus(item, 'APPROVED_BY_SC')" class="mb-3" color="primary">Undo</v-btn>
-        <SelectPresidentDialog v-else :juriProposal="item"/>
-      </template>
       <template v-slot:[`item.download`]>
         <v-btn href="/workflow.pdf" download>
           <v-icon>mdi-download</v-icon>
@@ -93,8 +89,7 @@ import { computed, onMounted, reactive, ref } from 'vue'
 import WorkflowDto from '../../models/WorkflowDto'
 import DefenseDto from '../../models/DefenseDto'
 import SelectPresidentDialog from '../dialogs/SelectJuriPresidentDialog.vue';
-import Workflow from '../../components/workflow/Workflow.vue';
-import FileUpload from '../../components/FileUpload.vue';
+import FileUpload from '../../components/files/FileUpload.vue';
 import { getColor } from '../../mappings/workflowMappings';
 
 let search = ref('')

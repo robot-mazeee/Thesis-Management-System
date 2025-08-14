@@ -50,6 +50,24 @@ export const useWorkflowStore = defineStore('workflow', {
             } catch (error) {
                 console.error('Failed to save Juri President:', error);
             }
+        },
+
+        async signDocument(workflowId: number) {
+            try {
+                const workflow = this.workflows.find(w => w.id === workflowId);
+                if (!workflow) 
+                    throw new Error('Workflow not found');
+
+                workflow.status = 'DOCUMENT_SIGNED';
+                const updatedWorkflow = await RemoteServices.signDocument(workflow);
+                console.log("updated workflow: ", updatedWorkflow);
+
+                const index = this.workflows.findIndex(w => w.id === workflowId);
+                if (index !== -1) 
+                    this.workflows[index] = updatedWorkflow;
+            } catch (error) {
+                console.error('Failed to sign document:', error);
+            }
         }
     }
 });

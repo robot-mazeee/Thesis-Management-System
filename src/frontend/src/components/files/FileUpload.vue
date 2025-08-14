@@ -12,15 +12,15 @@
 
 <script setup lang="ts">
 import { ref } from "vue";
-import RemoteServices from "../../services/RemoteService";
 import WorkflowDto from "../../models/WorkflowDto";
+import { useWorkflowStore } from "../../stores/workflows";
 
 const props = defineProps<{
   workflow: WorkflowDto
 }>();
 
 const selectedFile = ref<File | null>(null);
-const emit = defineEmits(['file-uploaded']);
+const workflowStore = useWorkflowStore();
 
 const onFileSelect = (event: Event) => {
 	const input = event.target as HTMLInputElement;
@@ -36,10 +36,8 @@ const uploadFile = async () => {
 	formData.append("file", selectedFile.value);
 
 	try {
-		let workflow = props.workflow;
-		workflow.status = "DOCUMENT_SIGNED"
-		await RemoteServices.updateWorkflow(workflow);
-		emit('file-uploaded');
+		const workflow: WorkflowDto = props.workflow;
+		await workflowStore.updateStatus(workflow, "DOCUMENT_SIGNED");
 	} catch (error) {
 		console.error("Upload failed:", error);
 	}

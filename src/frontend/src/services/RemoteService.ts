@@ -64,6 +64,10 @@ export default class RemoteServices {
 		return httpClient.put(`/workflows/${workflow.id}`, workflow);
 	}
 
+	static async signDocument(workflow: WorkflowDto): Promise<WorkflowDto> {
+		return httpClient.put(`/workflows/${workflow.id}/sign-document`, workflow.id);
+	}
+
 	static async createDefense() {
 		return httpClient.post('/defenses');
 	}

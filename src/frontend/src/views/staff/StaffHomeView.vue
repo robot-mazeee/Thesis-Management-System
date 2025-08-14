@@ -39,7 +39,6 @@
 import RemoteServices from '../../services/RemoteService';
 import { onMounted, reactive, ref } from 'vue'
 import WorkflowDto from '../../models/WorkflowDto'
-import Workflow from '../../components/workflow/Workflow.vue';
 
 let search = ref('')
 let loading = ref(true)

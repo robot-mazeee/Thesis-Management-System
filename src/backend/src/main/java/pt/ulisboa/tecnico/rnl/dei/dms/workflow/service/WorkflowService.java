@@ -73,6 +73,20 @@ public class WorkflowService {
         return new WorkflowDto(workflowRepository.save(workflow));
     }
 
+    @Transactional
+    public WorkflowDto updateStatus(long id, String newStatus) {
+        var workflow = fetchWorkflowOrThrow(id);
+        workflow.setStatus(WorkflowStatus.valueOf(newStatus));
+        return new WorkflowDto(workflowRepository.save(workflow));
+    }
+
+    @Transactional
+    public WorkflowDto signDocument(long id) {
+        var workflow = fetchWorkflowOrThrow(id);
+        workflow.setStatus(WorkflowStatus.DOCUMENT_SIGNED);
+        return new WorkflowDto(workflowRepository.save(workflow));
+    }
+
     public List<WorkflowDto> getWorkflowsByStatus(WorkflowStatus status) {
         return workflowRepository.findByStatus(status).stream()
 				.map(WorkflowDto::new)
