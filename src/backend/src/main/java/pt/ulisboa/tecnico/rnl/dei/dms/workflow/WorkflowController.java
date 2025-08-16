@@ -44,10 +44,21 @@ public class WorkflowController {
 	}
 
 	// update workflow status
+	// update/assign juri president
+	@PutMapping("/workflows/{id}/juri-president")
+	public WorkflowDto selectJuriPresident(@PathVariable long id, @RequestBody WorkflowDto workflow) {
+		return workflowService.selectJuriPresident(id, workflow);
+	}
+
 	@PutMapping("/workflows/{id}")
 	public WorkflowDto updateWorkflow(@PathVariable long id, @RequestBody WorkflowDto workflow) {
 		System.out.println(id);
 		return workflowService.updateWorkflow(id, workflow);
+	}
+
+	@PutMapping("workflows/{id}/status")
+	public WorkflowDto updateWorkflowStatus(@RequestBody WorkflowDto workflow) {
+		return workflowService.updateStatus(workflow);
 	}
 
 	@PutMapping("/workflows/{id}/sign-document")
@@ -75,12 +86,6 @@ public class WorkflowController {
 	@GetMapping("/workflows/{id}/juri-president")
 	public PersonDto getJuriPresident(@PathVariable long id) {
 		return workflowService.getJuriPresident(id);
-	}
-
-	// update/assign juri president
-	@PutMapping("/workflows/{id}/juri-president")
-	public WorkflowDto selectJuriPresident(@PathVariable long id, @RequestBody WorkflowDto workflow) {
-		return workflowService.selectJuriPresident(id, workflow);
 	}
 
 	@GetMapping("/workflows/juri-president-selected")

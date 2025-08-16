@@ -74,9 +74,9 @@ public class WorkflowService {
     }
 
     @Transactional
-    public WorkflowDto updateStatus(long id, String newStatus) {
-        var workflow = fetchWorkflowOrThrow(id);
-        workflow.setStatus(WorkflowStatus.valueOf(newStatus));
+    public WorkflowDto updateStatus(WorkflowDto workflowDto) {
+        var workflow = fetchWorkflowOrThrow(workflowDto.id());
+        workflow.setStatus(WorkflowStatus.valueOf(workflowDto.status()));
         return new WorkflowDto(workflowRepository.save(workflow));
     }
 

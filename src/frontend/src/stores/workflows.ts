@@ -26,7 +26,8 @@ export const useWorkflowStore = defineStore('workflow', {
         async updateStatus(workflow: WorkflowDto, status: string) {
             try {
                 workflow.status = status;
-                await RemoteServices.updateWorkflow(workflow);
+                console.log("Sending workflow: ", workflow);
+                await RemoteServices.updateWorkflowStatus(workflow);
                 await this.fetchWorkflows();
             } catch (error) {
                 console.error("Workflow status update failed:", error);
