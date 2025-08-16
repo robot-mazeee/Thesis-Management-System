@@ -29,6 +29,7 @@
 					</v-card-text>
 					<AdminActions v-if="roleStore.isAdmin" :workflow="workflow"/>
 					<CoordinatorActions v-if="roleStore.isCoordinator" :workflow="workflow"/>
+					<StaffActions v-if="roleStore.isStaff" :workflow="workflow"/>
 				</v-card>
 			</v-col>
 		</v-row>
@@ -42,6 +43,7 @@ import { getColor } from '../../mappings/workflowMappings';
 import { useRoleStore } from '../../stores/role';
 import AdminActions from './AdminActions.vue';
 import CoordinatorActions from './CoordinatorActions.vue';
+import StaffActions from './StaffActions.vue';
 
 const workflowStore = useWorkflowStore();
 const roleStore = useRoleStore();
