@@ -12,6 +12,7 @@ import pt.ulisboa.tecnico.rnl.dei.dms.workflow.repository.WorkflowRepository;
 import pt.ulisboa.tecnico.rnl.dei.dms.workflow.dto.WorkflowDto;
 import pt.ulisboa.tecnico.rnl.dei.dms.exceptions.DEIException;
 import pt.ulisboa.tecnico.rnl.dei.dms.exceptions.ErrorMessage;
+import pt.ulisboa.tecnico.rnl.dei.dms.file.service.FileService;
 import pt.ulisboa.tecnico.rnl.dei.dms.person.domain.Person;
 import pt.ulisboa.tecnico.rnl.dei.dms.person.dto.PersonDto;
 
@@ -21,6 +22,9 @@ public class WorkflowService {
 
 	@Autowired 
 	private WorkflowRepository workflowRepository;
+
+    @Autowired
+	private FileService fileService;
 
     private Workflow fetchWorkflowOrThrow(long id) {
 		return workflowRepository.findById(id)
@@ -143,5 +147,11 @@ public class WorkflowService {
     @Transactional
     public List<WorkflowDto> getSignedDocuments() {
         return getWorkflowsByStatus(WorkflowStatus.DOCUMENT_SIGNED);
+    }
+
+    @Transactional
+    public byte[] generateWorkflowPdf(Long id) {
+        Workflow workflow = fetchWorkflowOrThrow(id);
+        return fileService.generateWorkflowPdf(workflow);
     }
 }

@@ -1,4 +1,4 @@
-package pt.ulisboa.tecnico.rnl.dei.dms.file;
+package pt.ulisboa.tecnico.rnl.dei.dms.file.service;
 import pt.ulisboa.tecnico.rnl.dei.dms.workflow.domain.Workflow;
 
 import com.lowagie.text.*;
@@ -10,7 +10,7 @@ import java.io.ByteArrayOutputStream;
 import java.util.List;
     
 @Service
-public class PdfService {
+public class FileService {
 
     public byte[] generateWorkflowPdf(Workflow workflow) {
         try {

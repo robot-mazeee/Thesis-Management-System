@@ -3,12 +3,16 @@ package pt.ulisboa.tecnico.rnl.dei.dms.workflow;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
+
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
 
 import pt.ulisboa.tecnico.rnl.dei.dms.person.dto.PersonDto;
 import pt.ulisboa.tecnico.rnl.dei.dms.workflow.dto.WorkflowDto;
@@ -42,6 +46,16 @@ public class WorkflowController {
 	public WorkflowDto getWorkflowByStudent(@PathVariable Long studentId) {
 		return workflowService.getWorkflowByStudent(studentId);
 	}
+
+	@GetMapping("/workflows/{id}/download")
+    public ResponseEntity<byte[]> downloadWorkflowPdf(@PathVariable Long id) {
+        byte[] pdfBytes = workflowService.generateWorkflowPdf(id);
+
+        return ResponseEntity.ok()
+                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=workflow_" + id + ".pdf")
+                .contentType(MediaType.APPLICATION_PDF)
+                .body(pdfBytes);
+    }
 
 	// update workflow status
 	// update/assign juri president
