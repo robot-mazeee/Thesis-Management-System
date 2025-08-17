@@ -10,7 +10,7 @@
 </template>
 
 <script setup lang="ts">
-import FileUpload from '../../components/files/FileUpload.vue';
+import FileUpload from '../../components/file/FileUpload.vue';
 import WorkflowDto from '../../models/WorkflowDto';
 import { useWorkflowStore } from '../../stores/workflows';
 import SelectJuriPresidentDialog from '../dialogs/SelectJuriPresidentDialog.vue';
