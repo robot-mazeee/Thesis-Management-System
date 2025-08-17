@@ -1,9 +1,9 @@
-import axios from 'axios'
-import { useAppearanceStore } from '@/stores/appearance'
-import DeiError from '@/models/DeiError'
-import type PersonDto from '@/models/PersonDto'
-import type WorkflowDto from '@/models/WorkflowDto'
-import type DefenseDto from '@/models/DefenseDto'
+import axios from 'axios';
+import { useAppearanceStore } from '@/stores/appearance';
+import DeiError from '@/models/DeiError';
+import type PersonDto from '@/models/PersonDto';
+import type WorkflowDto from '@/models/WorkflowDto';
+import type DefenseDto from '@/models/DefenseDto';
 
 const httpClient = axios.create()
 httpClient.defaults.timeout = 50000
@@ -106,6 +106,23 @@ export default class RemoteServices {
 
 	static async getWorkflowSubmissions(): Promise<WorkflowDto[]> {
 		return httpClient.get(`/workflows/submissions`);
+	}
+
+	static async downloadWorkflowPdf(id: number): Promise<void> {
+		const response = await axios.get(`/workflows/${id}/download`, {
+			responseType: "blob",
+		});
+
+		const file = new Blob([response.data], { type: "application/pdf" });
+		const fileURL = window.URL.createObjectURL(file);
+
+		const link = document.createElement("a");
+		link.href = fileURL;
+		// link.download = `workflow_${id}.pdf`;
+		window.open(fileURL);
+		document.body.appendChild(link);
+		link.click();
+		document.body.removeChild(link);
 	}
 
 	static async errorMessage(error: any): Promise<string> {
