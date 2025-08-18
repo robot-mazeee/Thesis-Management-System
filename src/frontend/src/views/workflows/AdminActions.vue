@@ -12,7 +12,7 @@
         color="secondary"
     >Reject</v-btn>
     <v-btn 
-        v-if="props.workflow.status === 'APPROVED_BY_ADMIN'"
+        v-if="props.workflow.status === 'APPROVED_BY_ADMIN' || props.workflow.status === 'REJECTED'"
         @click="changeStatus('JURI_PROPOSAL_SUBMITTED')"
         class="mb-3" 
         color="error"

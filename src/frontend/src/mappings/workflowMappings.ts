@@ -1,18 +1,3 @@
-export const getColorByStatus = (status: string) => {
-  switch (status) {
-    case "APPROVED_BY_ADMIN":
-      return "purple";
-    case "JURI_PRESIDENT_ATTRIBUTED":
-      return "red";
-    case "DOCUMENT_SIGNED":
-      return "green";
-    case "SUBMITTED_TO_FENIX":
-      return "yellow";
-    default:
-      return "blue"
-  }
-};
-
 export const translateStatus = (status: string) => {
   switch (status) {
     case "JURI_PROPOSAL_SUBMITTED":
@@ -51,15 +36,15 @@ export const getColor = (status: string) => {
     console.log(status)
     switch(status) {
         case "JURI_PROPOSAL_SUBMITTED":
-            return 'pink';
+            return 'white';
         case "APPROVED_BY_ADMIN":
             return 'blue';
         case "JURI_PRESIDENT_ATTRIBUTED":
-            return 'red';
+            return 'purple';
         case "DOCUMENT_SIGNED":
-            return 'green';
-        case "SUBMITTED_TO_FENIX":
             return 'yellow';
+        case "SUBMITTED_TO_FENIX":
+            return 'green';
         default:
             return 'red';
     }
