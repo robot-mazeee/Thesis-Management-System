@@ -109,20 +109,20 @@ export default class RemoteServices {
 	}
 
 	static async downloadWorkflowPdf(id: number): Promise<void> {
-		const response = await axios.get(`/workflows/${id}/download`, {
-			responseType: "blob",
+		const response = await httpClient.get(`/workflows/${id}/download`, {
+			responseType: "blob"
 		});
+
+		console.log(response);
 
 		const file = new Blob([response.data], { type: "application/pdf" });
 		const fileURL = window.URL.createObjectURL(file);
 
 		const link = document.createElement("a");
 		link.href = fileURL;
-		// link.download = `workflow_${id}.pdf`;
-		window.open(fileURL);
-		document.body.appendChild(link);
+		link.download = `workflow_${id}.pdf`;
 		link.click();
-		document.body.removeChild(link);
+		window.URL.revokeObjectURL(fileURL);
 	}
 
 	static async errorMessage(error: any): Promise<string> {

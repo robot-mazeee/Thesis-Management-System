@@ -6,10 +6,12 @@
         class="mb-3" 
         color="error"
     >Undo</v-btn>
+    <FileDownload v-if="props.workflow.status === 'JURI_PRESIDENT_ATTRIBUTED'" :workflow="props.workflow"/>
     <FileUpload v-if="props.workflow.status === 'JURI_PRESIDENT_ATTRIBUTED'" :workflow="props.workflow"/>
 </template>
 
 <script setup lang="ts">
+import FileDownload from '../../components/file/FileDownload.vue';
 import FileUpload from '../../components/file/FileUpload.vue';
 import WorkflowDto from '../../models/WorkflowDto';
 import { useWorkflowStore } from '../../stores/workflows';

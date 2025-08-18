@@ -1,5 +1,6 @@
 package pt.ulisboa.tecnico.rnl.dei.dms.workflow;
 
+import java.nio.charset.StandardCharsets;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 
 import pt.ulisboa.tecnico.rnl.dei.dms.person.dto.PersonDto;
@@ -49,13 +51,17 @@ public class WorkflowController {
 
 	@GetMapping("/workflows/{id}/download")
     public ResponseEntity<byte[]> downloadWorkflowPdf(@PathVariable Long id) {
-        byte[] pdfBytes = workflowService.generateWorkflowPdf(id);
+		try {
+			byte[] pdfBytes = workflowService.generateWorkflowPdf(id);
 
-        return ResponseEntity.ok()
-                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=workflow_" + id + ".pdf")
-                .contentType(MediaType.APPLICATION_PDF)
-                .body(pdfBytes);
+			return ResponseEntity.ok().header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=workflow_" + id + ".pdf").contentType(MediaType.APPLICATION_PDF).body(pdfBytes);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+					.body(("Error generating PDF: " + e.getMessage()).getBytes(StandardCharsets.UTF_8));
+		}
     }
+
 
 	// update workflow status
 	// update/assign juri president

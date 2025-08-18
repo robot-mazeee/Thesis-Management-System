@@ -2,7 +2,6 @@
   <div class="text-center">
     <LoginPage v-if="!studentStore.isLoggedIn" />
     <StudentHomeView v-else-if="roleStore.isStudent" />
-    <CoordinatorHomeView v-else-if="roleStore.isCoordinator" />
     <StaffHomeView v-else-if="roleStore.isStaff" />
     <p v-else>
       Page in Construction :).
@@ -12,7 +11,6 @@
 
 <script setup lang="ts">
 import LoginPage from './login/LoginPage.vue';
-import CoordinatorHomeView from './coordinator/CoordinatorHomeView.vue';
 import StaffHomeView from './staff/StaffHomeView.vue';
 import StudentHomeView from './student/StudentHomeView.vue';
 import { useRoleStore } from '../stores/role';
