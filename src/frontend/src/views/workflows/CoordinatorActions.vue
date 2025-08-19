@@ -6,6 +6,12 @@
         class="mb-3" 
         color="error"
     >Undo</v-btn>
+    <v-btn 
+        v-else-if="props.workflow.status === 'DOCUMENT_SIGNED'"
+        @click="changeStatus('JURI_PRESIDENT_ATTRIBUTED')"
+        class="mb-3" 
+        color="error"
+    >Undo</v-btn>
     <FileDownload v-if="props.workflow.status === 'JURI_PRESIDENT_ATTRIBUTED'" :workflow="props.workflow"/>
     <FileUpload v-if="props.workflow.status === 'JURI_PRESIDENT_ATTRIBUTED'" :workflow="props.workflow"/>
 </template>

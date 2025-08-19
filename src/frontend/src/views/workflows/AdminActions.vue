@@ -1,16 +1,10 @@
 <template>
-    <v-btn 
-        v-if="props.workflow.status === 'JURI_PROPOSAL_SUBMITTED'" 
-        @click="changeStatus('APPROVED_BY_ADMIN')" 
-        class="mb-3" 
-        color="primary"
-    >Approve</v-btn>
-    <v-btn 
-        v-if="props.workflow.status === 'JURI_PROPOSAL_SUBMITTED'" 
-        @click="changeStatus('REJECTED')"
-        class="mb-3" 
-        color="secondary"
-    >Reject</v-btn>
+    <ViewJuriDialog 
+        v-if="props.workflow.status === 'JURI_PROPOSAL_SUBMITTED'"
+        :workflow="props.workflow" 
+        @approved="changeStatus('APPROVED_BY_ADMIN')"
+        @rejected="changeStatus('REJECTED')"
+    />
     <v-btn 
         v-if="props.workflow.status === 'APPROVED_BY_ADMIN' || props.workflow.status === 'REJECTED'"
         @click="changeStatus('JURI_PROPOSAL_SUBMITTED')"
@@ -22,6 +16,7 @@
 <script setup lang="ts">
 import WorkflowDto from '../../models/WorkflowDto';
 import { useWorkflowStore } from '../../stores/workflows';
+import ViewJuriDialog from '../dialogs/ViewJuriDialog.vue';
 
 const props = defineProps<{
     workflow: WorkflowDto

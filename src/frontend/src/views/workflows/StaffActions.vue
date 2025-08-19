@@ -5,6 +5,12 @@
         class="mb-3" 
         color="primary"
     >Submit</v-btn>
+    <v-btn 
+        v-else-if="props.workflow.status === 'SUBMITTED_TO_FENIX'" 
+        @click="changeStatus('DOCUMENT_SIGNED')" 
+        class="mb-3" 
+        color="error"
+    >Undo</v-btn>
 </template>
 
 <script setup lang="ts">
