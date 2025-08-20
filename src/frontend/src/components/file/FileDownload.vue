@@ -1,9 +1,7 @@
 <template>
-    <v-btn 
-        @click="downloadPdf"
-        class="mb-3" 
-        color="warning"
-    >Download PDF</v-btn>
+    <v-btn icon color="secondary" elevation="2" class="rounded-circle" @click="downloadPdf">
+        <v-icon>mdi-download</v-icon>
+    </v-btn>
 </template>
 
 <script setup lang="ts">

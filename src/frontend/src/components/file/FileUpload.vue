@@ -1,13 +1,16 @@
 <template>
-	<v-container>
-		<v-file-input
-			label="Upload File"
-			@change="onFileSelect"
-			accept="*.pdf"
-			show-size
-		></v-file-input>
-		<v-btn @click="uploadFile" :disabled="!selectedFile">Upload File</v-btn>
-	</v-container>
+	<v-file-input
+		accept=".pdf"
+		hide-input
+		@change="onFileSelect"
+		class="upload-btn"
+	>
+		<template v-if="selectedFile" v-slot:prepend>
+			<v-btn icon color="primary" elevation="2" class="rounded-circle" @click="uploadFile">
+				<v-icon>mdi-upload</v-icon>
+			</v-btn>
+		</template>
+	</v-file-input>
 </template>
 
 <script setup lang="ts">
@@ -22,11 +25,10 @@ const props = defineProps<{
 const selectedFile = ref<File | null>(null);
 const workflowStore = useWorkflowStore();
 
-const onFileSelect = (event: Event) => {
+const onFileSelect = async (event: Event) => {
 	const input = event.target as HTMLInputElement;
-	if (input.files && input.files[0]) {
+	if (input.files && input.files[0])
 		selectedFile.value = input.files[0];
-	}
 };
 
 const uploadFile = async () => {
