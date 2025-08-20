@@ -14,9 +14,9 @@
 </template>
 
 <script setup lang="ts">
-import WorkflowDto from '../../models/WorkflowDto';
-import { useWorkflowStore } from '../../stores/workflows';
-import ViewJuriDialog from '../dialogs/ViewJuriDialog.vue';
+import WorkflowDto from '../../../models/WorkflowDto';
+import { useWorkflowStore } from '../../../stores/workflows';
+import ViewJuriDialog from '../../dialogs/ViewJuriDialog.vue';
 
 const props = defineProps<{
     workflow: WorkflowDto

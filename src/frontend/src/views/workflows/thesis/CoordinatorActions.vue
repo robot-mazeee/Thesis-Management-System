@@ -19,11 +19,11 @@
 </template>
 
 <script setup lang="ts">
-import FileDownload from '../../components/file/FileDownload.vue';
-import FileUpload from '../../components/file/FileUpload.vue';
-import WorkflowDto from '../../models/WorkflowDto';
-import { useWorkflowStore } from '../../stores/workflows';
-import SelectJuriPresidentDialog from '../dialogs/SelectJuriPresidentDialog.vue';
+import FileDownload from '../../../components/file/FileDownload.vue';
+import FileUpload from '../../../components/file/FileUpload.vue';
+import WorkflowDto from '../../../models/WorkflowDto';
+import { useWorkflowStore } from '../../../stores/workflows';
+import SelectJuriPresidentDialog from '../../dialogs/SelectJuriPresidentDialog.vue';
 
 const props = defineProps<{
     workflow: WorkflowDto

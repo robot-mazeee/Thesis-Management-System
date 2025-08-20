@@ -14,8 +14,8 @@
 </template>
 
 <script setup lang="ts">
-import WorkflowDto from '../../models/WorkflowDto';
-import { useWorkflowStore } from '../../stores/workflows';
+import WorkflowDto from '../../../models/WorkflowDto';
+import { useWorkflowStore } from '../../../stores/workflows';
 
 const props = defineProps<{
     workflow: WorkflowDto

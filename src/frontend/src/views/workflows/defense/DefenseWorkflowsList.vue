@@ -1,10 +1,4 @@
 <template>
-	<v-row align="center">
-		<v-col>
-			<h1 class="text-left ml-1">Workflows List</h1>
-		</v-col>
-	</v-row>
-
 	<v-text-field
 		v-model="search"
 		label="Search"
@@ -34,9 +28,7 @@
 		</template>
 		<template v-slot:[`item.actions`]="{ item }">
 			<div class="d-flex align-center justify-center ga-2">
-				<AdminActions v-if="roleStore.isAdmin" :workflow="item" />
                 <CoordinatorActions v-if="roleStore.isCoordinator" :workflow="item" />
-                <StaffActions v-if="roleStore.isStaff" :workflow="item" />
 			</div>
 		</template>
 	</v-data-table>
@@ -44,12 +36,9 @@
 
 <script setup lang="ts">
 import { onMounted, ref } from 'vue';
-import { useWorkflowStore } from '../../stores/workflows';
-import { useRoleStore } from '../../stores/role';
-import AdminActions from './AdminActions.vue';
-import CoordinatorActions from './CoordinatorActions.vue';
-import StaffActions from './StaffActions.vue';
-import { getColor } from '../../mappings/workflowMappings';
+import { useWorkflowStore } from '../../../stores/workflows';
+import { useRoleStore } from '../../../stores/role';
+import { getColor } from '../../../mappings/workflowMappings';
 
 let search = ref('');
 let loading = ref(true);
