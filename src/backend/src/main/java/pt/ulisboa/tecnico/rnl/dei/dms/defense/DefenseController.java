@@ -20,8 +20,8 @@ public class DefenseController {
 	private DefenseService defenseService;
 
 	@PostMapping("/defenses")
-	public DefenseDto createDefense() {
-		return defenseService.createDefense();
+	public DefenseDto createDefense(@RequestBody DefenseDto defenseDto) {
+		return defenseService.createDefense(defenseDto);
 	}
 
 	@GetMapping("/defenses")
@@ -30,9 +30,14 @@ public class DefenseController {
 	}
 
 	// update workflow status
-	@PutMapping("/defenses/{id}")
-	public DefenseDto updateDefense(@PathVariable long id, @RequestBody DefenseDto defense) {
-		return defenseService.updateDefense(id, defense);
+	// @PutMapping("/defenses/{id}")
+	// public DefenseDto updateDefense(@PathVariable long id, @RequestBody DefenseDto defense) {
+	// 	return defenseService.updateDefense(id, defense);
+	// }
+
+	@PutMapping("/defenses/{id}/grade")
+	public DefenseDto gradeDefense(@PathVariable long id, @RequestBody DefenseDto defense) {
+		return defenseService.gradeDefense(id, defense);
 	}
 
 }

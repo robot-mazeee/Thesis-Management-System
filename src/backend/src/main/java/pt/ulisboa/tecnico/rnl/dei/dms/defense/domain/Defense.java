@@ -1,7 +1,7 @@
 package pt.ulisboa.tecnico.rnl.dei.dms.defense.domain;
 
 import pt.ulisboa.tecnico.rnl.dei.dms.defense.dto.DefenseDto;
-
+import pt.ulisboa.tecnico.rnl.dei.dms.person.domain.Person;
 import jakarta.persistence.*;
 
 import lombok.Data;
@@ -14,7 +14,7 @@ public class Defense {
 	@GeneratedValue
 	private Long id;
  
-    @Column(name = "workflow_status", nullable = false)
+    @Column(name = "workflow_status")
 	@Enumerated(EnumType.STRING)
     private DefenseStatus defenseStatus;
 
@@ -23,6 +23,10 @@ public class Defense {
 
     @Column(name = "grade")
     private long grade;
+
+    @ManyToOne
+    @JoinColumn(name = "student")
+    private Person student;
 
     public Defense() {}
 
@@ -34,6 +38,7 @@ public class Defense {
         this.defenseStatus = DefenseStatus.valueOf(defenseDto.defenseStatus().toUpperCase());
         this.date = defenseDto.date();
         this.grade = defenseDto.grade();
+        this.student = defenseDto.student();
     }
 
     public void setDefenseStatus(DefenseStatus status) {
