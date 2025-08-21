@@ -72,18 +72,6 @@ export default class RemoteServices {
 		return httpClient.put(`/workflows/${workflow.id}/sign-document`);
 	}
 
-	static async createDefense() {
-		return httpClient.post('/defenses');
-	}
-
-	static async getDefenses(): Promise<DefenseDto[]> {
-		return httpClient.get('/defenses');
-	}
-
-	static async updateDefense(defense: DefenseDto) {
-		return httpClient.put(`/defenses/${defense.id}`, defense);
-	}
-
 	static async getJuriProposals(): Promise<WorkflowDto[]> {
 		return httpClient.get('/workflows/juri-proposals');
 	}
@@ -106,6 +94,22 @@ export default class RemoteServices {
 
 	static async getWorkflowSubmissions(): Promise<WorkflowDto[]> {
 		return httpClient.get(`/workflows/submissions`);
+	}
+
+	static async createDefense() {
+		return httpClient.post('/defenses');
+	}
+
+	static async getDefenses(): Promise<DefenseDto[]> {
+		return httpClient.get('/defenses');
+	}
+
+	static async updateDefense(defense: DefenseDto) {
+		return httpClient.put(`/defenses/${defense.id}`, defense);
+	}
+
+	static async gradeDefense(defense: DefenseDto): Promise<DefenseDto> {
+		return httpClient.put(`defenses/${defense.id}/grade`, defense);
 	}
 
 	static async downloadWorkflowPdf(id: number): Promise<void> {
