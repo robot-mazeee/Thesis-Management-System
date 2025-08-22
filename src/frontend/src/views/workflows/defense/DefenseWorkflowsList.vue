@@ -9,14 +9,14 @@
 	></v-text-field>
 
 	<v-data-table
-		:headers="workflowsHeaders"
-		:items="workflowStore.workflows"
+		:headers="defensesHeaders"
+		:items="defenseStore.defenses"
 		:search="search"
 		:loading="loading"
 		:custom-filter="fuzzySearch"
 		item-key="id"
 		class="text-left"
-		no-data-text="No workflows."
+		no-data-text="No defenses."
 	>
         <template v-slot:[`item.student`]="{ item }">
             {{ item.student.name }} ({{ item.student.istId }})
@@ -28,7 +28,7 @@
 		</template>
 		<template v-slot:[`item.actions`]="{ item }">
 			<div class="d-flex align-center justify-center ga-2">
-                <CoordinatorActions v-if="roleStore.isCoordinator" :workflow="item" />
+                <DefenseActions v-if="roleStore.isCoordinator" :defense="item" />
 			</div>
 		</template>
 	</v-data-table>
@@ -36,14 +36,15 @@
 
 <script setup lang="ts">
 import { onMounted, ref } from 'vue';
-import { useWorkflowStore } from '../../../stores/workflows';
+import { useDefenseStore } from '../../../stores/defense';
 import { useRoleStore } from '../../../stores/role';
 import { getColor } from '../../../mappings/workflowMappings';
+import DefenseActions from './DefenseActions.vue';
 
 let search = ref('');
 let loading = ref(true);
 
-const workflowsHeaders = [
+const defensesHeaders = [
 	{ title: 'ID', key: 'id', value: 'id', sortable: true, filterable: false },
 	{
 		title: 'Student',
@@ -69,11 +70,11 @@ const workflowsHeaders = [
 	}
 ]
 
-const workflowStore = useWorkflowStore();
+const defenseStore = useDefenseStore();
 const roleStore = useRoleStore();
 
 onMounted(() => {
-    workflowStore.fetchWorkflows();
+    defenseStore.fetchDefenses();
     loading.value = false;
 });
 

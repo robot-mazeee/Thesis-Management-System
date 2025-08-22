@@ -41,6 +41,6 @@ export const useDefenseStore = defineStore('defense', {
             }
         },
 
-        async scheduleDefense(defenseId: number, date: Date) {}
+        async scheduleDefense(defenseId: number, date: string) {}
     }
 });
