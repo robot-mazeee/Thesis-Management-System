@@ -2,6 +2,9 @@ package pt.ulisboa.tecnico.rnl.dei.dms.defense.domain;
 
 import pt.ulisboa.tecnico.rnl.dei.dms.defense.dto.DefenseDto;
 import pt.ulisboa.tecnico.rnl.dei.dms.person.domain.Person;
+
+import java.time.LocalDate;
+
 import jakarta.persistence.*;
 
 import lombok.Data;
@@ -16,11 +19,11 @@ public class Defense {
  
     @Column(name = "workflow_status")
 	@Enumerated(EnumType.STRING)
-    private DefenseStatus defenseStatus;
+    private DefenseStatus status;
 
     @Column(name = "date")
-    private String date;
-
+    private LocalDate date;
+    
     @Column(name = "grade")
     private long grade;
 
@@ -31,17 +34,17 @@ public class Defense {
     public Defense() {}
 
     public Defense(DefenseStatus status) {
-        this.defenseStatus = status;
+        this.status = status;
     }
 
     public Defense(DefenseDto defenseDto) {
-        this.defenseStatus = DefenseStatus.valueOf(defenseDto.defenseStatus().toUpperCase());
+        this.status = DefenseStatus.valueOf(defenseDto.status().toUpperCase());
         this.date = defenseDto.date();
         this.grade = defenseDto.grade();
         this.student = defenseDto.student();
     }
 
     public void setDefenseStatus(DefenseStatus status) {
-        this.defenseStatus = status;
+        this.status = status;
     }
 }

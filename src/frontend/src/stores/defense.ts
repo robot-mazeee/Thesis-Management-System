@@ -39,8 +39,6 @@ export const useDefenseStore = defineStore('defense', {
             } catch (error) {
                 console.error('Failed to grade defense:', error);
             }
-        },
-
-        async scheduleDefense(defenseId: number, date: string) {}
+        }
     }
 });

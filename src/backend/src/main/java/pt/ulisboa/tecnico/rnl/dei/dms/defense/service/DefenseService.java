@@ -1,5 +1,6 @@
 package pt.ulisboa.tecnico.rnl.dei.dms.defense.service;
 
+import java.time.LocalDate;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -7,6 +8,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import pt.ulisboa.tecnico.rnl.dei.dms.defense.domain.Defense;
+import pt.ulisboa.tecnico.rnl.dei.dms.defense.domain.DefenseStatus;
 import pt.ulisboa.tecnico.rnl.dei.dms.defense.repository.DefenseRepository;
 import pt.ulisboa.tecnico.rnl.dei.dms.exceptions.DEIException;
 import pt.ulisboa.tecnico.rnl.dei.dms.exceptions.ErrorMessage;
@@ -35,9 +37,22 @@ public class DefenseService {
         Person student = defenseDto.student();
         defense.setStudent(student);
 
+        LocalDate defenseDate = defenseDto.date();
+        LocalDate currentDate = LocalDate.now();
+
+        DefenseStatus status;
+        if (defenseDate.isAfter(currentDate)) {
+            status = DefenseStatus.IN_REVISION;
+        } else {
+            status = DefenseStatus.DEFENSE_SCHEDULED;
+        }
+
+        defense.setDate(defenseDate);
+        defense.setDefenseStatus(status);
+
         defense = defenseRepository.save(defense);
 
-        return new DefenseDto(defense.getId(), defense.getDefenseStatus().toString(), defense.getDate(), defense.getGrade(), defense.getStudent());
+        return new DefenseDto(defense.getId(), defense.getStatus().toString(), defense.getDate(), defense.getGrade(), defense.getStudent());
     }
 	
 
@@ -58,17 +73,6 @@ public class DefenseService {
         var defense = fetchDefenseByStudent(studentId);
         return (defense != null) ? new DefenseDto(defense) : null;
     }
-
-    // @Transactional 
-    // public DefenseDto updateDefense(long id, DefenseDto defenseDto) {
-    //     fetchDefenseOrThrow(id);
-    //     Defense defense = new Defense(defenseDto);
-    //     defense.setId(id);
-    //     return new DefenseDto(defenseRepository.save(defense));
-    // }
-
-    // @Transactional
-    // public defenseDto scheduleDefense(long id, DefenseDto defenseDto) {}
 
     @Transactional
     public DefenseDto gradeDefense(long id, DefenseDto defenseDto) {

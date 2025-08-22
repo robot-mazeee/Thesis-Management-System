@@ -96,8 +96,8 @@ export default class RemoteServices {
 		return httpClient.get(`/workflows/submissions`);
 	}
 
-	static async createDefense() {
-		return httpClient.post('/defenses');
+	static async createDefense(defense: DefenseDto) {
+		return httpClient.post('/defenses', defense);
 	}
 
 	static async getDefenses(): Promise<DefenseDto[]> {
