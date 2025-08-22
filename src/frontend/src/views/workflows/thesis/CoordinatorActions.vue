@@ -16,12 +16,7 @@
             color="error"
         >Undo</v-btn>
         <div v-if="props.workflow.status === 'SUBMITTED_TO_FENIX'">
-            <v-text-field
-                v-model="selectedDate"
-                label="Select a date"
-                type="date"
-            />
-            <v-btn @click="scheduleDefense()" color="warning" class="mb-3">Schedule</v-btn>
+            <ScheduleDefenseAction :student="props.workflow.student" />
         </div>
     </div>
 </template>
@@ -32,40 +27,15 @@ import FileUpload from '../../../components/file/FileUpload.vue';
 import WorkflowDto from '../../../models/WorkflowDto';
 import { useWorkflowStore } from '../../../stores/workflows';
 import SelectJuriPresidentDialog from '../../dialogs/SelectJuriPresidentDialog.vue';
-import { ref, computed } from 'vue';
-import DefenseDto from '../../../models/DefenseDto';
-import RemoteServices from '../../../services/RemoteService';
+import ScheduleDefenseAction from '../defense/ScheduleDefenseAction.vue';
 
 const props = defineProps<{
     workflow: WorkflowDto
 }>();
 
 const workflowStore = useWorkflowStore();
-const selectedDate = ref<string | null>();
-
-const formattedDate = computed(() => {
-    return selectedDate.value ? new Date(selectedDate.value).toLocaleDateString() : "Pick a date...";
-});
 
 function changeStatus(status: string) {
     workflowStore.updateStatus(props.workflow, status);
-}
-
-async function scheduleDefense() {
-    if (!selectedDate || !selectedDate.value) {
-        alert("Please pick a date for the defense.");
-        return;
-    }
-
-    try {
-        const defense: DefenseDto = {
-            date: selectedDate.value,
-            student: props.workflow.student
-        };
-        const response = await RemoteServices.createDefense(defense);
-        console.log("created defense: ", response);
-    } catch (error) {
-        console.error('Error creating defense: ', error);
-    }
 }
 </script>
