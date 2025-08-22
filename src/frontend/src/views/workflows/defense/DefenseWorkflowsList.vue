@@ -38,7 +38,7 @@
 import { onMounted, ref } from 'vue';
 import { useDefenseStore } from '../../../stores/defense';
 import { useRoleStore } from '../../../stores/role';
-import { getColor } from '../../../mappings/workflowMappings';
+import { getColor } from '../../../mappings/defenseMappings';
 import DefenseActions from './DefenseActions.vue';
 
 let search = ref('');

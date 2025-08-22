@@ -1,39 +1,38 @@
 export const translateStatus = (status: string) => {
-  switch (status) {
-    case "JURI_PROPOSAL_SUBMITTED":
-      return "Juri Proposal Submitted"
-    case "APPROVED_BY_ADMIN":
-      return "Approved By ADMIN";
-    case "JURI_PRESIDENT_ATTRIBUTED":
-      return "Juri President Attributed";
-    case "DOCUMENT_SIGNED":
-      return "Document Signed";
-    case "SUBMITTED_TO_FENIX":
-      return "Submitted to Fenix";
-    default:
-      return "No workflows initiated";
+    switch (status) {
+        case "JURI_PROPOSAL_SUBMITTED":
+            return "Juri Proposal Submitted"
+        case "APPROVED_BY_ADMIN":
+            return "Approved By ADMIN";
+        case "JURI_PRESIDENT_ATTRIBUTED":
+            return "Juri President Attributed";
+        case "DOCUMENT_SIGNED":
+            return "Document Signed";
+        case "SUBMITTED_TO_FENIX":
+            return "Submitted to Fenix";
+        default:
+            return "No workflows initiated";
   }
 };
 
 export const translateStatusToIndex = (status: string) => {
   switch (status) {
     case "JURI_PROPOSAL_SUBMITTED":
-      return 0
+        return 0
     case "APPROVED_BY_ADMIN":
-      return 1;
+        return 1;
     case "JURI_PRESIDENT_ATTRIBUTED":
-      return 2;
+        return 2;
     case "DOCUMENT_SIGNED":
-      return 3;
+        return 3;
     case "SUBMITTED_TO_FENIX":
-      return 4;
+        return 4;
     default:
-      return -1;
+        return -1;
   }
 };
 
 export const getColor = (status: string) => {
-    console.log(status)
     switch(status) {
         case "JURI_PROPOSAL_SUBMITTED":
             return 'white';
