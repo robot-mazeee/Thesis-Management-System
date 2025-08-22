@@ -54,7 +54,6 @@ public class DefenseService {
 
         return new DefenseDto(defense.getId(), defense.getStatus().toString(), defense.getDate(), defense.getGrade(), defense.getStudent());
     }
-	
 
 	@Transactional
 	public List<DefenseDto> getDefenses() {
@@ -78,6 +77,7 @@ public class DefenseService {
     public DefenseDto gradeDefense(long id, DefenseDto defenseDto) {
         Defense defense = fetchDefenseOrThrow(id);
         defense.setGrade(defenseDto.grade());
+        defense.setStatus(DefenseStatus.SUBMITTED_TO_FENIX);
         return new DefenseDto(defenseRepository.save(defense));
     }
 }
