@@ -36,15 +36,17 @@ public class DefenseService {
         Defense defense = new Defense();
         Person student = defenseDto.student();
         defense.setStudent(student);
-
+        
         LocalDate defenseDate = defenseDto.date();
         LocalDate currentDate = LocalDate.now();
 
+        System.out.println("defense date: " + defenseDate + " current date: " + currentDate);
+
         DefenseStatus status;
         if (defenseDate.isAfter(currentDate)) {
-            status = DefenseStatus.IN_REVISION;
-        } else {
             status = DefenseStatus.DEFENSE_SCHEDULED;
+        } else {
+            status = DefenseStatus.IN_REVISION;
         }
 
         defense.setDate(defenseDate);
