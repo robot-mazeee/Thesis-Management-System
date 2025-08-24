@@ -1,0 +1,128 @@
+package pt.ulisboa.tecnico.rnl.dei.tms.workflow;
+
+import java.nio.charset.StandardCharsets;
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RestController;
+
+import pt.ulisboa.tecnico.rnl.dei.tms.person.dto.PersonDto;
+import pt.ulisboa.tecnico.rnl.dei.tms.workflow.dto.WorkflowDto;
+import pt.ulisboa.tecnico.rnl.dei.tms.workflow.service.WorkflowService;
+
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+
+@RestController
+public class WorkflowController {
+	 
+	@Autowired
+	private WorkflowService workflowService;
+
+	// create 
+	@PostMapping("/workflows")
+	public WorkflowDto createWorkflow(@RequestBody WorkflowDto workflowDto) {
+		return workflowService.createWorkflow(workflowDto);
+	}
+
+	// get all workflows
+	@GetMapping("/workflows")
+	public List<WorkflowDto> getWorkflows() {
+		return workflowService.getWorkflows();
+	}
+
+	// get single workflow
+	@GetMapping("/workflows/{id}")
+	public WorkflowDto getWorkflow(long id) {
+		return workflowService.getWorkflow(id);
+	}
+
+	@GetMapping("/student-workflow/{studentId}")
+	public WorkflowDto getWorkflowByStudent(@PathVariable Long studentId) {
+		return workflowService.getWorkflowByStudent(studentId);
+	}
+
+	@GetMapping("/workflows/{id}/download")
+    public ResponseEntity<byte[]> downloadWorkflowPdf(@PathVariable Long id) {
+		try {
+			byte[] pdfBytes = workflowService.generateWorkflowPdf(id);
+
+			return ResponseEntity.ok().header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=workflow_" + id + ".pdf").contentType(MediaType.APPLICATION_PDF).body(pdfBytes);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+					.body(("Error generating PDF: " + e.getMessage()).getBytes(StandardCharsets.UTF_8));
+		}
+    }
+
+
+	// update workflow status
+	// update/assign juri president
+	@PutMapping("/workflows/{id}/juri-president")
+	public WorkflowDto selectJuriPresident(@PathVariable long id, @RequestBody WorkflowDto workflow) {
+		return workflowService.selectJuriPresident(id, workflow);
+	}
+
+	@PutMapping("/workflows/{id}")
+	public WorkflowDto updateWorkflow(@PathVariable long id, @RequestBody WorkflowDto workflow) {
+		System.out.println(id);
+		return workflowService.updateWorkflow(id, workflow);
+	}
+
+	@PutMapping("workflows/{id}/status")
+	public WorkflowDto updateWorkflowStatus(@RequestBody WorkflowDto workflow) {
+		return workflowService.updateStatus(workflow);
+	}
+
+	@PutMapping("/workflows/{id}/sign-document")
+	public WorkflowDto signDocument(@PathVariable long id) {
+		return workflowService.signDocument(id);
+	}
+
+	@GetMapping("/workflows/juri-proposals") 
+	public List<WorkflowDto> getJuriProposals() {
+		return workflowService.getJuriProposals(); 
+	}
+
+	@GetMapping("/workflows/juri-proposals/approved") 
+	public List<WorkflowDto> getApprovedJuriProposals() {
+		return workflowService.getApprovedJuriProposals(); 
+	}
+
+	// get workflow juri
+	@GetMapping("/workflows/{id}/professors")
+	public List<PersonDto> getJuri(@PathVariable long id) {
+		return workflowService.getJuri(id);
+	}
+
+	// get juri president
+	@GetMapping("/workflows/{id}/juri-president")
+	public PersonDto getJuriPresident(@PathVariable long id) {
+		return workflowService.getJuriPresident(id);
+	}
+
+	@GetMapping("/workflows/juri-president-selected")
+	public List<WorkflowDto> getJuriPresidentSelectedWorkflows() {
+		return workflowService.getJuriPresidentSelectedWorkflows();
+	}
+
+	// // workflows submetidos no fenix
+	@GetMapping("/workflows/signed-documents")
+	public List<WorkflowDto> getSignedDocuments() {
+		return workflowService.getSignedDocuments();
+	}
+
+	// submissão de um workflow no fenix
+	@GetMapping("/workflows/submissions")
+	public List<WorkflowDto> getSubmissions() {
+		return workflowService.getSubmissions();
+	}
+
+}

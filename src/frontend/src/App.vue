@@ -1,15 +1,15 @@
 <template>
-  <v-layout id="app">
-    <TopBar v-if="studentStore.isLoggedIn"/>
-    <v-main
-      style="margin-top: 96px"
-      class="pa-10 d-flex flex-column flex-grow-1 flex-shrink-1 text-center"
-    >
-      <ErrorMessage />
-      <LoadingOverlay />
-      <RouterView />
-    </v-main>
-  </v-layout>
+	<v-layout id="app">
+		<TopBar v-if="studentStore.isLoggedIn"/>
+		<v-main
+			style="margin-top: 96px"
+			class="pa-10 d-flex flex-column flex-grow-1 flex-shrink-1 text-center"
+		>
+			<ErrorMessage />
+			<LoadingOverlay />
+			<RouterView />
+		</v-main>
+	</v-layout>
 </template>
 
 <script setup lang="ts">
@@ -30,20 +30,20 @@ const setWidth = () => (appearanceStore.windowWidth = window.innerWidth);
 setWidth();
 
 onMounted(() => {
-  window.addEventListener('resize', setWidth);
-  appearanceStore.clearErrors();
-  // Reset student store between sessions (for development only)
-  localStorage.removeItem('studentStore');
+	window.addEventListener('resize', setWidth);
+	appearanceStore.clearErrors();
+	// Reset student store between sessions (for development only)
+	localStorage.removeItem('studentStore');
 });
 
 onUnmounted(() => {
-  window.removeEventListener('resize', setWidth);
+  	window.removeEventListener('resize', setWidth);
 });
 </script>
 
 <style scoped>
 #app {
-  display: flex;
-  flex-direction: column;
+	display: flex;
+	flex-direction: column;
 }
 </style>
