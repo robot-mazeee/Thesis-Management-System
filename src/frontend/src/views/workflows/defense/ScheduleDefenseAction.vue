@@ -20,6 +20,7 @@ const props = defineProps<{
 
 const defenseStore = useDefenseStore();
 const selectedDate = ref<string | null>();
+const emit = defineEmits(['defense-scheduled'])
 
 async function scheduleDefense() {
     if (!selectedDate || !selectedDate.value) {
@@ -35,6 +36,7 @@ async function scheduleDefense() {
         const response = await RemoteServices.createDefense(defense);
         console.log("created defense: ", response);
         defenseStore.fetchDefenses();
+        emit('defense-scheduled');
     } catch (error) {
         console.error('Error creating defense: ', error);
     }
