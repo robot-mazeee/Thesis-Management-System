@@ -86,6 +86,11 @@ public class WorkflowController {
 		return workflowService.signDocument(id);
 	}
 
+	@PutMapping("/workflows/{id}/link-defense")
+	public WorkflowDto linkDefense(@RequestBody WorkflowDto workflow) {
+		return workflowService.linkDefense(workflow);
+	}
+
 	@GetMapping("/workflows/juri-proposals") 
 	public List<WorkflowDto> getJuriProposals() {
 		return workflowService.getJuriProposals(); 

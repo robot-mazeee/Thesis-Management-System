@@ -32,6 +32,10 @@ public class Workflow {
     @JoinColumn(name = "juri_president")
     private Person juriPresident;
 
+    @OneToOne
+    @JoinColumn(name = "defense_workflow")
+    private Long defenseId;
+
     public Workflow() {}
 
     public Workflow(WorkflowStatus status, List<Person> professors, Person student) {

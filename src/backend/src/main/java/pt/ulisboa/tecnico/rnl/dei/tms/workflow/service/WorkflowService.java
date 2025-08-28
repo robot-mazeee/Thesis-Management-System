@@ -45,10 +45,18 @@ public class WorkflowService {
         Person student = workflowDto.student();
         workflow.setStudent(student);
         workflow.setJuriPresident(null);
+        workflow.setDefenseId(null);
 
         workflow = workflowRepository.save(workflow);
 
-        return new WorkflowDto(workflow.getId(), workflow.getStatus().toString(), workflow.getProfessors(), workflow.getStudent(), workflow.getJuriPresident());
+        return new WorkflowDto(
+            workflow.getId(), 
+            workflow.getStatus().toString(), 
+            workflow.getProfessors(), 
+            workflow.getStudent(), 
+            workflow.getJuriPresident(), 
+            workflow.getDefenseId()
+        );
     }
 	
 	@Transactional
@@ -65,7 +73,7 @@ public class WorkflowService {
 
     @Transactional
     public WorkflowDto getWorkflowByStudent(long studentId) {
-        var workflow = fetchWorkflowByStudent(studentId);
+        Workflow workflow = fetchWorkflowByStudent(studentId);
         return (workflow != null) ? new WorkflowDto(workflow) : null;
     }
 
@@ -79,15 +87,22 @@ public class WorkflowService {
 
     @Transactional
     public WorkflowDto updateStatus(WorkflowDto workflowDto) {
-        var workflow = fetchWorkflowOrThrow(workflowDto.id());
+        Workflow workflow = fetchWorkflowOrThrow(workflowDto.id());
         workflow.setStatus(WorkflowStatus.valueOf(workflowDto.status()));
         return new WorkflowDto(workflowRepository.save(workflow));
     }
 
     @Transactional
     public WorkflowDto signDocument(long id) {
-        var workflow = fetchWorkflowOrThrow(id);
+        Workflow workflow = fetchWorkflowOrThrow(id);
         workflow.setStatus(WorkflowStatus.DOCUMENT_SIGNED);
+        return new WorkflowDto(workflowRepository.save(workflow));
+    }
+
+    @Transactional
+    public WorkflowDto linkDefense(WorkflowDto workflowDto) {
+        Workflow workflow = fetchWorkflowOrThrow(workflowDto.id());
+        workflow.setDefenseId(workflowDto.defenseId());
         return new WorkflowDto(workflowRepository.save(workflow));
     }
 

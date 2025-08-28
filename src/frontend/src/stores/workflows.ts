@@ -36,18 +36,14 @@ export const useWorkflowStore = defineStore('workflow', {
 
         async saveJuriPresident(workflowId: number, president: PersonDto) {
             try {
-                const workflow = this.workflows.find(w => w.id === workflowId);
-                if (!workflow) 
-                    throw new Error('Workflow not found');
+                const workflow = this.getWorkflow(workflowId);
 
                 workflow.juriPresident = president;
                 workflow.status = 'JURI_PRESIDENT_ATTRIBUTED';
                 const updatedWorkflow = await RemoteServices.selectJuriPresident(workflow);
                 console.log("updated workflow: ", updatedWorkflow);
 
-                const index = this.workflows.findIndex(w => w.id === workflowId);
-                if (index !== -1) 
-                    this.workflows[index] = updatedWorkflow;
+                this.updateWorkflow(workflowId, updatedWorkflow);
             } catch (error) {
                 console.error('Failed to save Juri President:', error);
             }
@@ -55,20 +51,43 @@ export const useWorkflowStore = defineStore('workflow', {
 
         async signDocument(workflowId: number) {
             try {
-                const workflow = this.workflows.find(w => w.id === workflowId);
-                if (!workflow) 
-                    throw new Error('Workflow not found');
+                const workflow = this.getWorkflow(workflowId);
 
                 workflow.status = 'DOCUMENT_SIGNED';
                 const updatedWorkflow = await RemoteServices.signDocument(workflow);
                 console.log("updated workflow: ", updatedWorkflow);
 
-                const index = this.workflows.findIndex(w => w.id === workflowId);
-                if (index !== -1) 
-                    this.workflows[index] = updatedWorkflow;
+                this.updateWorkflow(workflowId, updatedWorkflow);
             } catch (error) {
                 console.error('Failed to sign document:', error);
             }
+        },
+
+        async linkDefense(workflowId: number, defenseId: number) {
+            try {
+                const workflow = this.getWorkflow(workflowId);
+
+                workflow.defenseId = defenseId;
+                const updatedWorkflow = await RemoteServices.linkDefense(workflow);
+                console.log('updated workflow: ', updatedWorkflow);
+
+                this.updateWorkflow(workflowId, updatedWorkflow);
+            } catch (error) {
+                console.error('Failed to link defense: ', error);
+            }
+        },
+
+        getWorkflow(workflowId: number): WorkflowDto {
+            const workflow = this.workflows.find(w => w.id === workflowId);
+            if (!workflow) 
+                throw new Error('Workflow not found');
+            return workflow;
+        },
+
+        updateWorkflow(workflowId: number, updatedWorkflow: WorkflowDto) {
+            const index = this.workflows.findIndex(w => w.id === workflowId);
+            if (index !== -1) 
+                this.workflows[index] = updatedWorkflow;
         }
     }
 });

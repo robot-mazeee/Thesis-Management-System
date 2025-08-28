@@ -68,8 +68,16 @@ export default class RemoteServices {
 		return httpClient.put(`workflows/${workflow.id}/status`, workflow);
 	}
 
+	static async selectJuriPresident(workflow: WorkflowDto): Promise<WorkflowDto> {
+		return httpClient.put(`/workflows/${workflow.id}/juri-president`, workflow);
+	}
+
 	static async signDocument(workflow: WorkflowDto): Promise<WorkflowDto> {
 		return httpClient.put(`/workflows/${workflow.id}/sign-document`);
+	}
+
+	static async linkDefense(workflow: WorkflowDto): Promise<WorkflowDto> {
+		return httpClient.put(`/workflows/${workflow.id}/link-defense`);
 	}
 
 	static async getJuriProposals(): Promise<WorkflowDto[]> {
@@ -80,9 +88,6 @@ export default class RemoteServices {
 		return httpClient.get('/workflows/juri-proposals/approved');
 	}
 
-	static async selectJuriPresident(workflow: WorkflowDto): Promise<WorkflowDto> {
-		return httpClient.put(`/workflows/${workflow.id}/juri-president`, workflow);
-	}
 
 	static async juriPresidentSelectedWorkflows(): Promise<WorkflowDto[]> {
 		return httpClient.get(`/workflows/juri-president-selected`);
@@ -96,7 +101,7 @@ export default class RemoteServices {
 		return httpClient.get(`/workflows/submissions`);
 	}
 
-	static async createDefense(defense: DefenseDto) {
+	static async createDefense(defense: DefenseDto): Promise<DefenseDto> {
 		return httpClient.post('/defenses', defense);
 	}
 

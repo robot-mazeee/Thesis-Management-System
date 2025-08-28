@@ -4,7 +4,7 @@
         label="Select a date"
         type="date"
     />
-    <v-btn @click="scheduleDefense()" color="warning" class="mb-3">Schedule</v-btn>
+    <v-btn @click="scheduleDefense" color="warning" class="mb-3">Schedule</v-btn>
 </template>
 
 <script setup lang="ts">
@@ -20,7 +20,7 @@ const props = defineProps<{
 
 const defenseStore = useDefenseStore();
 const selectedDate = ref<string | null>();
-const emit = defineEmits(['defense-scheduled'])
+const emit = defineEmits(['defense-scheduled']);
 
 async function scheduleDefense() {
     if (!selectedDate || !selectedDate.value) {
@@ -36,7 +36,7 @@ async function scheduleDefense() {
         const response = await RemoteServices.createDefense(defense);
         console.log("created defense: ", response);
         defenseStore.fetchDefenses();
-        emit('defense-scheduled');
+        emit('defense-scheduled', response.id);
     } catch (error) {
         console.error('Error creating defense: ', error);
     }

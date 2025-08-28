@@ -6,6 +6,7 @@ export default class WorkflowDto {
     professors?: PersonDto[]
     student?: PersonDto
     juriPresident?: PersonDto
+    defenseId?: number
   
     constructor(obj?: Partial<WorkflowDto>) {
       Object.assign(this, obj)

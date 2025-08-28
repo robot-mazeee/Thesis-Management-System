@@ -15,8 +15,8 @@
             class="mb-3" 
             color="error"
         >Undo</v-btn>
-        <div v-if="props.workflow.status === 'SUBMITTED_TO_FENIX' && !defenseScheduled">
-            <ScheduleDefenseAction :student="props.workflow.student" @defense-scheduled="defenseScheduled = true"/>
+        <div v-if="props.workflow.status === 'SUBMITTED_TO_FENIX' && !props.workflow.defenseId">
+            <ScheduleDefenseAction :student="props.workflow.student" @defense-scheduled="linkDefense"/>
         </div>
     </div>
 </template>
@@ -28,16 +28,18 @@ import WorkflowDto from '../../../models/WorkflowDto';
 import { useWorkflowStore } from '../../../stores/workflows';
 import SelectJuriPresidentDialog from '../../dialogs/SelectJuriPresidentDialog.vue';
 import ScheduleDefenseAction from '../defense/ScheduleDefenseAction.vue';
-import { ref } from 'vue';
 
 const props = defineProps<{
     workflow: WorkflowDto
 }>();
 
 const workflowStore = useWorkflowStore();
-const defenseScheduled = ref<boolean>(false);
 
 function changeStatus(status: string) {
     workflowStore.updateStatus(props.workflow, status);
+}
+
+function linkDefense(defenseId: number) {
+    workflowStore.linkDefense(props.workflow.id, defenseId);
 }
 </script>
