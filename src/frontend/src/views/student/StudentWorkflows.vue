@@ -1,5 +1,4 @@
 <template>
-    <h3 v-if="noWorkflow">No Workflow Initiated</h3>
     <WorkflowTimeline :thesis-events="thesisEvents" :defense-events="defenseEvents"/>
     <ProposeJuriDialog v-if="noWorkflow" @workflow-created="getStudentWorkflow"/>
 </template>
@@ -13,7 +12,7 @@ import ProposeJuriDialog from '../dialogs/ProposeJuriDialog.vue';
 import WorkflowTimeline from './WorkflowTimeline.vue';
 
 const props = defineProps<{
-  studentId: number,
+    studentId: number,
 }>()
 
 const noWorkflow = ref(false);

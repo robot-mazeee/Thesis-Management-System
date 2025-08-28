@@ -1,7 +1,7 @@
 <template>
-  <v-container fluid class="p-6 w-full">
-    <StudentTab v-if="ready" :student="student" @fetch-student="fetchStudent"/>
-  </v-container>
+    <v-container fluid class="p-6 w-full">
+        <StudentTab v-if="ready" :student="student" @fetch-student="fetchStudent"/>
+    </v-container>
 </template>
 
 <script setup lang="ts">
@@ -18,26 +18,25 @@ const student = ref<PersonDto | null>(null);
 const ready = ref(false);
 
 async function fetchStudent() {
-  ready.value = false
-  console.log("Fetching student")
-  if (props.studentId === null || studentStore.isLoggedIn) {
-      student.value = studentStore.currentStudent;
-      console.log("fetched student", student.value);
-  } else {
-      try {
-          student.value = await RemoteService.getPerson(props.studentId);
-          console.log(student.value)
-      } catch (error) {
-          console.error('Failed to fetch user data:', error);
-      }
-  }
-  if (student.value) {
-      ready.value = true;
-  }
+    ready.value = false
+    console.log("Fetching student")
+    if (props.studentId === null || studentStore.isLoggedIn) {
+        student.value = studentStore.currentStudent;
+        console.log("fetched student", student.value);
+    } else {
+        try {
+            student.value = await RemoteService.getPerson(props.studentId);
+            console.log(student.value);
+        } catch (error) {
+            console.error('Failed to fetch user data:', error);
+        }
+    }
+    if (student.value) {
+        ready.value = true;
+    }
 }
 
 onMounted(async () => {
-  fetchStudent()
+    fetchStudent()
 });
-
 </script>
