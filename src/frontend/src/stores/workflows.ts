@@ -68,6 +68,7 @@ export const useWorkflowStore = defineStore('workflow', {
                 const workflow = this.getWorkflow(workflowId);
 
                 workflow.defenseId = defenseId;
+                console.log("workflow to link: ", workflow);
                 const updatedWorkflow = await RemoteServices.linkDefense(workflow);
                 console.log('updated workflow: ', updatedWorkflow);
 

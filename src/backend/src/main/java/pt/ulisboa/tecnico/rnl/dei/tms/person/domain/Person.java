@@ -32,9 +32,6 @@ public class Person {
 	@Enumerated(EnumType.STRING)
     private PersonType type;
 
-    // @Enumerated(EnumType.STRING)
-	// private Workflow workflow;
-
 	protected Person() {
 	}
 

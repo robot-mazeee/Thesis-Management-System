@@ -31,9 +31,8 @@ public class Workflow {
     @ManyToOne
     @JoinColumn(name = "juri_president")
     private Person juriPresident;
-
-    @OneToOne
-    @JoinColumn(name = "defense_workflow")
+    
+    @Column(name = "defense_id", nullable = true)
     private Long defenseId;
 
     public Workflow() {}

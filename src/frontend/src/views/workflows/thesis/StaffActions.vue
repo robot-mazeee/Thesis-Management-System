@@ -6,7 +6,7 @@
         color="primary"
     >Submit</v-btn>
     <v-btn 
-        v-else-if="props.workflow.status === 'SUBMITTED_TO_FENIX'" 
+        v-else-if="props.workflow.status === 'SUBMITTED_TO_FENIX' && !props.workflow.defenseId" 
         @click="changeStatus('DOCUMENT_SIGNED')" 
         class="mb-3" 
         color="error"

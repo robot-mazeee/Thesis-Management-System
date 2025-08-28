@@ -77,7 +77,7 @@ export default class RemoteServices {
 	}
 
 	static async linkDefense(workflow: WorkflowDto): Promise<WorkflowDto> {
-		return httpClient.put(`/workflows/${workflow.id}/link-defense`);
+		return httpClient.put(`/workflows/${workflow.id}/link-defense`, workflow);
 	}
 
 	static async getJuriProposals(): Promise<WorkflowDto[]> {

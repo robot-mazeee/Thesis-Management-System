@@ -40,6 +40,7 @@ function changeStatus(status: string) {
 }
 
 function linkDefense(defenseId: number) {
+    console.log("linking defenses: ", props.workflow, defenseId);
     workflowStore.linkDefense(props.workflow.id, defenseId);
 }
 </script>

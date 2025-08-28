@@ -54,7 +54,7 @@ public class WorkflowService {
             workflow.getStatus().toString(), 
             workflow.getProfessors(), 
             workflow.getStudent(), 
-            workflow.getJuriPresident(), 
+            workflow.getJuriPresident(),
             workflow.getDefenseId()
         );
     }
