@@ -10,7 +10,7 @@ import pt.ulisboa.tecnico.rnl.dei.tms.person.domain.Person;
 
 @Data
 @Entity
-@Table(name = "defences")
+@Table(name = "defenses")
 public class Defense {
     @Id
 	@GeneratedValue
