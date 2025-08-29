@@ -13,4 +13,3 @@ spring.jpa.database-platform=org.hibernate.dialect.PostgreSQLDialect
 ## Locale
 spring.jackson.date-format=yyyy-MM-dd HH:mm:ss
 spring.jackson.time-zone=Europe/Lisbon
-2

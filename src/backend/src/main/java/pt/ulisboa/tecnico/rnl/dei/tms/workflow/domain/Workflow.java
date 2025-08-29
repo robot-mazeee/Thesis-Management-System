@@ -20,9 +20,14 @@ public class Workflow {
 	@Enumerated(EnumType.STRING)
     private WorkflowStatus status;
 
-    @OneToMany
-    @JoinColumn(name = "workflow_professors")
+    @ManyToMany
+    @JoinTable(
+        name = "workflow_professors",
+        joinColumns = @JoinColumn(name = "workflow_id"),
+        inverseJoinColumns = @JoinColumn(name = "person_id")
+    )
     private List<Person> professors;
+
 
     @ManyToOne
     @JoinColumn(name = "student")

@@ -95,5 +95,5 @@ psql -h localhost -p 7654 -U postgres deidb
 
 
 ```
-pg_dump -U postgres -p 7654 -d deidb > populate.sql
+sudo pg_dump -h localhost -p 7654 -U postgres -d deidb > populate.sql
 ```
