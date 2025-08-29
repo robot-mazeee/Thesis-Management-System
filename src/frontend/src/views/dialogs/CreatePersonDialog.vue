@@ -20,7 +20,7 @@
 					</v-text-field>
 		
 					<v-text-field 
-						label="IST ID*"
+						label="IST ID (ist1xxx)*"
 						required
 						v-model="newPerson.istId">
 					</v-text-field>
@@ -53,9 +53,12 @@
 						text="Save"
 						color="primary"
 						variant="tonal"
-						@click="
-							dialog = false,
-							savePerson()
+						@click=" () => {
+							if (isValidPerson()) {
+								dialog = false,
+								savePerson()
+							}
+						}
 						"
 					></v-btn>
 				</v-card-actions>
@@ -79,6 +82,41 @@ const newPerson = ref<PersonDto>({
 	email: '',
 	type: ''
 })
+
+function isValidPerson(): boolean {
+	if (!newPerson.value.name) {
+		alert('Please provide a valid name.');
+		return false;
+	}
+
+	if (!newPerson.value.istId) {
+		alert('Please provide a valid IstId.');
+		return false;
+	}
+
+	if (!/^[0-9]+$/.test(newPerson.value.istId)){
+		alert('Invalid IstId. Must be only numbers.');
+		return false;
+	}
+
+	if (!newPerson.value.email) {
+		alert('Please provide a valid email.');
+		return false;
+	}
+
+	const emailRegex = /^[^\s@]+@(gmail\.com|tecnico\.ulisboa\.pt)$/;
+	if (!emailRegex.test(newPerson.value.email)) {
+		alert('Invalid email. The accepted domains are @tecnico.ulisboa.pt or @gmail.com.');
+		return false;
+	}
+
+	if (!newPerson.value.type) {
+		alert('Please select a role.');
+		return false;
+	}
+
+	return true;
+}
 
 const savePerson = async () => {
 	newPerson.value.type = typeMappings[newPerson.value.type as keyof typeof typeMappings];
