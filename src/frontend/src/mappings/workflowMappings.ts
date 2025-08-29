@@ -15,7 +15,7 @@ export const translateStatus = (status: string) => {
   }
 };
 
-export const translateStatusToIndex = (status: string) => {
+export const translateWorkflowStatusToIndex = (status: string) => {
   switch (status) {
     case "JURI_PROPOSAL_SUBMITTED":
         return 0

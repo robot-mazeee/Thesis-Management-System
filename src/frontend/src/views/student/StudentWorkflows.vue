@@ -1,22 +1,22 @@
 <template>
     <WorkflowTimeline :events="thesisEvents" />
     <WorkflowTimeline :events="defenseEvents" />
-    <ProposeJuriDialog v-if="noWorkflow" @workflow-created="getStudentWorkflow"/>
+    <ProposeJuriDialog v-if="noWorkflow" @workflow-created="getStudentWorkflow" />
 </template>
 
 <script setup lang="ts">
 import { onMounted, reactive, ref } from 'vue';
 import RemoteServices from '../../services/RemoteService';
 import WorkflowDto from '../../models/WorkflowDto';
-import { translateStatusToIndex } from '../../mappings/workflowMappings';
+import { translateWorkflowStatusToIndex } from '../../mappings/workflowMappings';
+import { translateDefenseStatusToIndex } from '../../mappings/defenseMappings';
 import ProposeJuriDialog from '../dialogs/ProposeJuriDialog.vue';
 import WorkflowTimeline from './WorkflowTimeline.vue';
+import DefenseDto from '../../models/DefenseDto';
 
 const props = defineProps<{
     studentId: number,
-}>()
-
-const noWorkflow = ref(false);
+}>();
 
 const thesisEvents = reactive([
     { title: 'Juri Proposal Submitted', date: '2025-02', color: 'grey', icon: 'mdi-code-tags' },
@@ -33,11 +33,22 @@ const defenseEvents = reactive([
 ]);
 
 const workflow = reactive<WorkflowDto>({} as WorkflowDto);
+const defense = reactive<DefenseDto>({} as DefenseDto);
+const noWorkflow = ref(false);
+const noDefense = ref(false);
+
+onMounted(() => {
+    getStudentDefense();
+})
 
 function updateTimeline() {
     const workflowStatus = workflow.status;
-    const index = translateStatusToIndex(workflowStatus);
-    getDotColors(index);
+    const workflowIndex = translateWorkflowStatusToIndex(workflowStatus);
+    getDotColors(workflowIndex, thesisEvents);
+
+    const defenseStatus = defense.status;
+    const defenseIndex = translateDefenseStatusToIndex(defenseStatus);
+    getDotColors(defenseIndex, defenseEvents);
 }
 
 async function getStudentWorkflow() {
@@ -57,16 +68,31 @@ async function getStudentWorkflow() {
     }
 }
 
-function getDotColors(index: number) {
-    let counter = -1;
-    thesisEvents.forEach(event => {
-            counter += 1;
-            if (counter <= index)
-                event.color = 'success';
-            else {
-                return;
-            }
-    });
+async function getStudentDefense() {
+    console.log("Getting student defense!");
+    try {
+        const response = await RemoteServices.getDefenseByStudent(props.studentId);
+        console.log("student defense: ", response);
+        if (!response) {
+            noDefense.value = true;
+            return;
+        }
+        noDefense.value = false;
+        Object.assign(defense, response);
+        updateTimeline();
+    } catch (error) {
+        console.error("Error getting student defense: ", error);
+    }
+}
+
+function getDotColors(index: number, events: Array<any>) {
+    for (let i = 0; i < events.length; i++) {
+        if (i <= index) {
+            events[i].color = 'success';
+        } else {
+            break;
+        }
+    }
 }
 
 onMounted(async () => {

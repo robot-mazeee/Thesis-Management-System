@@ -10,3 +10,16 @@ export const getColor = (status: string) => {
             return 'red';
     }
 }
+
+export const translateDefenseStatusToIndex = (status: string) => {
+    switch (status) {
+        case "DEFENSE_SCHEDULED":
+            return 0
+        case "IN_REVISION":
+            return 1;
+        case "SUBMITTED_TO_FENIX":
+            return 2;
+        default:
+            return -1;
+    }
+};

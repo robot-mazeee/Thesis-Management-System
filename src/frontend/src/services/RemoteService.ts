@@ -59,6 +59,10 @@ export default class RemoteServices {
 		return httpClient.get(`/student-workflow/${studentId}`);
 	}
 
+	static async getDefenseByStudent(studentId: number): Promise<WorkflowDto> {
+		return httpClient.get(`/student-defense/${studentId}`);
+	}
+
 	// Updates workflow status
 	static async updateWorkflow(workflow: WorkflowDto): Promise<WorkflowDto> {
 		return httpClient.put(`/workflows/${workflow.id}`, workflow);
