@@ -53,12 +53,7 @@
 						text="Save"
 						color="primary"
 						variant="tonal"
-						@click=" () => {
-							if (isValidPerson()) {
-								dialog = false,
-								savePerson()
-							}
-						}
+						@click=" () => { if (isValidPerson()) savePerson() }
 						"
 					></v-btn>
 				</v-card-actions>
@@ -136,6 +131,7 @@ const savePerson = async () => {
 	}
 
 	emit('close-dialog');
+	dialog.value = false;
 }
 </script>
   

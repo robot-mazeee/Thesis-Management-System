@@ -41,7 +41,13 @@
 			<v-card-actions>
 				<v-spacer />
 				<v-btn text="Close" variant="plain" @click="dialog = false" />
-				<v-btn color="primary" text="Save" variant="tonal" @click="editPerson" />
+				<v-btn
+						text="Save"
+						color="primary"
+						variant="tonal"
+						@click=" () => { if (isValidPerson()) editPerson() }
+						"
+					></v-btn>
 			</v-card-actions>
 		</v-card>
 		</v-dialog>
@@ -64,6 +70,41 @@ const props = defineProps<{
 
 const editablePerson = reactive({ ...props.personToEdit })
 
+function isValidPerson(): boolean {
+	if (!editablePerson.name) {
+		alert('Please provide a valid name.');
+		return false;
+	}
+
+	if (!editablePerson.istId) {
+		alert('Please provide a valid IstId.');
+		return false;
+	}
+
+	if (!/^[0-9]+$/.test(editablePerson.istId)){
+		alert('Invalid IstId. Must be only numbers.');
+		return false;
+	}
+
+	if (!editablePerson.email) {
+		alert('Please provide a valid email.');
+		return false;
+	}
+
+	const emailRegex = /^[^\s@]+@(gmail\.com|tecnico\.ulisboa\.pt)$/;
+	if (!emailRegex.test(editablePerson.email)) {
+		alert('Invalid email. The accepted domains are @tecnico.ulisboa.pt or @gmail.com.');
+		return false;
+	}
+
+	if (!editablePerson.type) {
+		alert('Please select a role.');
+		return false;
+	}
+
+	return true;
+}
+
 const editPerson = async () => {
 	const person = { ...editablePerson }
 	const isValidTypeValue = Object.values(typeMappings).includes(person.type);
@@ -79,7 +120,7 @@ const editPerson = async () => {
 		console.error("Error deleting person: ", error);
 	}
 
-	emit('close-dialog')
-	dialog.value = false
+	emit('close-dialog');
+	dialog.value = false;
 }
 </script>
