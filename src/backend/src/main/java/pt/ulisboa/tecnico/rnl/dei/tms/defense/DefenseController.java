@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import pt.ulisboa.tecnico.rnl.dei.tms.defense.dto.DefenseDto;
 import pt.ulisboa.tecnico.rnl.dei.tms.defense.service.DefenseService;
-
 @RestController
 public class DefenseController {
 	 
@@ -29,15 +28,13 @@ public class DefenseController {
 		return defenseService.getDefenses();
 	}
 
-	// update workflow status
-	// @PutMapping("/defenses/{id}")
-	// public DefenseDto updateDefense(@PathVariable long id, @RequestBody DefenseDto defense) {
-	// 	return defenseService.updateDefense(id, defense);
-	// }
-
 	@PutMapping("/defenses/{id}/grade")
 	public DefenseDto gradeDefense(@PathVariable long id, @RequestBody DefenseDto defense) {
 		return defenseService.gradeDefense(id, defense);
 	}
 
+	@GetMapping("/student-defense/{studentId}")
+	public DefenseDto getDefenseByStudent(@PathVariable Long studentId) {
+		return defenseService.getDefenseByStudent(studentId);
+	}
 }

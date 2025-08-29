@@ -1,5 +1,6 @@
 <template>
-    <WorkflowTimeline :thesis-events="thesisEvents" :defense-events="defenseEvents"/>
+    <WorkflowTimeline :events="thesisEvents" />
+    <WorkflowTimeline :events="defenseEvents" />
     <ProposeJuriDialog v-if="noWorkflow" @workflow-created="getStudentWorkflow"/>
 </template>
 
